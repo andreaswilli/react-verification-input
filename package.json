@@ -4,5 +4,17 @@
   "main": "src/index.js",
   "repository": "https://github.com/andreaswilli/react-verification-input.git",
   "author": "Andreas Willi",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "path": "^0.12.7",
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0",
+    "webpack": "^3.9.1"
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-preset-es2017": "^6.24.1",
+    "babel-preset-react": "^6.24.1"
+  }
 }
