@@ -1,0 +1,8 @@
+{
+  "name": "react-verification-input",
+  "version": "1.0.0",
+  "main": "src/index.js",
+  "repository": "https://github.com/andreaswilli/react-verification-input.git",
+  "author": "Andreas Willi",
+  "license": "MIT"
+}
