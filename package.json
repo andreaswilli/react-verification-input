@@ -1,6 +1,6 @@
 {
   "name": "react-verification-input",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "main": "dist/index.js",
   "repository": "https://github.com/andreaswilli/react-verification-input.git",
   "author": "Andreas Willi",
