@@ -1,0 +1,13 @@
+$color-hover: red;
+
+.purple {
+  color: rebeccapurple;
+
+  &:hover {
+    color: $color-hover;
+  }
+}
+
+.semi-bold {
+  font-weight: 600;
+}
