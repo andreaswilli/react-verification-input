@@ -71,3 +71,4 @@ Things, that need to be done:
   - Minify etc.
 - Make compatible with Redux Form
 - Add ability to use `' '` (blank) as placeholder
+  - Update doc when done
