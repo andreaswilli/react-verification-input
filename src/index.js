@@ -12,11 +12,27 @@ export default class VerificationInput extends PureComponent {
     length: PropTypes.number.isRequired,
     validChars: PropTypes.string,
     placeholder: PropTypes.string,
+    container: PropTypes.shape({
+      className: PropTypes.string,
+    }),
+    inputField: PropTypes.shape({
+      className: PropTypes.string,
+    }),
+    characters: PropTypes.shape({
+      className: PropTypes.string,
+    }),
+    character: PropTypes.shape({
+      className: PropTypes.string,
+    }),
   };
 
   static defaultProps = {
     validChars: 'A-Za-z0-9',
     placeholder: '·',
+    container: {},
+    inputField: {},
+    characters: {},
+    character: {},
   };
 
   constructor(props) {
@@ -167,24 +183,57 @@ export default class VerificationInput extends PureComponent {
   }
 
   render() {
+    const {
+      length,
+      placeholder,
+      container,
+      inputField,
+      characters,
+      character,
+    } = this.props;
+
+    const {
+      className: containerClassName,
+      ...containerProps,
+    } = container;
+
+    const {
+      className: inputClassName,
+      ...inputProps,
+    } = inputField;
+
+    const {
+      className: charactersClassName,
+      ...charactersProps,
+    } = characters;
+
+    const {
+      className: characterClassName,
+      ...characterProps,
+    } = character;
+
     return (
-      <div className="verification-input__container">
+      <div
+        className={classNames('verification-input__container', containerClassName)}
+        {...containerProps}
+      >
         <input
           ref={(input) => this.input = input}
-          type="tel" // TODO: make configurable
-          className="verification-input"
+          className={classNames('verification-input', inputClassName)}
           onKeyUp={this.handleKeyUp.bind(this)}
           onFocus={() => this.setState({ isActive: true })}
           onBlur={() => this.setState({ isActive: false })}
           onPaste={this.handlePaste.bind(this)}
+          {...inputProps}
         />
         <div
-          className="verification-input__characters"
+          className={classNames('verification-input__characters', charactersClassName)}
           onClick={() => this.input.focus()}
+          {...charactersProps}
         >
-          {[...Array(this.props.length)].map((_, i) => (
+          {[...Array(length)].map((_, i) => (
             <div
-              className={classNames('verification-input__character', {
+              className={classNames('verification-input__character', characterClassName, {
                 'verification-input__character--selected': this.state.selectedIndex === i && this.state.isActive,
                 'verification-input__character--inactive': this.state.tan.length < i,
               })}
@@ -192,10 +241,12 @@ export default class VerificationInput extends PureComponent {
               id={`field-${i}`}
               key={i}
               onPaste={this.handlePaste.bind(this)}
-            >{this.state.tan[i] || this.props.placeholder}</div>
+              {...characterProps}
+            >{this.state.tan[i] || placeholder}</div>
           ))}
         </div>
       </div>
     );
   }
+
 }
