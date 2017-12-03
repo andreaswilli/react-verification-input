@@ -50,7 +50,7 @@ Option | Type | Default | Description
 --- | --- | --- | ---
 validChars | String | `'A-Za-z0-9'` | Define, which characters should be allowed. The string is inserted into a regexp character set ( `/[]/` ) for input validating.
 placeholder | String | `'·'` (U+00B7) | Define, which character should be displayed as placeholder in empty fields. Note: Currently the blank character can´t be used as placeholder, this will be possible in a later version.
-container | Object | `null` | Define the props of the container `div`. All props except for `className` is passed directly to the `div` element. Use `{ className: 'your-class' }` to apply your custom styling. This options are available on every element.
+container | Object | `null` | Define the props of the container `div`. All props except for `className` are passed directly to the `div` element. Use `{ className: 'your-class' }` to style the input. This options are available on every element. For more details on how to apply your custom styling see [here](#custom-styling).
 inputField | Object | `null` | Define the props of the `input` element. See `container` for more details.
 characters | Object | `null` | Define the props of the characters `div`. See `container` for more details.
 character | Object | `null` | Define the props of the character `div`s. See `container` for more details.
