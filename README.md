@@ -34,7 +34,7 @@ Inside the `render` method write:
 
 That´s it! You now have a basic verification input with default configuration rendered on your page. 🎉😃
 
-The `length`-prop is the only one required. For a complete API overview read the next chapter.
+The `length`-prop is the only one required. For a complete API overview see [here](#api-documentation).
 
 ## API documentation
 
