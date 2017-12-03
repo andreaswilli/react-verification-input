@@ -7,7 +7,8 @@
   "author": "Andreas Willi",
   "license": "MIT",
   "scripts": {
-    "serve": "webpack --watch"
+    "serve": "webpack --watch",
+    "minor": "npm version minor"
   },
   "dependencies": {
     "path": "^0.12.7",
