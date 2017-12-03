@@ -8,7 +8,7 @@
   "license": "MIT",
   "scripts": {
     "serve": "webpack --watch",
-    "minor": "npm version minor"
+    "minor": "npm version minor && npm publish"
   },
   "dependencies": {
     "path": "^0.12.7",
