@@ -1,13 +1,52 @@
-$color-hover: red;
+.input__container {
+  position: relative;
+  max-width: 500px;
+}
 
-.purple {
-  color: rebeccapurple;
+.input {
+  height: 100%;
+  position: absolute;
+  left: -2000px;
+  opacity: 0;
+  transform: scale(0);
+}
 
-  &:hover {
-    color: $color-hover;
+.digits {
+  display: flex;
+  height: 50px;
+  z-index: -1;
+}
+
+.digit {
+  font-size: 36px;
+  line-height: 50px;
+  text-align: center;
+  background-color: white;
+  height: 100%;
+  flex-grow: 1;
+  flex-basis: 0;
+  padding: 0;
+  margin-left: 8px;
+  border: 1px solid black;
+  cursor: default;
+  user-select: none;
+  box-sizing: border-box;
+
+  &:first-child {
+    margin-left: 0;
+  }
+
+  @media (min-width : 768px) {
+    margin-left: 16px;
   }
 }
 
-.semi-bold {
-  font-weight: 600;
+.digit--inactive {
+  color: dimgray;
+  background-color: lightgray;
+}
+
+.digit--selected {
+  border-color: cornflowerblue;
+  color: cornflowerblue;
 }
