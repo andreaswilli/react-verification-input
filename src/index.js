@@ -6,7 +6,18 @@ import { KEY_CODE } from './constants';
 
 import './styles.scss';
 
-class VerificationInput extends PureComponent {
+export default class VerificationInput extends PureComponent {
+
+  static propTypes = {
+    length: PropTypes.number.isRequired,
+    validChars: PropTypes.string,
+    placeholder: PropTypes.string,
+  };
+
+  static defaultProps = {
+    validChars: 'A-Za-z0-9',
+    placeholder: '·',
+  };
 
   constructor(props) {
     super(props);
@@ -16,7 +27,7 @@ class VerificationInput extends PureComponent {
       tan: '',
       previousTan: '',
       isActive: false,
-      isValidTan: false
+      isValidTan: false,
     };
   }
 
@@ -49,7 +60,7 @@ class VerificationInput extends PureComponent {
     this.setState({
       tan,
       previousTan,
-      isValidTan: RegExp(`^[${this.props.validChars}]{${this.props.length}}$`).test(tan)
+      isValidTan: RegExp(`^[${this.props.validChars}]{${this.props.length}}$`).test(tan),
     });
   }
 
@@ -157,26 +168,25 @@ class VerificationInput extends PureComponent {
 
   render() {
     return (
-      <div className="input__container">
+      <div className="verification-input__container">
         <input
-          id="tanInput"
           ref={(input) => this.input = input}
-          type="tel"
-          className="input"
+          type="tel" // TODO: make configurable
+          className="verification-input"
           onKeyUp={this.handleKeyUp.bind(this)}
           onFocus={() => this.setState({ isActive: true })}
           onBlur={() => this.setState({ isActive: false })}
           onPaste={this.handlePaste.bind(this)}
         />
         <div
-          className="digits"
+          className="verification-input__characters"
           onClick={() => this.input.focus()}
         >
           {[...Array(this.props.length)].map((_, i) => (
             <div
-              className={classNames('digit', {
-                'digit--selected': this.state.selectedIndex === i && this.state.isActive,
-                'digit--inactive': this.state.tan.length < i
+              className={classNames('verification-input__character', {
+                'verification-input__character--selected': this.state.selectedIndex === i && this.state.isActive,
+                'verification-input__character--inactive': this.state.tan.length < i,
               })}
               onClick={this.handleClick.bind(this)}
               id={`field-${i}`}
@@ -189,16 +199,3 @@ class VerificationInput extends PureComponent {
     );
   }
 }
-
-VerificationInput.propTypes = {
-  length: PropTypes.number.isRequired,
-  validChars: PropTypes.string,
-  placeholder: PropTypes.string
-};
-
-VerificationInput.defaultProps = {
-  validChars: 'A-Za-z0-9',
-  placeholder: '·'
-};
-
-export default VerificationInput;

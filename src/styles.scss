@@ -1,9 +1,9 @@
-.input__container {
+.verification-input__container {
   position: relative;
   max-width: 500px;
 }
 
-.input {
+.verification-input {
   height: 100%;
   position: absolute;
   left: -2000px;
@@ -11,13 +11,13 @@
   transform: scale(0);
 }
 
-.digits {
+.verification-input__characters {
   display: flex;
   height: 50px;
   z-index: -1;
 }
 
-.digit {
+.verification-input__character {
   font-size: 36px;
   line-height: 50px;
   text-align: center;
@@ -41,12 +41,12 @@
   }
 }
 
-.digit--inactive {
+.verification-input__character--inactive {
   color: dimgray;
   background-color: lightgray;
 }
 
-.digit--selected {
+.verification-input__character--selected {
   border-color: cornflowerblue;
   color: cornflowerblue;
 }
