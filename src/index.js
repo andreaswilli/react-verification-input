@@ -79,6 +79,9 @@ export default class VerificationInput extends PureComponent {
       previousTan,
       isValidTan: RegExp(`^[${this.props.validChars}]{${this.props.length}}$`).test(tan),
     });
+    if (this.props.input && this.props.input.onChange) {
+      this.props.input.onChange(tan);
+    }
   }
 
   handleKeyUp(event) {
@@ -191,6 +194,8 @@ export default class VerificationInput extends PureComponent {
       inputField,
       characters,
       character,
+      input,
+      meta,
     } = this.props;
 
     const {
@@ -222,8 +227,18 @@ export default class VerificationInput extends PureComponent {
           ref={(input) => this.input = input}
           className={classNames('verification-input', inputClassName)}
           onKeyUp={this.handleKeyUp.bind(this)}
-          onFocus={() => this.setState({ isActive: true })}
-          onBlur={() => this.setState({ isActive: false })}
+          onFocus={() => {
+            this.setState({ isActive: true });
+            if (input && input.onFocus) {
+              input.onFocus();
+            }
+          }}
+          onBlur={() => {
+            this.setState({ isActive: false });
+            if (input && input.onBlur) {
+              input.onBlur();
+            }
+          }}
           onPaste={this.handlePaste.bind(this)}
           {...inputProps}
         />
@@ -246,6 +261,9 @@ export default class VerificationInput extends PureComponent {
             >{this.state.tan[i] || placeholder}</div>
           ))}
         </div>
+        {meta && meta.touched && meta.error && (
+          <div className="verification-input__error">{meta.error}</div>
+        )}
       </div>
     );
   }

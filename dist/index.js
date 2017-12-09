@@ -136,6 +136,9 @@ class VerificationInput extends __WEBPACK_IMPORTED_MODULE_0_react__["PureCompone
       previousTan,
       isValidTan: RegExp(`^[${this.props.validChars}]{${this.props.length}}$`).test(tan)
     });
+    if (this.props.input && this.props.input.onChange) {
+      this.props.input.onChange(tan);
+    }
   }
 
   handleKeyUp(event) {
@@ -245,7 +248,9 @@ class VerificationInput extends __WEBPACK_IMPORTED_MODULE_0_react__["PureCompone
       container,
       inputField,
       characters,
-      character
+      character,
+      input,
+      meta
     } = this.props;
 
     const {
@@ -277,8 +282,18 @@ class VerificationInput extends __WEBPACK_IMPORTED_MODULE_0_react__["PureCompone
         ref: input => this.input = input,
         className: __WEBPACK_IMPORTED_MODULE_1_classnames___default()('verification-input', inputClassName),
         onKeyUp: this.handleKeyUp.bind(this),
-        onFocus: () => this.setState({ isActive: true }),
-        onBlur: () => this.setState({ isActive: false }),
+        onFocus: () => {
+          this.setState({ isActive: true });
+          if (input && input.onFocus) {
+            input.onFocus();
+          }
+        },
+        onBlur: () => {
+          this.setState({ isActive: false });
+          if (input && input.onBlur) {
+            input.onBlur();
+          }
+        },
         onPaste: this.handlePaste.bind(this)
       }, inputProps)),
       __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
@@ -301,6 +316,11 @@ class VerificationInput extends __WEBPACK_IMPORTED_MODULE_0_react__["PureCompone
           }, characterProps),
           this.state.tan[i] || placeholder
         ))
+      ),
+      meta && meta.touched && meta.error && __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+        'div',
+        { className: 'verification-input__error' },
+        meta.error
       )
     );
   }
@@ -893,7 +913,7 @@ exports = module.exports = __webpack_require__(7)(undefined);
 
 
 // module
-exports.push([module.i, ".verification-input__container {\n  position: relative;\n  max-width: 500px; }\n\n.verification-input {\n  height: 100%;\n  position: absolute;\n  left: -2000px;\n  opacity: 0;\n  transform: scale(0); }\n\n.verification-input__characters {\n  display: flex;\n  height: 50px;\n  z-index: -1; }\n\n.verification-input__character {\n  font-size: 36px;\n  line-height: 50px;\n  text-align: center;\n  background-color: white;\n  height: 100%;\n  flex-grow: 1;\n  flex-basis: 0;\n  padding: 0;\n  margin-left: 8px;\n  border: 1px solid black;\n  cursor: default;\n  user-select: none;\n  box-sizing: border-box; }\n  .verification-input__character:first-child {\n    margin-left: 0; }\n  @media (min-width: 768px) {\n    .verification-input__character {\n      margin-left: 16px; } }\n\n.verification-input__character--inactive {\n  color: dimgray;\n  background-color: lightgray; }\n\n.verification-input__character--selected {\n  border-color: cornflowerblue;\n  color: cornflowerblue; }\n", ""]);
+exports.push([module.i, ".verification-input__container {\n  position: relative;\n  max-width: 500px; }\n\n.verification-input {\n  height: 100%;\n  position: absolute;\n  left: -2000px;\n  opacity: 0;\n  transform: scale(0); }\n\n.verification-input__characters {\n  display: flex;\n  height: 50px;\n  z-index: -1; }\n\n.verification-input__character {\n  font-size: 36px;\n  line-height: 50px;\n  text-align: center;\n  background-color: white;\n  height: 100%;\n  flex-grow: 1;\n  flex-basis: 0;\n  padding: 0;\n  margin-left: 8px;\n  border: 1px solid black;\n  cursor: default;\n  user-select: none;\n  box-sizing: border-box; }\n  .verification-input__character:first-child {\n    margin-left: 0; }\n  @media (min-width: 768px) {\n    .verification-input__character {\n      margin-left: 16px; } }\n\n.verification-input__character--inactive {\n  color: dimgray;\n  background-color: lightgray; }\n\n.verification-input__character--selected {\n  border-color: cornflowerblue;\n  color: cornflowerblue; }\n\n.verification-input__error {\n  color: red;\n  margin-top: 8px; }\n", ""]);
 
 // exports
 

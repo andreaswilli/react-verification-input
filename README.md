@@ -1,6 +1,6 @@
 # react-verification-input
 
-`react-verification-input` is a customizable, masked input, which can be used to enter all sorts of codes e.g. security codes when two-factor authenticating.
+`react-verification-input` is a customizable, masked input, which can be used to enter all sorts of codes e.g. security codes when two-factor authenticating. It is compatible with [Redux Form](https://github.com/erikras/redux-form) 🎉
 
 ## Installation
 
@@ -60,10 +60,10 @@ This project is still work in progress.
 
 Things, that need to be done:
 
-- Fix order of style sheets
+- [ ] Fix order of style sheets
   - When specifiying custom style classes, the custom styles are getting overwritten by the default styles because of the wrong order
-- Configure production build
+- [ ] Configure production build
   - Minify etc.
-- Make compatible with Redux Form
-- Add ability to use `' '` (blank) as placeholder
+- [x] Make compatible with Redux Form
+- [ ] Add ability to use `' '` (blank) as placeholder
   - Update doc when done
