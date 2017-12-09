@@ -9,7 +9,7 @@ import './styles.scss';
 export default class VerificationInput extends PureComponent {
 
   static propTypes = {
-    length: PropTypes.number.isRequired,
+    length: PropTypes.number,
     validChars: PropTypes.string,
     placeholder: PropTypes.string,
     container: PropTypes.shape({
@@ -27,6 +27,7 @@ export default class VerificationInput extends PureComponent {
   };
 
   static defaultProps = {
+    length: 6,
     validChars: 'A-Za-z0-9',
     placeholder: '·',
     container: {},

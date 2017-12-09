@@ -309,7 +309,7 @@ class VerificationInput extends __WEBPACK_IMPORTED_MODULE_0_react__["PureCompone
 /* harmony export (immutable) */ __webpack_exports__["default"] = VerificationInput;
 
 VerificationInput.propTypes = {
-  length: __WEBPACK_IMPORTED_MODULE_2_proptypes___default.a.number.isRequired,
+  length: __WEBPACK_IMPORTED_MODULE_2_proptypes___default.a.number,
   validChars: __WEBPACK_IMPORTED_MODULE_2_proptypes___default.a.string,
   placeholder: __WEBPACK_IMPORTED_MODULE_2_proptypes___default.a.string,
   container: __WEBPACK_IMPORTED_MODULE_2_proptypes___default.a.shape({
@@ -326,6 +326,7 @@ VerificationInput.propTypes = {
   })
 };
 VerificationInput.defaultProps = {
+  length: 6,
   validChars: 'A-Za-z0-9',
   placeholder: '·',
   container: {},
