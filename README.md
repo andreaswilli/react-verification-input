@@ -1,5 +1,8 @@
 # react-verification-input
 
+[![NPM version](https://badge.fury.io/js/react-verification-input.svg)](http://badge.fury.io/js/react-verification-input)
+[![HitCount](http://hits.dwyl.io/andreaswilli/react-verification-input.svg)](http://hits.dwyl.io/andreaswilli/react-verification-input)
+
 `react-verification-input` is a customizable, masked input, which can be used to enter all sorts of codes e.g. security codes when two-factor authenticating. It is compatible with [Redux Form](https://github.com/erikras/redux-form) 🎉
 
 ## Installation
@@ -67,3 +70,4 @@ Things, that need to be done:
 - [x] Make compatible with Redux Form
 - [ ] Add ability to use `' '` (blank) as placeholder
   - Update doc when done
+- [ ] Make everything stylable
