@@ -58,18 +58,3 @@ character | Object | `null` | Define the props of the character `div`s. See `con
 ## Custom styling
 
 TODO
-
-## Work in progress
-
-This project is still work in progress.
-
-Things, that need to be done:
-
-- [ ] Fix order of style sheets
-  - When specifiying custom style classes, the custom styles are getting overwritten by the default styles because of the wrong order
-- [ ] Configure production build
-  - Minify etc.
-- [x] Make compatible with Redux Form
-- [ ] Add ability to use `' '` (blank) as placeholder
-  - Update doc when done
-- [ ] Make everything stylable
