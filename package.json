@@ -9,7 +9,7 @@
   "scripts": {
     "build": "webpack",
     "build:prod": "webpack -p",
-    "serve": "webpack -d --watch",
+    "serve": "webpack --watch",
     "major": "npm version major && npm publish",
     "minor": "npm version minor && npm publish",
     "patch": "npm version patch && npm publish"

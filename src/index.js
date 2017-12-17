@@ -48,6 +48,10 @@ export default class VerificationInput extends PureComponent {
     };
   }
 
+  getPlaceholder() {
+    return this.props.placeholder.trim() === '' ? '\xa0' : this.props.placeholder; // \xa0 = non-breaking space
+  }
+
   setSelection(index) {
     if (index > this.props.length - 1) {
       index = this.props.length - 1;
@@ -66,7 +70,8 @@ export default class VerificationInput extends PureComponent {
 
   handleChange(tan, selectedIndex) {
     const previousTan = this.state.tan;
-    if (!RegExp(`^[${this.props.validChars}${this.props.placeholder}]{0,${this.props.length}}$`).test(tan) && (tan.indexOf(' ') === -1 || !RegExp(`^$[${this.props.validChars}]{${this.props.length}}$`).test(tan.replace(/\s/g, '')))) {
+    if (!RegExp(`^[${this.props.validChars}${this.getPlaceholder()}]{0,${this.props.length}}$`).test(tan)
+      && (tan.indexOf(' ') === -1 || !RegExp(`^$[${this.props.validChars}]{${this.props.length}}$`).test(tan.replace(/ /g, '')))) {
       this.input.value = previousTan;
       this.moveSelectionBy(0); // set to where it was before
       return;
@@ -121,12 +126,12 @@ export default class VerificationInput extends PureComponent {
       // if selection is not last character
       if (selectedIndex < this.state.tan.length - 1) {
         // if selection is empty
-        if (this.state.tan[selectedIndex] === this.props.placeholder) {
+        if (this.state.tan[selectedIndex] === this.getPlaceholder()) {
           // move selection to the left
           selectedIndex = selectedIndex > 0 ? selectedIndex - 1 : selectedIndex;
         }
         // delete character (replace with placeholder)
-        tan = `${this.state.tan.substring(0, selectedIndex)}${this.props.placeholder}${this.state.tan.substring(selectedIndex + 1)}`;
+        tan = `${this.state.tan.substring(0, selectedIndex)}${this.getPlaceholder()}${this.state.tan.substring(selectedIndex + 1)}`;
         this.handleChange(tan, selectedIndex);
         return;
       }
@@ -151,13 +156,13 @@ export default class VerificationInput extends PureComponent {
       }
       // selection is to the left of last character
       // if selection is empty
-      if (this.state.tan[selectedIndex] === this.props.placeholder) {
+      if (this.state.tan[selectedIndex] === this.getPlaceholder()) {
         // move selection to the right
         selectedIndex = selectedIndex < this.props.length ? selectedIndex + 1 : selectedIndex;
       }
       // delete character (replace with placeholder if not last character)
       tan = `${this.state.tan.substring(0, selectedIndex)}${
-        this.state.tan.substring(selectedIndex + 1) ? `${this.props.placeholder}${this.state.tan.substring(selectedIndex + 1)}` : ''
+        this.state.tan.substring(selectedIndex + 1) ? `${this.getPlaceholder()}${this.state.tan.substring(selectedIndex + 1)}` : ''
         }`;
       this.handleChange(tan, selectedIndex);
       return;
@@ -189,7 +194,6 @@ export default class VerificationInput extends PureComponent {
   render() {
     const {
       length,
-      placeholder,
       container,
       inputField,
       characters,
@@ -258,7 +262,7 @@ export default class VerificationInput extends PureComponent {
               key={i}
               onPaste={this.handlePaste.bind(this)}
               {...characterProps}
-            >{this.state.tan[i] || placeholder}</div>
+            >{this.state.tan[i] || this.getPlaceholder()}</div>
           ))}
         </div>
         {meta && meta.touched && meta.error && (
