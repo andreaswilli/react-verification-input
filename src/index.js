@@ -219,6 +219,8 @@ export default class VerificationInput extends PureComponent {
 
     const {
       className: characterClassName,
+      classNameInactive: characterClassNameInactive,
+      classNameSelected: characterClassNameSelected,
       ...characterProps,
     } = character;
 
@@ -255,7 +257,9 @@ export default class VerificationInput extends PureComponent {
             <div
               className={classNames('verification-input__character', characterClassName, {
                 'verification-input__character--selected': this.state.selectedIndex === i && this.state.isActive,
+                [characterClassNameSelected]: this.state.selectedIndex === i && this.state.isActive,
                 'verification-input__character--inactive': this.state.tan.length < i,
+                [characterClassNameInactive]: this.state.tan.length < i,
               })}
               onClick={this.handleClick.bind(this)}
               id={`field-${i}`}
