@@ -3,7 +3,7 @@
 [![NPM version](https://badge.fury.io/js/react-verification-input.svg)](http://badge.fury.io/js/react-verification-input)
 [![HitCount](http://hits.dwyl.io/andreaswilli/react-verification-input.svg)](http://hits.dwyl.io/andreaswilli/react-verification-input)
 
-`react-verification-input` is a customizable, masked input, which can be used to enter all sorts of codes e.g. security codes when two-factor authenticating. It is compatible with [Redux Form](https://github.com/erikras/redux-form) 🎉
+`react-verification-input` is a customizable, masked input, which can be used to enter all sorts of codes e.g. security codes when two-factor authenticating. Also I'm sure you can think of many more creative use cases. This component is fully compatible with [Redux Form](https://github.com/erikras/redux-form) 🎉
 
 ![react-verification-input](https://user-images.githubusercontent.com/17298270/33804469-04e0bd2c-dda6-11e7-8f97-eb2879270a71.gif)
 
@@ -79,7 +79,7 @@ Style the input by passing it your custom class names like so:
 />
 ```
 
-There is also the `input` prop, which will attach styles to the actual input element, but you probably don't want to use this as it's outside the viewport and thus not visible.
+There is also the `inputField` prop, which will attach styles to the actual input element, but you probably don't want to use this as it's outside the viewport and thus not visible.
 
 Have a look at these two examples:
 
@@ -144,3 +144,8 @@ Have a look at these two examples:
 ```
 
 ![react-verification-input_style1](https://user-images.githubusercontent.com/17298270/34184356-8e346e7c-e51f-11e7-86c7-9f90ed341c13.gif)
+
+## Contributing
+
+If you want to contribute, feel free to do so. I'd very much appreciate that.❤️
+Just keep it consistent and I'm very happy to review your PR.
