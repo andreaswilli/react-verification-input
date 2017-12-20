@@ -12,6 +12,7 @@ export default class VerificationInput extends PureComponent {
     length: PropTypes.number,
     validChars: PropTypes.string,
     placeholder: PropTypes.string,
+    autoFocus: PropTypes.bool,
     container: PropTypes.shape({
       className: PropTypes.string,
     }),
@@ -30,6 +31,7 @@ export default class VerificationInput extends PureComponent {
     length: 6,
     validChars: 'A-Za-z0-9',
     placeholder: '·',
+    autoFocus: false,
     container: {},
     inputField: {},
     characters: {},
@@ -46,6 +48,10 @@ export default class VerificationInput extends PureComponent {
       isActive: false,
       isValidTan: false,
     };
+
+    if (this.props.autoFocus) {
+      setTimeout(() => this.input.focus(), 0);
+    }
   }
 
   getPlaceholder() {

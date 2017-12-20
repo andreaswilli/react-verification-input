@@ -50,6 +50,7 @@ Option | Type | Default | Description
 length | Number | `6` | Define, how many characters the input should allow.
 validChars | String | `'A-Za-z0-9'` | Define, which characters should be allowed. The string is inserted into a regexp character set ( `/[]/` ) for input validating.
 placeholder | String | `'·'` (U+00B7) | Define, which character should be displayed as placeholder in empty fields. In order to use the blank character as placeholder specify this option as `' '` or `''`.
+autoFocus | Boolean | `false` | This will make the input focus automatically as soon as it rendered.
 container | Object | `null` | Define the props of the container `div`. All props except for `className` are passed directly to the `div` element. Use `{ className: 'your-class' }` to style the input. These options are available on every element. For more details on how to apply your custom styling see [here](#custom-styling).
 inputField | Object | `null` | Define the props of the `input` element. See `container` for more details.
 characters | Object | `null` | Define the props of the characters `div`. See `container` for more details.
