@@ -1,3 +1,5 @@
+$input-height: 50px;
+
 .verification-input__container {
   position: relative;
   max-width: 500px;
@@ -11,21 +13,29 @@
   transform: scale(0);
 }
 
+.verification-input--debug {
+  left: 0;
+  bottom: -70px;
+  opacity: 1;
+  transform: scale(1);
+}
+
 .verification-input__characters {
   display: flex;
-  height: 50px;
-  z-index: -1;
+  height: $input-height;
 }
 
 .verification-input__character {
   font-size: 36px;
-  line-height: 50px;
+  line-height: $input-height;
   text-align: center;
   background-color: white;
   height: 100%;
   flex-grow: 1;
   flex-basis: 0;
-  padding: 0;
+}
+
+.verification-input__character--default {
   margin-left: 8px;
   border: 1px solid black;
   cursor: default;

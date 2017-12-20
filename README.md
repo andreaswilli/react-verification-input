@@ -53,6 +53,8 @@ length | Number | `6` | Define, how many characters the input should allow.
 validChars | String | `'A-Za-z0-9'` | Define, which characters should be allowed. The string is inserted into a regexp character set ( `/[]/` ) for input validating.
 placeholder | String | `'·'` (U+00B7) | Define, which character should be displayed as placeholder in empty fields. In order to use the blank character as placeholder specify this option as `' '` or `''`.
 autoFocus | Boolean | `false` | This will make the input focus automatically as soon as it rendered.
+removeDefaultStyles | Boolean | `false` | The default styling might get annoying when applying you own styles. Use this option to completely remove all styles, that are not required in order for the component to work properly.
+debug | Boolean | `false` | This will reveal, what's going on behind the scenes, which might come in handy when trying to better understand the component. Obviously you don't want to use this in production. 😄
 container | Object | `null` | Define the props of the container `div`. All props except for `className` are passed directly to the `div` element. Use `{ className: 'your-class' }` to style the input. These options are available on every element. For more details on how to apply your custom styling see [here](#custom-styling).
 inputField | Object | `null` | Define the props of the `input` element. See `container` for more details.
 characters | Object | `null` | Define the props of the characters `div`. See `container` for more details.

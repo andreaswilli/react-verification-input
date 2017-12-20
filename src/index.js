@@ -13,6 +13,8 @@ export default class VerificationInput extends PureComponent {
     validChars: PropTypes.string,
     placeholder: PropTypes.string,
     autoFocus: PropTypes.bool,
+    removeDefaultStyles: PropTypes.bool,
+    debug: PropTypes.bool,
     container: PropTypes.shape({
       className: PropTypes.string,
     }),
@@ -32,6 +34,8 @@ export default class VerificationInput extends PureComponent {
     validChars: 'A-Za-z0-9',
     placeholder: '·',
     autoFocus: false,
+    removeDefaultStyles: false,
+    debug: false,
     container: {},
     inputField: {},
     characters: {},
@@ -200,6 +204,8 @@ export default class VerificationInput extends PureComponent {
   render() {
     const {
       length,
+      removeDefaultStyles,
+      debug,
       container,
       inputField,
       characters,
@@ -237,7 +243,9 @@ export default class VerificationInput extends PureComponent {
       >
         <input
           ref={(input) => this.input = input}
-          className={classNames('verification-input', inputClassName)}
+          className={classNames('verification-input', inputClassName, {
+            'verification-input--debug': debug,
+          })}
           onKeyUp={this.handleKeyUp.bind(this)}
           onFocus={() => {
             this.setState({ isActive: true });
@@ -262,9 +270,10 @@ export default class VerificationInput extends PureComponent {
           {[...Array(length)].map((_, i) => (
             <div
               className={classNames('verification-input__character', characterClassName, {
-                'verification-input__character--selected': this.state.selectedIndex === i && this.state.isActive,
+                'verification-input__character--default': !removeDefaultStyles,
+                'verification-input__character--selected': !removeDefaultStyles && this.state.selectedIndex === i && this.state.isActive,
                 [characterClassNameSelected]: this.state.selectedIndex === i && this.state.isActive,
-                'verification-input__character--inactive': this.state.tan.length < i,
+                'verification-input__character--inactive': !removeDefaultStyles && this.state.tan.length < i,
                 [characterClassNameInactive]: this.state.tan.length < i,
               })}
               onClick={this.handleClick.bind(this)}
