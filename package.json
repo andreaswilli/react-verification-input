@@ -3,7 +3,7 @@
   "version": "0.1.2",
   "main": "dist/index.js",
   "repository": "https://github.com/andreaswilli/react-verification-input.git",
-  "description": "WORK IN PROGRESS",
+  "description": "Customizable, masked input, which can be used for all sorts of codes.",
   "author": "Andreas Willi",
   "license": "MIT",
   "scripts": {
