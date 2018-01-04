@@ -5,7 +5,7 @@
 
 `react-verification-input` is a customizable, masked input, which can be used to enter all sorts of codes e.g. security codes when two-factor authenticating. Also I'm sure you can think of many more creative use cases. This component is fully compatible with [Redux Form](https://github.com/erikras/redux-form) 🎉
 
-![react-verification-input](https://user-images.githubusercontent.com/17298270/33804469-04e0bd2c-dda6-11e7-8f97-eb2879270a71.gif)
+![react-verification-input](https://user-images.githubusercontent.com/17298270/34587443-ab845a2e-f1a8-11e7-8227-390bc278041c.gif)
 
 ## Installation
 
@@ -108,7 +108,7 @@ Have a look at these two examples:
 }
 ```
 
-![react-verification-input_style2](https://user-images.githubusercontent.com/17298270/34184361-9254ea72-e51f-11e7-96a8-30ebfc1398da.gif)
+![react-verification-input_style2](https://user-images.githubusercontent.com/17298270/34587466-c17fdf6a-f1a8-11e7-8b6d-51d28a8dcf4f.gif)
 
 
 ### Example 2
@@ -143,7 +143,7 @@ Have a look at these two examples:
 }
 ```
 
-![react-verification-input_style1](https://user-images.githubusercontent.com/17298270/34184356-8e346e7c-e51f-11e7-86c7-9f90ed341c13.gif)
+![react-verification-input_style1](https://user-images.githubusercontent.com/17298270/34587481-cab83e7e-f1a8-11e7-95fd-ab5ec10967fc.gif)
 
 ## Contributing
 
