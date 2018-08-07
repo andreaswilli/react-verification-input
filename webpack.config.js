@@ -9,10 +9,31 @@ module.exports = {
     libraryTarget: 'commonjs2'
   },
   module: {
-    loaders: [
-      { test: /\.jsx?$/, loader: 'babel-loader', exclude: /node_modules/ },
-      { test: /\.css$/, loader: 'style-loader!css-loader' },
-      { test: /\.scss$/, loader: 'style-loader!css-loader!sass-loader' }
+    rules: [
+      {
+        test: /\.jsx?$/,
+        loader: 'babel-loader',
+        exclude: /node_modules/
+      },
+      {
+        test: /\.css$/,
+        loader: 'postcss-loader!css-loader'
+      },
+      {
+        test: /\.scss$/,
+        use: [{
+            loader: 'postcss-loader',
+            options: {
+              sourceMap: 'inline'
+            }
+          }, {
+            loader: 'sass-loader',
+            options: {
+              sourceMap: true
+            }
+          }
+        ]
+      }
     ]
   },
   plugins: [
