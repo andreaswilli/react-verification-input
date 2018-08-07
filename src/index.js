@@ -4,7 +4,7 @@ import PropTypes from 'proptypes';
 
 import { KEY_CODE } from './constants';
 
-import './styles.scss';
+import style from './styles.scss';
 
 export default class VerificationInput extends PureComponent {
 
@@ -287,6 +287,7 @@ export default class VerificationInput extends PureComponent {
         {meta && meta.touched && meta.error && (
           <div className="verification-input__error">{meta.error}</div>
         )}
+        <style dangerouslySetInnerHTML={{ __html: style }} />
       </div>
     );
   }
