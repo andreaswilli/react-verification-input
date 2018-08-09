@@ -238,7 +238,9 @@ export default class VerificationInput extends PureComponent {
 
     return (
       <div
-        className={classNames('verification-input__container', containerClassName)}
+        className={classNames('verification-input__container', containerClassName, {
+          'verification-input__container--default': !removeDefaultStyles,
+        })}
         {...containerProps}
       >
         <input
@@ -263,7 +265,9 @@ export default class VerificationInput extends PureComponent {
           {...inputProps}
         />
         <div
-          className={classNames('verification-input__characters', charactersClassName)}
+          className={classNames('verification-input__characters', charactersClassName, {
+            'verification-input__characters--default': !removeDefaultStyles,
+          })}
           onClick={() => this.input.focus()}
           {...charactersProps}
         >
@@ -271,9 +275,9 @@ export default class VerificationInput extends PureComponent {
             <div
               className={classNames('verification-input__character', characterClassName, {
                 'verification-input__character--default': !removeDefaultStyles,
-                'verification-input__character--selected': !removeDefaultStyles && this.state.selectedIndex === i && this.state.isActive,
+                'verification-input__character--selected--default': !removeDefaultStyles && this.state.selectedIndex === i && this.state.isActive,
                 [characterClassNameSelected]: this.state.selectedIndex === i && this.state.isActive,
-                'verification-input__character--inactive': !removeDefaultStyles && this.state.tan.length < i,
+                'verification-input__character--inactive--default': !removeDefaultStyles && this.state.tan.length < i,
                 [characterClassNameInactive]: this.state.tan.length < i,
               })}
               onClick={this.handleClick.bind(this)}
