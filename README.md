@@ -63,6 +63,8 @@ character | Object | `{}` | Define the props of the character `div`s. See `conta
 
 ## Custom styling
 
+> **Note:** It's recommended to use the `removeDefaultStyles` option when applying custom styles, as you may not be able to override the default styles otherwise.
+
 Style the input by passing it your custom class names like so:
 ```js
 <VerificationInput
@@ -139,7 +141,7 @@ Have a look at these two examples:
   color: black;
   margin-left: 8px;
   box-shadow: inset 0 0 2px black;
-  
+
   &:nth-child(4) {
     margin-left: 24px;
   }
