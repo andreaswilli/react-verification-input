@@ -1,6 +1,6 @@
 {
   "name": "react-verification-input",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "main": "dist/index.js",
   "repository": "https://github.com/andreaswilli/react-verification-input.git",
   "description": "Customizable, masked input, which can be used for all sorts of codes.",
