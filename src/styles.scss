@@ -2,6 +2,9 @@ $input-height: 50px;
 
 .verification-input__container {
   position: relative;
+}
+
+.verification-input__container--default {
   max-width: 500px;
 }
 
@@ -22,20 +25,23 @@ $input-height: 50px;
 
 .verification-input__characters {
   display: flex;
+}
+
+.verification-input__characters--default {
   height: $input-height;
 }
 
 .verification-input__character {
-  font-size: 36px;
-  line-height: $input-height;
-  text-align: center;
-  background-color: white;
   height: 100%;
   flex-grow: 1;
   flex-basis: 0;
 }
 
 .verification-input__character--default {
+  font-size: 36px;
+  line-height: $input-height;
+  text-align: center;
+  background-color: white;
   margin-left: 8px;
   border: 1px solid black;
   cursor: default;
@@ -51,12 +57,12 @@ $input-height: 50px;
   }
 }
 
-.verification-input__character--inactive {
+.verification-input__character--inactive--default {
   color: dimgray;
   background-color: lightgray;
 }
 
-.verification-input__character--selected {
+.verification-input__character--selected--default {
   border-color: cornflowerblue;
   color: cornflowerblue;
 }

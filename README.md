@@ -54,7 +54,7 @@ length | Number | `6` | Define, how many characters the input should allow.
 validChars | String | `'A-Za-z0-9'` | Define, which characters should be allowed. The string is inserted into a regexp character set ( `/[]/` ) for input validating.
 placeholder | String | `'·'` (U+00B7) | Define, which character should be displayed as placeholder in empty fields. In order to use the blank character as placeholder specify this option as `' '` or `''`.
 autoFocus | Boolean | `false` | This will make the input focus automatically as soon as it rendered.
-removeDefaultStyles | Boolean | `false` | The default styling might get annoying when applying you own styles. Use this option to completely remove all styles, that are not required in order for the component to work properly.
+removeDefaultStyles | Boolean | `false` | Use this option to completely remove all styles, that are not required in order for the component to work properly. This is useful, if you want to override the default styles.
 debug | Boolean | `false` | This will reveal, what's going on behind the scenes, which might come in handy when trying to better understand the component. Obviously you don't want to use this in production. 😄
 container | Object | `{}` | Define the props of the container `div`. All props except for `className` are passed directly to the `div` element. Use `{ className: 'your-class' }` to style the input. These options are available on every element. For more details on how to apply your custom styling see [here](#custom-styling).
 inputField | Object | `{}` | Define the props of the `input` element. See `container` for more details.
@@ -63,9 +63,12 @@ character | Object | `{}` | Define the props of the character `div`s. See `conta
 
 ## Custom styling
 
+> **Note:** It's recommended to use the `removeDefaultStyles` option when applying custom styles, as you may not be able to override the default styles otherwise.
+
 Style the input by passing it your custom class names like so:
 ```js
 <VerificationInput
+  removeDefaultStyles
   container={{
     className: 'container',
   }}
@@ -91,7 +94,13 @@ Have a look at these two examples:
   max-width: 350px;
 }
 
+.characters {
+  height: 50px;
+}
+
 .character {
+  line-height: 50px;
+  font-size: 36px;
   background-color: rgba(255, 255, 255, 0.2);
   border: 1px solid transparent;
   border-radius: 8px;
@@ -119,14 +128,20 @@ Have a look at these two examples:
   max-width: 350px;
 }
 
+.characters {
+  height: 50px;
+}
+
 .character {
+  line-height: 50px;
+  font-size: 36px;
   background-color: rgba(255, 255, 255, 0.8);
   border: none;
   border-radius: 8px;
   color: black;
   margin-left: 8px;
   box-shadow: inset 0 0 2px black;
-  
+
   &:nth-child(4) {
     margin-left: 24px;
   }
