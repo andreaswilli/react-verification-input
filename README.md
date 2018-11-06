@@ -60,6 +60,7 @@ container | Object | `{}` | Define the props of the container `div`. All props e
 inputField | Object | `{}` | Define the props of the `input` element. See `container` for more details.
 characters | Object | `{}` | Define the props of the characters `div`. See `container` for more details.
 character | Object | `{}` | Define the props of the character `div`s. See `container` for more details.
+getInputRef | Function | `() => {}` | Define a function that will receive input element `ref`.
 
 ## Custom styling
 

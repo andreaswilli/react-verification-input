@@ -41,6 +41,7 @@ export default class VerificationInput extends PureComponent {
     inputField: {},
     characters: {},
     character: {},
+    getInputRef: () => {},
   };
 
   constructor(props) {
@@ -81,10 +82,7 @@ export default class VerificationInput extends PureComponent {
 
   saveInputRef = ref => {
     this.input = ref
-    
-    if (this.props.getInputRef) {
-      this.props.getInputRef(ref)
-    }
+    this.props.getInputRef(ref)
   }
 
   handleChange(tan, selectedIndex) {
