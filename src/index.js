@@ -15,6 +15,7 @@ export default class VerificationInput extends PureComponent {
     autoFocus: PropTypes.bool,
     removeDefaultStyles: PropTypes.bool,
     debug: PropTypes.bool,
+    getInputRef: PropTypes.func,
     container: PropTypes.shape({
       className: PropTypes.string,
     }),
@@ -40,6 +41,7 @@ export default class VerificationInput extends PureComponent {
     inputField: {},
     characters: {},
     character: {},
+    getInputRef: () => {},
   };
 
   constructor(props) {
@@ -76,6 +78,11 @@ export default class VerificationInput extends PureComponent {
   // negative offset = move to the left
   moveSelectionBy(offset) {
     this.setSelection(this.state.selectedIndex + offset);
+  }
+
+  saveInputRef = ref => {
+    this.input = ref
+    this.props.getInputRef(ref)
   }
 
   handleChange(tan, selectedIndex) {
@@ -244,7 +251,7 @@ export default class VerificationInput extends PureComponent {
         {...containerProps}
       >
         <input
-          ref={(input) => this.input = input}
+          ref={this.saveInputRef}
           className={classNames('verification-input', inputClassName, {
             'verification-input--debug': debug,
           })}
