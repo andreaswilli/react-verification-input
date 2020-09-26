@@ -223,24 +223,24 @@ export default class VerificationInput extends PureComponent {
 
     const {
       className: containerClassName,
-      ...containerProps,
+      ...containerProps
     } = container;
 
     const {
       className: inputClassName,
-      ...inputProps,
+      ...inputProps
     } = inputField;
 
     const {
       className: charactersClassName,
-      ...charactersProps,
+      ...charactersProps
     } = characters;
 
     const {
       className: characterClassName,
       classNameInactive: characterClassNameInactive,
       classNameSelected: characterClassNameSelected,
-      ...characterProps,
+      ...characterProps
     } = character;
 
     return (
