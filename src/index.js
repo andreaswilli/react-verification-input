@@ -88,7 +88,7 @@ export default class VerificationInput extends PureComponent {
   handleChange(tan, selectedIndex) {
     const previousTan = this.state.tan;
     if (!RegExp(`^[${this.props.validChars}${this.getPlaceholder()}]{0,${this.props.length}}$`).test(tan)
-      && (tan.indexOf(' ') === -1 || !RegExp(`^$[${this.props.validChars}]{${this.props.length}}$`).test(tan.replace(/ /g, '')))) {
+      && (tan.indexOf(' ') === -1 || !RegExp(`^[${this.props.validChars}]{${this.props.length}}$`).test(tan.replace(/ /g, '')))) {
       this.input.value = previousTan;
       this.moveSelectionBy(0); // set to where it was before
       return;
@@ -128,13 +128,9 @@ export default class VerificationInput extends PureComponent {
     let tan = this.input.value;
     // if value not changed (and no arrow key pressed)
     if (tan === this.state.tan) {
-      // if selection did not change
-      if (selectedIndex === this.state.selectedIndex && selectedIndex + 1 === this.input.selectionEnd) {
-        // ignore event
-        return;
+      if (event.key === 'Tab') {
+        this.setSelection(tan.length);
       }
-
-      this.setSelection(selectedIndex);
       return;
     }
 
@@ -145,7 +141,7 @@ export default class VerificationInput extends PureComponent {
         // if selection is empty
         if (this.state.tan[selectedIndex] === this.getPlaceholder()) {
           // move selection to the left
-          selectedIndex = selectedIndex > 0 ? selectedIndex - 1 : selectedIndex;
+          selectedIndex = Math.max(selectedIndex - 1, 0);
         }
         // delete character (replace with placeholder)
         tan = `${this.state.tan.substring(0, selectedIndex)}${this.getPlaceholder()}${this.state.tan.substring(selectedIndex + 1)}`;
@@ -160,11 +156,6 @@ export default class VerificationInput extends PureComponent {
 
     if (keyCode === KEY_CODE.DELETE) {
       selectedIndex = this.state.selectedIndex;
-      // if selection is to the right of last character
-      if (selectedIndex > this.state.tan.length - 1) {
-        // nothing to delete on the right side of the selection -> ignore event
-        return;
-      }
       // if selection is on last character
       if (selectedIndex === this.state.tan.length - 1) {
         // delete last character and leave selection where it is
@@ -201,11 +192,16 @@ export default class VerificationInput extends PureComponent {
     this.input.setSelectionRange(index, index + 1);
   }
 
-  handlePaste() {
-    // only clear input here b/c I wasn't able to receive the pasted content from the event in IE 11 (probably older versions as well)
-    // the pasted content is taken directly from input.value and state is updated onKeyUp (paste via context menu not supported)
-    this.input.focus();
-    this.input.value = '';
+  handlePaste(event) {
+    const pastedData = event.clipboardData || window.clipboardData;
+    const pastedText = pastedData?.getData('Text')
+    
+    // this will only work for environments that properly support
+    // the clipboard api
+    if (pastedText != null) {
+      event.preventDefault();
+      this.handleChange(pastedText, pastedText.length);
+    }
   }
 
   render() {
@@ -255,6 +251,7 @@ export default class VerificationInput extends PureComponent {
           className={classNames('verification-input', inputClassName, {
             'verification-input--debug': debug,
           })}
+          value={this.props.tan}
           onKeyUp={this.handleKeyUp.bind(this)}
           onFocus={() => {
             this.setState({ isActive: true });
@@ -272,6 +269,7 @@ export default class VerificationInput extends PureComponent {
           {...inputProps}
         />
         <div
+          data-testid="characters"
           className={classNames('verification-input__characters', charactersClassName, {
             'verification-input__characters--default': !removeDefaultStyles,
           })}
@@ -289,6 +287,7 @@ export default class VerificationInput extends PureComponent {
               })}
               onClick={this.handleClick.bind(this)}
               id={`field-${i}`}
+              data-testid={`character-${i}`}
               key={i}
               onPaste={this.handlePaste.bind(this)}
               {...characterProps}
