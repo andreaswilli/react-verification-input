@@ -18,7 +18,9 @@
     "bump-preminor": "npm version preminor --preid beta",
     "bump-prepatch": "npm version prepatch --preid beta",
     "bump-prerelease": "npm version prerelease",
-    "publish": "npm publish"
+    "push-tags": "git push --follow-tags",
+    "publish": "npm publish",
+    "publish-beta": "npm publish --tag beta"
   },
   "dependencies": {
     "postcss-loader": "^2.1.6",
