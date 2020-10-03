@@ -31,6 +31,15 @@ describe("VerificationInput", () => {
     expect(screen.getByTestId("characters")).toHaveTextContent(/^______$/);
   });
 
+  it("should use non-breaking space if placholder is empty or blank", () => {
+    render(<VerificationInput placeholder="" />);
+
+    // expect().toHaveTextContent() does not seem to work with \xa0
+    expect(screen.getByTestId("characters").textContent).toBe(
+      "\xa0\xa0\xa0\xa0\xa0\xa0"
+    );
+  });
+
   it("should allow digits as well as upper- and lowercase letters", () => {
     render(<VerificationInput />);
 
@@ -55,8 +64,7 @@ describe("VerificationInput", () => {
     expect(screen.getByTestId("characters")).toHaveTextContent(/^012345$/);
   });
 
-  // TODO: prevent user from entering the placeholder character
-  xit("should not allow placeholder character", () => {
+  it("should not allow placeholder character", () => {
     render(<VerificationInput />);
 
     userEvent.type(screen.getByRole("textbox"), "·0·1·2");
@@ -77,6 +85,23 @@ describe("VerificationInput", () => {
     userEvent.type(screen.getByRole("textbox"), "012345");
 
     paste(screen.getByRole("textbox"), "abcdefg");
+
+    expect(screen.getByTestId("characters")).toHaveTextContent("012345");
+  });
+
+  it("should keep previous value if clipboardData is null", () => {
+    render(<VerificationInput />);
+    userEvent.type(screen.getByRole("textbox"), "012345");
+
+    paste(screen.getByRole("textbox"), null);
+
+    expect(screen.getByTestId("characters")).toHaveTextContent("012345");
+  });
+
+  it("should allow the code to have blanks when pasting", () => {
+    render(<VerificationInput />);
+
+    paste(screen.getByRole("textbox"), "012 345");
 
     expect(screen.getByTestId("characters")).toHaveTextContent("012345");
   });
@@ -164,6 +189,17 @@ describe("VerificationInput", () => {
     );
   });
 
+  it("should replace characer if field is not empty", () => {
+    render(<VerificationInput />);
+    userEvent.type(screen.getByRole("textbox"), "012345");
+    const field = screen.getByText("3");
+
+    userEvent.click(field);
+    userEvent.type(screen.getByRole("textbox"), "9");
+
+    expect(screen.getByTestId("characters")).toHaveTextContent(/^012945$/);
+  });
+
   it("should delete characters to the left (backspace)", () => {
     render(<VerificationInput />);
     userEvent.type(screen.getByRole("textbox"), "012345");
@@ -220,6 +256,31 @@ describe("VerificationInput", () => {
     expect(screen.getByTestId("characters")).toHaveTextContent(/^··2···$/);
     expect(field3).toHaveClass(
       "verification-input__character--selected--default"
+    );
+  });
+
+  it("should allow to delete all the characters", () => {
+    render(<VerificationInput />);
+    userEvent.type(screen.getByRole("textbox"), "01");
+
+    userEvent.type(screen.getByRole("textbox"), "{backspace}{backspace}");
+
+    expect(screen.getByTestId("characters")).toHaveTextContent(/^······$/);
+  });
+
+  it("should remove trailing placeholder characters", () => {
+    render(<VerificationInput />);
+    userEvent.type(screen.getByRole("textbox"), "012345");
+    userEvent.click(screen.getByTestId("character-3"));
+
+    userEvent.type(screen.getByRole("textbox"), "{del}{del}{del}");
+
+    expect(screen.getByTestId("characters")).toHaveTextContent(/^012···$/);
+    expect(screen.getByTestId("character-3")).toHaveClass(
+      "verification-input__character--selected--default"
+    );
+    expect(screen.getByTestId("character-4")).toHaveClass(
+      "verification-input__character--inactive--default"
     );
   });
 

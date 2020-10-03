@@ -51,7 +51,6 @@ export default class VerificationInput extends PureComponent {
       tan: "",
       previousTan: "",
       isActive: false,
-      isValidTan: false,
     };
 
     if (this.props.autoFocus) {
@@ -61,8 +60,8 @@ export default class VerificationInput extends PureComponent {
 
   getPlaceholder() {
     return this.props.placeholder.trim() === ""
-      ? "\xa0"
-      : this.props.placeholder; // \xa0 = non-breaking space
+      ? "\xa0" // \xa0 = non-breaking space
+      : this.props.placeholder;
   }
 
   setSelection(index) {
@@ -88,33 +87,30 @@ export default class VerificationInput extends PureComponent {
 
   handleChange(tan, selectedIndex) {
     const previousTan = this.state.tan;
+    let newTan = tan.replace(RegExp(`${this.getPlaceholder()}+$`), "");
+
+    if (newTan !== tan) {
+      selectedIndex = newTan.length;
+    }
     if (
       !RegExp(
         `^[${this.props.validChars}${this.getPlaceholder()}]{0,${
           this.props.length
         }}$`
-      ).test(tan) &&
-      (tan.indexOf(" ") === -1 ||
-        !RegExp(`^[${this.props.validChars}]{${this.props.length}}$`).test(
-          tan.replace(/ /g, "")
-        ))
+      ).test(newTan)
     ) {
       this.input.value = previousTan;
       this.moveSelectionBy(0); // set to where it was before
       return;
     }
-    tan = tan.replace(/ /g, "");
-    this.input.value = tan;
+    this.input.value = newTan;
     this.setSelection(selectedIndex);
     this.setState({
-      tan,
+      tan: newTan,
       previousTan,
-      isValidTan: RegExp(
-        `^[${this.props.validChars}]{${this.props.length}}$`
-      ).test(tan),
     });
     if (this.props.input && this.props.input.onChange) {
-      this.props.input.onChange(tan);
+      this.props.input.onChange(newTan);
     }
   }
 
@@ -142,6 +138,8 @@ export default class VerificationInput extends PureComponent {
     if (tan === this.state.tan) {
       if (event.key === "Tab") {
         this.setSelection(tan.length);
+      } else {
+        this.setSelection(selectedIndex);
       }
       return;
     }
@@ -173,30 +171,16 @@ export default class VerificationInput extends PureComponent {
 
     if (keyCode === KEY_CODE.DELETE) {
       selectedIndex = this.state.selectedIndex;
-      // if selection is on last character
-      if (selectedIndex === this.state.tan.length - 1) {
-        // delete last character and leave selection where it is
-        this.handleChange(
-          this.state.tan.substr(0, this.state.tan.length - 1),
-          this.state.selectedIndex
-        );
-        return;
-      }
-      // selection is to the left of last character
+
       // if selection is empty
       if (this.state.tan[selectedIndex] === this.getPlaceholder()) {
         // move selection to the right
-        selectedIndex =
-          selectedIndex < this.props.length ? selectedIndex + 1 : selectedIndex;
+        selectedIndex += 1;
       }
-      // delete character (replace with placeholder if not last character)
-      tan = `${this.state.tan.substring(0, selectedIndex)}${
-        this.state.tan.substring(selectedIndex + 1)
-          ? `${this.getPlaceholder()}${this.state.tan.substring(
-              selectedIndex + 1
-            )}`
-          : ""
-      }`;
+      // replace with placeholder
+      const head = this.state.tan.substring(0, selectedIndex);
+      const tail = this.state.tan.substring(selectedIndex + 1);
+      tan = `${head}${this.getPlaceholder()}${tail}`;
       this.handleChange(tan, selectedIndex);
       return;
     }
@@ -218,8 +202,8 @@ export default class VerificationInput extends PureComponent {
   }
 
   handlePaste(event) {
-    const pastedData = event.clipboardData || window.clipboardData;
-    const pastedText = pastedData?.getData("Text");
+    const pastedData = event.clipboardData;
+    const pastedText = pastedData?.getData("Text")?.replace(/\s/g, "");
 
     // this will only work for environments that properly support
     // the clipboard api
@@ -239,7 +223,6 @@ export default class VerificationInput extends PureComponent {
       characters,
       character,
       input,
-      meta,
     } = this.props;
 
     const { className: containerClassName, ...containerProps } = container;
@@ -329,9 +312,6 @@ export default class VerificationInput extends PureComponent {
             </div>
           ))}
         </div>
-        {meta && meta.touched && meta.error && (
-          <div className="verification-input__error">{meta.error}</div>
-        )}
         <style dangerouslySetInnerHTML={{ __html: style }} />
       </div>
     );
