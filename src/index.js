@@ -101,7 +101,7 @@ const VerificationInput = (props) => {
       if (event.key === "Tab") {
         setSelection(newTan.length);
       } else {
-        setSelection(selectedIndex);
+        setSelection(newSelectedIndex);
       }
       return;
     }
