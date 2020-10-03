@@ -1,207 +1,151 @@
-import React, { PureComponent } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import classNames from "classnames";
-import PropTypes from "proptypes";
+import PropTypes from "prop-types";
 
 import { KEY_CODE } from "./constants";
 
 import style from "./styles.scss";
 
-export default class VerificationInput extends PureComponent {
-  static propTypes = {
-    length: PropTypes.number,
-    validChars: PropTypes.string,
-    placeholder: PropTypes.string,
-    autoFocus: PropTypes.bool,
-    removeDefaultStyles: PropTypes.bool,
-    debug: PropTypes.bool,
-    getInputRef: PropTypes.func,
-    container: PropTypes.shape({
-      className: PropTypes.string,
-    }),
-    inputField: PropTypes.shape({
-      className: PropTypes.string,
-    }),
-    characters: PropTypes.shape({
-      className: PropTypes.string,
-    }),
-    character: PropTypes.shape({
-      className: PropTypes.string,
-    }),
-  };
+const VerificationInput = (props) => {
+  const [selectedIndex, setSelectedIndex] = useState(0);
+  const [tan, setTan] = useState("");
+  const [isActive, setActive] = useState(false);
 
-  static defaultProps = {
-    length: 6,
-    validChars: "A-Za-z0-9",
-    placeholder: "·",
-    autoFocus: false,
-    removeDefaultStyles: false,
-    debug: false,
-    container: {},
-    inputField: {},
-    characters: {},
-    character: {},
-    getInputRef: () => {},
-  };
+  const inputRef = useRef(null);
 
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      selectedIndex: 0,
-      tan: "",
-      previousTan: "",
-      isActive: false,
-    };
-
-    if (this.props.autoFocus) {
-      setTimeout(() => this.input.focus(), 0);
+  useEffect(() => {
+    if (props.autoFocus) {
+      inputRef.current.focus();
     }
-  }
+  }, []);
 
-  getPlaceholder() {
-    return this.props.placeholder.trim() === ""
+  const getPlaceholder = () => {
+    return props.placeholder.trim() === ""
       ? "\xa0" // \xa0 = non-breaking space
-      : this.props.placeholder;
-  }
+      : props.placeholder;
+  };
 
-  setSelection(index) {
-    if (index > this.props.length - 1) {
-      index = this.props.length - 1;
+  const setSelection = (index) => {
+    if (index > props.length - 1) {
+      index = props.length - 1;
     } else if (index < 0) {
       index = 0;
     }
-    this.input.setSelectionRange(index, index + 1);
-    this.setState({ selectedIndex: index });
-  }
+    inputRef.current.setSelectionRange(index, index + 1);
+    setSelectedIndex(index);
+  };
 
   // positive offset = move to the right
   // negative offset = move to the left
-  moveSelectionBy(offset) {
-    this.setSelection(this.state.selectedIndex + offset);
-  }
-
-  saveInputRef = (ref) => {
-    this.input = ref;
-    this.props.getInputRef(ref);
+  const moveSelectionBy = (offset) => {
+    setSelection(selectedIndex + offset);
   };
 
-  handleChange(tan, selectedIndex) {
-    const previousTan = this.state.tan;
-    let newTan = tan.replace(RegExp(`${this.getPlaceholder()}+$`), "");
+  // TODO: forwardRef
+  // const saveInputRef = (ref) => {
+  //   this.input = ref;
+  //   props.getInputRef(ref);
+  // };
+
+  const deleteCharacterAt = (index, string) => {
+    // replace with placeholder
+    const head = string.substring(0, index);
+    const tail = string.substring(index + 1);
+    return `${head}${getPlaceholder()}${tail}`;
+  };
+
+  const handleChange = (tan, selectedIndex) => {
+    const previousTan = tan;
+    let newTan = tan.replace(RegExp(`${getPlaceholder()}+$`), "");
 
     if (newTan !== tan) {
       selectedIndex = newTan.length;
     }
     if (
       !RegExp(
-        `^[${this.props.validChars}${this.getPlaceholder()}]{0,${
-          this.props.length
-        }}$`
+        `^[${props.validChars}${getPlaceholder()}]{0,${props.length}}$`
       ).test(newTan)
     ) {
-      this.input.value = previousTan;
-      this.moveSelectionBy(0); // set to where it was before
+      inputRef.current.value = previousTan;
+      moveSelectionBy(0); // set to where it was before
       return;
     }
-    this.input.value = newTan;
-    this.setSelection(selectedIndex);
-    this.setState({
-      tan: newTan,
-      previousTan,
-    });
-    if (this.props.input && this.props.input.onChange) {
-      this.props.input.onChange(newTan);
-    }
-  }
+    inputRef.current.value = newTan;
+    setSelection(selectedIndex);
+    setTan(newTan);
+    props.input?.onChange?.(newTan);
+  };
 
-  handleKeyUp(event) {
+  const handleKeyUp = (event) => {
     const { keyCode } = event;
 
     if (keyCode === KEY_CODE.ARROW_LEFT) {
-      this.moveSelectionBy(-1);
+      moveSelectionBy(-1);
       return;
     }
 
     if (keyCode === KEY_CODE.ARROW_RIGHT) {
-      if (this.state.selectedIndex >= this.state.tan.length) {
+      if (selectedIndex >= tan.length) {
         // don't move selection to disabled fields
-        this.moveSelectionBy(0);
+        moveSelectionBy(0);
         return;
       }
-      this.moveSelectionBy(1);
+      moveSelectionBy(1);
       return;
     }
 
-    let selectedIndex = this.input.selectionStart;
-    let tan = this.input.value;
+    let newSelectedIndex = inputRef.current.selectionStart;
+    let newTan = inputRef.current.value;
     // if value not changed (and no arrow key pressed)
-    if (tan === this.state.tan) {
+    if (newTan === tan) {
       if (event.key === "Tab") {
-        this.setSelection(tan.length);
+        setSelection(newTan.length);
       } else {
-        this.setSelection(selectedIndex);
+        setSelection(selectedIndex);
       }
       return;
     }
 
     if (keyCode === KEY_CODE.BACKSPACE) {
-      selectedIndex = this.state.selectedIndex;
-      // if selection is not last character
-      if (selectedIndex < this.state.tan.length - 1) {
-        // if selection is empty
-        if (this.state.tan[selectedIndex] === this.getPlaceholder()) {
-          // move selection to the left
-          selectedIndex = Math.max(selectedIndex - 1, 0);
-        }
-        // delete character (replace with placeholder)
-        tan = `${this.state.tan.substring(
-          0,
-          selectedIndex
-        )}${this.getPlaceholder()}${this.state.tan.substring(
-          selectedIndex + 1
-        )}`;
-        this.handleChange(tan, selectedIndex);
-        return;
+      newSelectedIndex = selectedIndex;
+      // if selection is empty
+      if (
+        tan[newSelectedIndex] === getPlaceholder() ||
+        tan[newSelectedIndex] === undefined
+      ) {
+        // move selection to the left
+        newSelectedIndex -= 1;
       }
-      // delete last character and move selection there
-      tan = this.state.tan.substr(0, this.state.tan.length - 1);
-      this.handleChange(tan, tan.length);
+      newTan = deleteCharacterAt(newSelectedIndex, tan);
+      handleChange(newTan, newSelectedIndex);
       return;
     }
 
     if (keyCode === KEY_CODE.DELETE) {
-      selectedIndex = this.state.selectedIndex;
+      newSelectedIndex = selectedIndex;
 
       // if selection is empty
-      if (this.state.tan[selectedIndex] === this.getPlaceholder()) {
+      if (tan[newSelectedIndex] === getPlaceholder()) {
         // move selection to the right
-        selectedIndex += 1;
+        newSelectedIndex += 1;
       }
-      // replace with placeholder
-      const head = this.state.tan.substring(0, selectedIndex);
-      const tail = this.state.tan.substring(selectedIndex + 1);
-      tan = `${head}${this.getPlaceholder()}${tail}`;
-      this.handleChange(tan, selectedIndex);
+      newTan = deleteCharacterAt(newSelectedIndex, tan);
+      handleChange(newTan, newSelectedIndex);
       return;
     }
 
     // some character key (valid or invalid) was pressed
-    this.handleChange(tan, selectedIndex);
-  }
+    handleChange(newTan, newSelectedIndex);
+  };
 
-  handleClick(event) {
+  const handleClick = (event) => {
     let index = parseInt(event.target.id.replace("field-", ""));
-    if (index > this.input.value.length) {
-      index = this.input.value.length;
-    }
-    this.setState({
-      selectedIndex: index,
-    });
-    this.input.focus();
-    this.input.setSelectionRange(index, index + 1);
-  }
+    index = Math.min(index, inputRef.current.value.length);
+    inputRef.current.focus();
+    setSelection(index);
+  };
 
-  handlePaste(event) {
+  const handlePaste = (event) => {
     const pastedData = event.clipboardData;
     const pastedText = pastedData?.getData("Text")?.replace(/\s/g, "");
 
@@ -209,111 +153,137 @@ export default class VerificationInput extends PureComponent {
     // the clipboard api
     if (pastedText != null) {
       event.preventDefault();
-      this.handleChange(pastedText, pastedText.length);
+      handleChange(pastedText, pastedText.length);
     }
-  }
+  };
 
-  render() {
-    const {
-      length,
-      removeDefaultStyles,
-      debug,
-      container,
-      inputField,
-      characters,
-      character,
-      input,
-    } = this.props;
+  const {
+    length,
+    removeDefaultStyles,
+    debug,
+    container,
+    inputField,
+    characters,
+    character,
+    input,
+  } = props;
 
-    const { className: containerClassName, ...containerProps } = container;
+  const { className: containerClassName, ...containerProps } = container;
+  const { className: inputClassName, ...inputProps } = inputField;
+  const { className: charactersClassName, ...charactersProps } = characters;
 
-    const { className: inputClassName, ...inputProps } = inputField;
+  const {
+    className: characterClassName,
+    classNameInactive: characterClassNameInactive,
+    classNameSelected: characterClassNameSelected,
+    ...characterProps
+  } = character;
 
-    const { className: charactersClassName, ...charactersProps } = characters;
-
-    const {
-      className: characterClassName,
-      classNameInactive: characterClassNameInactive,
-      classNameSelected: characterClassNameSelected,
-      ...characterProps
-    } = character;
-
-    return (
+  return (
+    <div
+      className={classNames(
+        "verification-input__container",
+        containerClassName,
+        {
+          "verification-input__container--default": !removeDefaultStyles,
+        }
+      )}
+      {...containerProps}
+    >
+      <input
+        ref={inputRef}
+        className={classNames("verification-input", inputClassName, {
+          "verification-input--debug": debug,
+        })}
+        onKeyUp={handleKeyUp}
+        onFocus={() => {
+          setActive(true);
+          input?.onFocus?.();
+        }}
+        onBlur={() => {
+          setActive(false);
+          input?.onBlur?.();
+        }}
+        onPaste={handlePaste}
+        {...inputProps}
+      />
       <div
+        data-testid="characters"
         className={classNames(
-          "verification-input__container",
-          containerClassName,
+          "verification-input__characters",
+          charactersClassName,
           {
-            "verification-input__container--default": !removeDefaultStyles,
+            "verification-input__characters--default": !removeDefaultStyles,
           }
         )}
-        {...containerProps}
+        onClick={() => inputRef.current.focus()}
+        {...charactersProps}
       >
-        <input
-          ref={this.saveInputRef}
-          className={classNames("verification-input", inputClassName, {
-            "verification-input--debug": debug,
-          })}
-          value={this.props.tan}
-          onKeyUp={this.handleKeyUp.bind(this)}
-          onFocus={() => {
-            this.setState({ isActive: true });
-            if (input && input.onFocus) {
-              input.onFocus();
-            }
-          }}
-          onBlur={() => {
-            this.setState({ isActive: false });
-            if (input && input.onBlur) {
-              input.onBlur();
-            }
-          }}
-          onPaste={this.handlePaste.bind(this)}
-          {...inputProps}
-        />
-        <div
-          data-testid="characters"
-          className={classNames(
-            "verification-input__characters",
-            charactersClassName,
-            {
-              "verification-input__characters--default": !removeDefaultStyles,
-            }
-          )}
-          onClick={() => this.input.focus()}
-          {...charactersProps}
-        >
-          {[...Array(length)].map((_, i) => (
-            <div
-              className={classNames(
-                "verification-input__character",
-                characterClassName,
-                {
-                  "verification-input__character--default": !removeDefaultStyles,
-                  "verification-input__character--selected--default":
-                    !removeDefaultStyles &&
-                    this.state.selectedIndex === i &&
-                    this.state.isActive,
-                  [characterClassNameSelected]:
-                    this.state.selectedIndex === i && this.state.isActive,
-                  "verification-input__character--inactive--default":
-                    !removeDefaultStyles && this.state.tan.length < i,
-                  [characterClassNameInactive]: this.state.tan.length < i,
-                }
-              )}
-              onClick={this.handleClick.bind(this)}
-              id={`field-${i}`}
-              data-testid={`character-${i}`}
-              key={i}
-              onPaste={this.handlePaste.bind(this)}
-              {...characterProps}
-            >
-              {this.state.tan[i] || this.getPlaceholder()}
-            </div>
-          ))}
-        </div>
-        <style dangerouslySetInnerHTML={{ __html: style }} />
+        {[...Array(length)].map((_, i) => (
+          <div
+            className={classNames(
+              "verification-input__character",
+              characterClassName,
+              {
+                "verification-input__character--default": !removeDefaultStyles,
+                "verification-input__character--selected--default":
+                  !removeDefaultStyles && selectedIndex === i && isActive,
+                [characterClassNameSelected]: selectedIndex === i && isActive,
+                "verification-input__character--inactive--default":
+                  !removeDefaultStyles && tan.length < i,
+                [characterClassNameInactive]: tan.length < i,
+              }
+            )}
+            onClick={handleClick}
+            id={`field-${i}`}
+            data-testid={`character-${i}`}
+            key={i}
+            onPaste={handlePaste}
+            {...characterProps}
+          >
+            {tan[i] || getPlaceholder()}
+          </div>
+        ))}
       </div>
-    );
-  }
-}
+      <style dangerouslySetInnerHTML={{ __html: style }} />
+    </div>
+  );
+};
+
+VerificationInput.propTypes = {
+  length: PropTypes.number,
+  validChars: PropTypes.string,
+  placeholder: PropTypes.string,
+  autoFocus: PropTypes.bool,
+  removeDefaultStyles: PropTypes.bool,
+  debug: PropTypes.bool,
+  getInputRef: PropTypes.func,
+  container: PropTypes.shape({
+    className: PropTypes.string,
+  }),
+  inputField: PropTypes.shape({
+    className: PropTypes.string,
+  }),
+  characters: PropTypes.shape({
+    className: PropTypes.string,
+  }),
+  character: PropTypes.shape({
+    className: PropTypes.string,
+  }),
+};
+
+VerificationInput.defaultProps = {
+  length: 6,
+  validChars: "A-Za-z0-9",
+  placeholder: "·",
+  autoFocus: false,
+  removeDefaultStyles: false,
+  debug: false,
+  container: {},
+  inputField: {},
+  characters: {},
+  character: {},
+  getInputRef: () => {},
+};
+
+export default VerificationInput;
