@@ -257,7 +257,7 @@ VerificationInput.propTypes = {
   autoFocus: PropTypes.bool,
   removeDefaultStyles: PropTypes.bool,
   debug: PropTypes.bool,
-  getInputRef: PropTypes.func,
+  // getInputRef: PropTypes.func,
   container: PropTypes.shape({
     className: PropTypes.string,
   }),
@@ -283,7 +283,7 @@ VerificationInput.defaultProps = {
   inputField: {},
   characters: {},
   character: {},
-  getInputRef: () => {},
+  // getInputRef: () => {},
 };
 
 export default VerificationInput;
