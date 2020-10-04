@@ -17,7 +17,7 @@ const VerificationInput = (props) => {
     if (props.autoFocus) {
       inputRef.current.focus();
     }
-  }, []);
+  }, [props.autoFocus]);
 
   const getPlaceholder = () => {
     return props.placeholder.trim() === ""
@@ -269,6 +269,13 @@ VerificationInput.propTypes = {
   }),
   character: PropTypes.shape({
     className: PropTypes.string,
+    classNameInactive: PropTypes.string,
+    classNameSelected: PropTypes.string,
+  }),
+  input: PropTypes.shape({
+    onChange: PropTypes.func,
+    onFocus: PropTypes.func,
+    onBlur: PropTypes.func,
   }),
 };
 
@@ -283,6 +290,7 @@ VerificationInput.defaultProps = {
   inputField: {},
   characters: {},
   character: {},
+  input: null,
   // getInputRef: () => {},
 };
 
