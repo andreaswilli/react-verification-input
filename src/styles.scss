@@ -10,6 +10,7 @@ $input-height: 50px;
 
 .verification-input {
   height: 100%;
+  box-sizing: border-box;
   position: absolute;
   left: -2000px;
   opacity: 0;
@@ -25,6 +26,7 @@ $input-height: 50px;
 
 .verification-input__characters {
   display: flex;
+  width: 300px;
 }
 
 .verification-input__characters--default {
@@ -35,6 +37,7 @@ $input-height: 50px;
   height: 100%;
   flex-grow: 1;
   flex-basis: 0;
+  color: black;
 }
 
 .verification-input__character--default {
@@ -63,6 +66,6 @@ $input-height: 50px;
 }
 
 .verification-input__character--selected--default {
-  border-color: cornflowerblue;
+  outline: 2px solid cornflowerblue;
   color: cornflowerblue;
 }
