@@ -252,7 +252,7 @@ describe("VerificationInput", () => {
         _setValue(v);
       };
 
-      return <VerificationInput value={value} input={{ onChange: setValue }} />;
+      return <VerificationInput value={value} onChange={setValue} />;
     };
     render(<Wrapper />);
 
@@ -268,9 +268,7 @@ describe("VerificationInput", () => {
     const spyHandleBlur = jest.fn();
     render(
       <>
-        <VerificationInput
-          input={{ onFocus: spyHandleFocus, onBlur: spyHandleBlur }}
-        />
+        <VerificationInput onFocus={spyHandleFocus} onBlur={spyHandleBlur} />
         <div>other element</div>
       </>
     );
@@ -304,5 +302,61 @@ describe("VerificationInput", () => {
     userEvent.type(screen.getByRole("textbox"), "123456");
 
     expect(inputRef.current).toHaveValue("123456");
+  });
+
+  it("should apply custom class names", () => {
+    render(
+      <VerificationInput
+        classNames={{
+          input: "custom-input",
+          container: "custom-container",
+          characters: "custom-characters",
+          character: "custom-character",
+          characterInactive: "custom-character-inactive",
+          characterSelected: "custom-character-selected",
+        }}
+        autoFocus
+      />
+    );
+
+    expect(screen.getByRole("textbox")).toHaveClass("custom-input");
+    expect(screen.getByTestId("container")).toHaveClass("custom-container");
+    expect(screen.getByTestId("characters")).toHaveClass("custom-characters");
+    expect(screen.getByTestId("character-0")).toHaveClass(
+      "custom-character",
+      "custom-character-selected"
+    );
+    expect(screen.getByTestId("character-1")).toHaveClass(
+      "custom-character",
+      "custom-character-inactive"
+    );
+    expect(screen.getByTestId("character-2")).toHaveClass(
+      "custom-character",
+      "custom-character-inactive"
+    );
+    expect(screen.getByTestId("character-3")).toHaveClass(
+      "custom-character",
+      "custom-character-inactive"
+    );
+    expect(screen.getByTestId("character-4")).toHaveClass(
+      "custom-character",
+      "custom-character-inactive"
+    );
+    expect(screen.getByTestId("character-5")).toHaveClass(
+      "custom-character",
+      "custom-character-inactive"
+    );
+  });
+
+  it("should forward inputProps to input element", () => {
+    render(<VerificationInput inputProps={{ type: "tel" }} />);
+
+    expect(screen.getByRole("textbox")).toHaveAttribute("type", "tel");
+  });
+
+  it("should forward unknown props to container element", () => {
+    render(<VerificationInput prop="value" />);
+
+    expect(screen.getByTestId("container")).toHaveAttribute("prop", "value");
   });
 });

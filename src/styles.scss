@@ -37,13 +37,13 @@ $input-height: 50px;
   height: 100%;
   flex-grow: 1;
   flex-basis: 0;
-  color: black;
+  text-align: center;
 }
 
 .verification-input__character--default {
   font-size: 36px;
   line-height: $input-height;
-  text-align: center;
+  color: black;
   background-color: white;
   margin-left: 8px;
   border: 1px solid black;
