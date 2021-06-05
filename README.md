@@ -1,8 +1,9 @@
 # react-verification-input
 
-[![NPM version](https://badge.fury.io/js/react-verification-input.svg)](http://badge.fury.io/js/react-verification-input)
+[![npm](https://img.shields.io/npm/v/react-verification-input?color=orange)](https://www.npmjs.com/package/react-verification-input)
 [![npm downloads](https://img.shields.io/npm/dm/react-verification-input.svg?style=flat)](https://www.npmjs.com/package/react-verification-input)
-[![Lint and Test](https://github.com/andreaswilli/react-verification-input/actions/workflows/main.yml/badge.svg)](https://github.com/andreaswilli/react-verification-input/actions/workflows/main.yml)
+[![GitHub Workflow Status](https://img.shields.io/github/workflow/status/andreaswilli/react-verification-input/Lint%20and%20Test?logo=github)](https://github.com/andreaswilli/react-verification-input/actions?query=branch%3Amaster)
+![npm bundle size](https://img.shields.io/bundlephobia/min/react-verification-input?color=cornflowerblue)
 
 `react-verification-input` is a customizable, masked input that can be used to enter all sorts of codes e.g. security codes when two-factor authenticating. Also I'm sure you can think of many more creative use cases.
 
@@ -62,6 +63,7 @@ All of these props are optional and some also come with a default value. However
 | onChange            | Function | -              | Callback function that gets called with the value whenever it changes.                                                                                                      |
 | onFocus             | Function | -              | Callback function that gets called when the component gets focus.                                                                                                           |
 | onBlur              | Function | -              | Callback function that gets called when the component loses focus.                                                                                                          |
+| (any other prop)    | Any      | -              | Any props not listed above will be directly forwarded to the `container` element.                                                                                           |
 
 ## Custom Styling
 
@@ -74,7 +76,6 @@ Style the input by passing it your custom class names like so:
   removeDefaultStyles
   classNames={{
     container: "container",
-    characters: "characters",
     character: "character",
     characterInactive: "character--inactive",
     characterSelected: "character--selected",
@@ -82,82 +83,46 @@ Style the input by passing it your custom class names like so:
 />
 ```
 
-There is also the `input` property, which will assign a class name to the actual input element, but you probably don't want to use this as it's outside the viewport and thus not visible.
+### Component Structure
 
-Have a look at these two examples:
+The following illustration shows the component structure.
 
-### Example 1
+![elements](https://user-images.githubusercontent.com/17298270/120887724-d61f4e00-c5f4-11eb-9971-0fc2f4ff9982.png)
+
+### Example
+
+Have a look at this example:
+
+![custom styles example](https://user-images.githubusercontent.com/17298270/120889453-8d1fc780-c5fd-11eb-9cc9-5cf463dec16c.png)
 
 ```css
 .container {
-  max-width: 350px;
-}
-
-.characters {
   height: 50px;
+  width: 300px;
 }
 
 .character {
   line-height: 50px;
   font-size: 36px;
+  color: white;
   background-color: rgba(255, 255, 255, 0.2);
   border: 1px solid transparent;
   border-radius: 8px;
-  color: white;
   margin-left: 8px;
+}
+
+.character:first-child {
+  margin-left: 0;
 }
 
 .character--inactive {
   background-color: rgba(255, 255, 255, 0.1);
-  box-shadow: none;
 }
 
 .character--selected {
   border: 1px solid white;
 }
 ```
-
-![react-verification-input_style2](https://user-images.githubusercontent.com/17298270/34587466-c17fdf6a-f1a8-11e7-8b6d-51d28a8dcf4f.gif)
-
-### Example 2
-
-```css
-.container {
-  max-width: 350px;
-}
-
-.characters {
-  height: 50px;
-}
-
-.character {
-  line-height: 50px;
-  font-size: 36px;
-  background-color: rgba(255, 255, 255, 0.8);
-  border: none;
-  border-radius: 8px;
-  color: black;
-  margin-left: 8px;
-  box-shadow: inset 0 0 2px black;
-
-  &:nth-child(4) {
-    margin-left: 24px;
-  }
-}
-
-.character--inactive {
-  background-color: rgba(0, 0, 0, 0.5);
-  box-shadow: none;
-}
-
-.character--selected {
-  color: black;
-  outline: red 2px;
-  background-color: white;
-}
-```
-
-![react-verification-input_style1](https://user-images.githubusercontent.com/17298270/34587481-cab83e7e-f1a8-11e7-95fd-ab5ec10967fc.gif)
 
 ## Contributing
 

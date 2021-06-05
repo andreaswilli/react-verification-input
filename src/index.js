@@ -71,17 +71,7 @@ const VerificationInput = forwardRef(
     };
 
     return (
-      <div
-        data-testid="container"
-        className={classNames(
-          "verification-input__container",
-          classes.container,
-          {
-            "verification-input__container--default": !removeDefaultStyles,
-          }
-        )}
-        {...restProps}
-      >
+      <div className="vi__wrapper">
         <input
           value={getValue()}
           onChange={handleInputChange}
@@ -93,8 +83,8 @@ const VerificationInput = forwardRef(
               ref.current = node;
             }
           }}
-          className={classNames("verification-input", classes.input, {
-            "verification-input--debug": debug,
+          className={classNames("vi", {
+            "vi--debug": debug,
           })}
           onKeyDown={handleKeyDown}
           onFocus={(e) => {
@@ -110,38 +100,30 @@ const VerificationInput = forwardRef(
           {...inputProps}
         />
         <div
-          data-testid="characters"
-          className={classNames(
-            "verification-input__characters",
-            classes.characters,
-            {
-              "verification-input__characters--default": !removeDefaultStyles,
-            }
-          )}
+          data-testid="container"
+          className={classNames("vi__container", classes.container, {
+            "vi__container--default": !removeDefaultStyles,
+          })}
           onClick={() => inputRef.current.focus()}
+          {...restProps}
         >
           {[...Array(length)].map((_, i) => (
             <div
-              className={classNames(
-                "verification-input__character",
-                classes.character,
-                {
-                  "verification-input__character--default":
-                    !removeDefaultStyles,
-                  "verification-input__character--selected--default":
-                    !removeDefaultStyles &&
-                    (getValue().length === i ||
-                      (getValue().length === i + 1 && length === i + 1)) &&
-                    isActive,
-                  [classes.characterSelected]:
-                    (getValue().length === i ||
-                      (getValue().length === i + 1 && length === i + 1)) &&
-                    isActive,
-                  "verification-input__character--inactive--default":
-                    !removeDefaultStyles && getValue().length < i,
-                  [classes.characterInactive]: getValue().length < i,
-                }
-              )}
+              className={classNames("vi__character", classes.character, {
+                "vi__character--default": !removeDefaultStyles,
+                "vi__character--selected--default":
+                  !removeDefaultStyles &&
+                  (getValue().length === i ||
+                    (getValue().length === i + 1 && length === i + 1)) &&
+                  isActive,
+                [classes.characterSelected]:
+                  (getValue().length === i ||
+                    (getValue().length === i + 1 && length === i + 1)) &&
+                  isActive,
+                "vi__character--inactive--default":
+                  !removeDefaultStyles && getValue().length < i,
+                [classes.characterInactive]: getValue().length < i,
+              })}
               onClick={handleClick}
               id={`field-${i}`}
               data-testid={`character-${i}`}
@@ -170,8 +152,6 @@ VerificationInput.propTypes = {
   inputProps: PropTypes.object,
   classNames: PropTypes.shape({
     container: PropTypes.string,
-    input: PropTypes.string,
-    characters: PropTypes.string,
     character: PropTypes.string,
     characterInactive: PropTypes.string,
     characterSelected: PropTypes.string,
