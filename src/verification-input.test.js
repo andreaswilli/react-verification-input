@@ -1,16 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import { render, screen, waitFor, fireEvent } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
 import VerificationInput from "./index";
-
-const paste = (element, text) => {
-  // DataTransfer is not supported in jsdom: https://github.com/jsdom/jsdom/issues/1568
-  // userEvent.paste will not work in this case
-  const pasteEvent = new Event("paste", { bubbles: true, cancelable: true });
-  pasteEvent.clipboardData = { getData: () => text };
-  element.dispatchEvent(pasteEvent);
-};
 
 describe("VerificationInput", () => {
   it("should render 6 empty fields with placeholder", () => {
@@ -29,15 +21,6 @@ describe("VerificationInput", () => {
     render(<VerificationInput placeholder="_" />);
 
     expect(screen.getByTestId("characters")).toHaveTextContent(/^______$/);
-  });
-
-  it("should use non-breaking space if placholder is empty or blank", () => {
-    render(<VerificationInput placeholder="" />);
-
-    // expect().toHaveTextContent() does not seem to work with \xa0
-    expect(screen.getByTestId("characters").textContent).toBe(
-      "\xa0\xa0\xa0\xa0\xa0\xa0"
-    );
   });
 
   it("should allow digits as well as upper- and lowercase letters", () => {
@@ -75,7 +58,7 @@ describe("VerificationInput", () => {
   it("should insert valid code on paste", () => {
     render(<VerificationInput />);
 
-    paste(screen.getByRole("textbox"), "012345");
+    userEvent.paste(screen.getByRole("textbox"), "012345");
 
     expect(screen.getByTestId("characters")).toHaveTextContent("012345");
   });
@@ -84,16 +67,7 @@ describe("VerificationInput", () => {
     render(<VerificationInput />);
     userEvent.type(screen.getByRole("textbox"), "012345");
 
-    paste(screen.getByRole("textbox"), "abcdefg");
-
-    expect(screen.getByTestId("characters")).toHaveTextContent("012345");
-  });
-
-  it("should keep previous value if clipboardData is null", () => {
-    render(<VerificationInput />);
-    userEvent.type(screen.getByRole("textbox"), "012345");
-
-    paste(screen.getByRole("textbox"), null);
+    userEvent.paste(screen.getByRole("textbox"), "abcdefg");
 
     expect(screen.getByTestId("characters")).toHaveTextContent("012345");
   });
@@ -101,7 +75,7 @@ describe("VerificationInput", () => {
   it("should allow the code to have blanks when pasting", () => {
     render(<VerificationInput />);
 
-    paste(screen.getByRole("textbox"), "012 345");
+    userEvent.paste(screen.getByRole("textbox"), "012 345");
 
     expect(screen.getByTestId("characters")).toHaveTextContent("012345");
   });
@@ -112,18 +86,6 @@ describe("VerificationInput", () => {
     await waitFor(() => {
       expect(screen.getByRole("textbox")).toHaveFocus();
     });
-  });
-
-  it("should focus the clicked field", () => {
-    render(<VerificationInput />);
-    userEvent.type(screen.getByRole("textbox"), "012345");
-    const field = screen.getByText("3");
-
-    userEvent.click(field);
-
-    expect(field).toHaveClass(
-      "verification-input__character--selected--default"
-    );
   });
 
   it("should select the rightmost active field", () => {
@@ -189,17 +151,6 @@ describe("VerificationInput", () => {
     );
   });
 
-  it("should replace characer if field is not empty", () => {
-    render(<VerificationInput />);
-    userEvent.type(screen.getByRole("textbox"), "012345");
-    const field = screen.getByText("3");
-
-    userEvent.click(field);
-    userEvent.type(screen.getByRole("textbox"), "9");
-
-    expect(screen.getByTestId("characters")).toHaveTextContent(/^012945$/);
-  });
-
   it("should delete characters to the left (backspace)", () => {
     render(<VerificationInput />);
     userEvent.type(screen.getByRole("textbox"), "012345");
@@ -211,52 +162,17 @@ describe("VerificationInput", () => {
     userEvent.type(screen.getByRole("textbox"), "{backspace}");
 
     expect(screen.getByTestId("characters")).toHaveTextContent(/^0123··$/);
-
-    const field1 = screen.getByText("1");
-    userEvent.click(field1);
-    userEvent.type(screen.getByRole("textbox"), "{backspace}");
-
-    expect(screen.getByTestId("characters")).toHaveTextContent(/^0·23··$/);
-    expect(field1).toHaveClass(
-      "verification-input__character--selected--default"
-    );
-
-    userEvent.type(screen.getByRole("textbox"), "{backspace}");
-
-    expect(screen.getByTestId("characters")).toHaveTextContent(/^··23··$/);
-    expect(screen.getByTestId("character-0")).toHaveClass(
-      "verification-input__character--selected--default"
-    );
   });
 
-  it("should delete characters to the right (del)", () => {
+  it("should not do anything when delete is pressed", () => {
     render(<VerificationInput />);
     userEvent.type(screen.getByRole("textbox"), "0123");
-    userEvent.click(screen.getByTestId("character-0"));
+
+    expect(screen.getByTestId("characters")).toHaveTextContent(/^0123··$/);
 
     userEvent.type(screen.getByRole("textbox"), "{del}");
 
-    expect(screen.getByTestId("characters")).toHaveTextContent(/^·123··$/);
-
-    userEvent.type(screen.getByRole("textbox"), "{del}");
-
-    expect(screen.getByTestId("characters")).toHaveTextContent(/^··23··$/);
-
-    const field3 = screen.getByTestId("character-3");
-    userEvent.click(field3);
-    userEvent.type(screen.getByRole("textbox"), "{del}");
-
-    expect(screen.getByTestId("characters")).toHaveTextContent(/^··2···$/);
-    expect(field3).toHaveClass(
-      "verification-input__character--selected--default"
-    );
-
-    userEvent.type(screen.getByRole("textbox"), "{del}");
-
-    expect(screen.getByTestId("characters")).toHaveTextContent(/^··2···$/);
-    expect(field3).toHaveClass(
-      "verification-input__character--selected--default"
-    );
+    expect(screen.getByTestId("characters")).toHaveTextContent(/^0123··$/);
   });
 
   it("should allow to delete all the characters", () => {
@@ -268,73 +184,13 @@ describe("VerificationInput", () => {
     expect(screen.getByTestId("characters")).toHaveTextContent(/^······$/);
   });
 
-  it("should remove trailing placeholder characters", () => {
-    render(<VerificationInput />);
-    userEvent.type(screen.getByRole("textbox"), "012345");
-    userEvent.click(screen.getByTestId("character-3"));
-
-    userEvent.type(screen.getByRole("textbox"), "{del}{del}{del}");
-
-    expect(screen.getByTestId("characters")).toHaveTextContent(/^012···$/);
-    expect(screen.getByTestId("character-3")).toHaveClass(
-      "verification-input__character--selected--default"
-    );
-    expect(screen.getByTestId("character-4")).toHaveClass(
-      "verification-input__character--inactive--default"
-    );
-  });
-
-  it("should move the selection with arrow keys", () => {
+  it("should not move the cursor position with arrow keys", () => {
     render(<VerificationInput />);
     const input = screen.getByRole("textbox");
-    userEvent.type(input, "012345");
 
-    fireEvent.keyUp(input, {
-      key: "ArrowLeft",
-      code: "ArrowLeft",
-      keyCode: 37,
-    });
+    userEvent.type(input, "0{arrowleft}1{arrowright}2{arrowup}3{arrowdown}45");
 
-    expect(screen.getByText("4")).toHaveClass(
-      "verification-input__character--selected--default"
-    );
-
-    fireEvent.keyUp(input, {
-      key: "ArrowRight",
-      code: "ArrowRight",
-      keyCode: 39,
-    });
-
-    expect(screen.getByText("5")).toHaveClass(
-      "verification-input__character--selected--default"
-    );
-  });
-
-  it("should not move the selection out of bounds", () => {
-    render(<VerificationInput />);
-    const input = screen.getByRole("textbox");
-    userEvent.type(input, "012345");
-
-    fireEvent.keyUp(input, {
-      key: "ArrowRight",
-      code: "ArrowRight",
-      keyCode: 39,
-    });
-
-    expect(screen.getByText("5")).toHaveClass(
-      "verification-input__character--selected--default"
-    );
-
-    userEvent.click(screen.getByText("0"));
-    fireEvent.keyUp(input, {
-      key: "ArrowLeft",
-      code: "ArrowLeft",
-      keyCode: 37,
-    });
-
-    expect(screen.getByText("0")).toHaveClass(
-      "verification-input__character--selected--default"
-    );
+    expect(screen.getByTestId("characters")).toHaveTextContent("012345");
   });
 
   it("should not move the selection to an inactive field", () => {
@@ -369,19 +225,36 @@ describe("VerificationInput", () => {
     expect(screen.getByTestId("character-3")).toHaveClass(
       "verification-input__character--selected--default"
     );
+    expect(screen.getByTestId("characters")).toHaveTextContent(/^012···$/);
+    // TODO: by default this is behaving differently in a real browser (whole
+    //       value gets selected), how to test?
+    expect(screen.getByRole("textbox").selectionStart).toBe(3);
 
-    userEvent.type(screen.getByRole("textbox"), "345");
+    userEvent.type(screen.getByRole("textbox"), "34");
     userEvent.click(otherElement);
     userEvent.tab(otherElement);
 
-    expect(screen.getByText("5")).toHaveClass(
+    expect(screen.getByTestId("character-5")).toHaveClass(
       "verification-input__character--selected--default"
     );
+    expect(screen.getByTestId("characters")).toHaveTextContent(/^01234·$/);
+    expect(screen.getByRole("textbox").selectionStart).toBe(5);
   });
 
   it("should trigger onChange callback", () => {
     const spyHandleChange = jest.fn();
-    render(<VerificationInput input={{ onChange: spyHandleChange }} />);
+
+    const Wrapper = () => {
+      const [value, _setValue] = useState("");
+
+      const setValue = (v) => {
+        spyHandleChange(v);
+        _setValue(v);
+      };
+
+      return <VerificationInput value={value} onChange={setValue} />;
+    };
+    render(<Wrapper />);
 
     userEvent.type(screen.getByRole("textbox"), "01");
 
@@ -390,26 +263,12 @@ describe("VerificationInput", () => {
     expect(spyHandleChange).toHaveBeenCalledWith("01");
   });
 
-  it("should ignore irrelevant keyboard events", () => {
-    const spyHandleChange = jest.fn();
-    render(<VerificationInput input={{ onChange: spyHandleChange }} />);
-
-    userEvent.type(screen.getByRole("textbox"), "012");
-    spyHandleChange.mockClear();
-
-    userEvent.type(screen.getByRole("textbox"), "{ctrl}");
-
-    expect(spyHandleChange).not.toHaveBeenCalled();
-  });
-
   it("should trigger onFocus and onBlur callbacks", () => {
     const spyHandleFocus = jest.fn();
     const spyHandleBlur = jest.fn();
     render(
       <>
-        <VerificationInput
-          input={{ onFocus: spyHandleFocus, onBlur: spyHandleBlur }}
-        />
+        <VerificationInput onFocus={spyHandleFocus} onBlur={spyHandleBlur} />
         <div>other element</div>
       </>
     );
@@ -419,5 +278,85 @@ describe("VerificationInput", () => {
 
     expect(spyHandleFocus).toHaveBeenCalledTimes(1);
     expect(spyHandleBlur).toHaveBeenCalledTimes(1);
+  });
+
+  it("should provide ref as object", () => {
+    const inputRef = React.createRef();
+    render(<VerificationInput ref={inputRef} />);
+
+    userEvent.type(screen.getByRole("textbox"), "123456");
+
+    expect(inputRef.current).toHaveValue("123456");
+  });
+
+  it("should provide ref as function", () => {
+    const inputRef = React.createRef();
+    render(
+      <VerificationInput
+        ref={(node) => {
+          inputRef.current = node;
+        }}
+      />
+    );
+
+    userEvent.type(screen.getByRole("textbox"), "123456");
+
+    expect(inputRef.current).toHaveValue("123456");
+  });
+
+  it("should apply custom class names", () => {
+    render(
+      <VerificationInput
+        classNames={{
+          input: "custom-input",
+          container: "custom-container",
+          characters: "custom-characters",
+          character: "custom-character",
+          characterInactive: "custom-character-inactive",
+          characterSelected: "custom-character-selected",
+        }}
+        autoFocus
+      />
+    );
+
+    expect(screen.getByRole("textbox")).toHaveClass("custom-input");
+    expect(screen.getByTestId("container")).toHaveClass("custom-container");
+    expect(screen.getByTestId("characters")).toHaveClass("custom-characters");
+    expect(screen.getByTestId("character-0")).toHaveClass(
+      "custom-character",
+      "custom-character-selected"
+    );
+    expect(screen.getByTestId("character-1")).toHaveClass(
+      "custom-character",
+      "custom-character-inactive"
+    );
+    expect(screen.getByTestId("character-2")).toHaveClass(
+      "custom-character",
+      "custom-character-inactive"
+    );
+    expect(screen.getByTestId("character-3")).toHaveClass(
+      "custom-character",
+      "custom-character-inactive"
+    );
+    expect(screen.getByTestId("character-4")).toHaveClass(
+      "custom-character",
+      "custom-character-inactive"
+    );
+    expect(screen.getByTestId("character-5")).toHaveClass(
+      "custom-character",
+      "custom-character-inactive"
+    );
+  });
+
+  it("should forward inputProps to input element", () => {
+    render(<VerificationInput inputProps={{ type: "tel" }} />);
+
+    expect(screen.getByRole("textbox")).toHaveAttribute("type", "tel");
+  });
+
+  it("should forward unknown props to container element", () => {
+    render(<VerificationInput prop="value" />);
+
+    expect(screen.getByTestId("container")).toHaveAttribute("prop", "value");
   });
 });

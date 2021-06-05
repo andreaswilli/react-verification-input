@@ -4,9 +4,9 @@
 [![npm downloads](https://img.shields.io/npm/dm/react-verification-input.svg?style=flat)](https://www.npmjs.com/package/react-verification-input)
 [![Lint and Test](https://github.com/andreaswilli/react-verification-input/actions/workflows/main.yml/badge.svg)](https://github.com/andreaswilli/react-verification-input/actions/workflows/main.yml)
 
-`react-verification-input` is a customizable, masked input that can be used to enter all sorts of codes e.g. security codes when two-factor authenticating. Also I'm sure you can think of many more creative use cases. This component is fully compatible with [Redux Form](https://github.com/erikras/redux-form) 🎉
+`react-verification-input` is a customizable, masked input that can be used to enter all sorts of codes e.g. security codes when two-factor authenticating. Also I'm sure you can think of many more creative use cases.
 
-![react-verification-input](https://user-images.githubusercontent.com/17298270/34587443-ab845a2e-f1a8-11e7-8227-390bc278041c.gif)
+![verification-input](https://user-images.githubusercontent.com/17298270/120872091-e821d200-c59d-11eb-87f5-729692c6b40a.gif)
 
 ## Installation
 
@@ -44,25 +44,26 @@ Of course the input can be configured manually. For a complete API overview see 
 
 > **Note:** In order for it to work properly, make sure you have the `<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no user-scalable=no">` tag in the head of your page. Otherwise, it might zoom in to the left side of the screen on mobile devices. This is the case because mobile devices zoom in on inputs and there is an input field outside of the viewport.
 
-## API documentation
+## API Documentation
 
-All of these props are optional and thus come with a default value. However it's recommended to use at least the `length`, `validChars` and `placeholder` props.
+All of these props are optional and some also come with a default value. However it's recommended to use at least the `length`, `validChars` and `placeholder` props.
 
-| Option              | Type     | Default        | Description                                                                                                                                                                                                                                                                                               |
-| ------------------- | -------- | -------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| length              | Number   | `6`            | Define how many characters the input should allow.                                                                                                                                                                                                                                                        |
-| validChars          | String   | `'A-Za-z0-9'`  | Define which characters should be allowed. The string is inserted into a regexp character set ( `/[]/` ) for input validating.                                                                                                                                                                            |
-| placeholder         | String   | `'·'` (U+00B7) | Define which character should be displayed as placeholder in empty fields. In order to use the blank character as a placeholder, specify this option as `' '` or `''`.                                                                                                                                    |
-| autoFocus           | Boolean  | `false`        | This will make the input focus automatically as soon as the component is rendered.                                                                                                                                                                                                                        |
-| removeDefaultStyles | Boolean  | `false`        | Use this option to completely remove any styles that are not required for the component to work properly. This is useful if you want to override the default styles.                                                                                                                                      |
-| debug               | Boolean  | `false`        | This will reveal what is going on behind the scenes, which might come in handy when trying to better understand the component. Obviously you don't want to use this in production. 😄                                                                                                                     |
-| container           | Object   | `{}`           | Define the props of the container `div`. All props except for `className` are passed directly to the `div` element. Use `{ className: 'your-class' }` to style the input. These options are available on every element. For more details on how to apply your custom styling see [here](#custom-styling). |
-| inputField          | Object   | `{}`           | Define the props of the `input` element. See `container` for more details.                                                                                                                                                                                                                                |
-| characters          | Object   | `{}`           | Define the props of the characters `div`. See `container` for more details.                                                                                                                                                                                                                               |
-| character           | Object   | `{}`           | Define the props of the character `div`s. See `container` for more details.                                                                                                                                                                                                                               |
-| getInputRef         | Function | `() => {}`     | Define a function that will receive input element `ref`.                                                                                                                                                                                                                                                  |
+| Option              | Type     | Default        | Description                                                                                                                                                                 |
+| ------------------- | -------- | -------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| value               | String   | -              | The value of the verification input. Behaves the same way as the input's value prop.                                                                                        |
+| length              | Number   | `6`            | Number of characters the input should allow.                                                                                                                                |
+| validChars          | String   | `'A-Za-z0-9'`  | Set of characters the input should allow. The string is inserted into a regexp character set ( `/[]/` ) for input validation.                                               |
+| placeholder         | String   | `'·'` (U+00B7) | The character to display in empty fields. In order to use the blank character as a placeholder, specify this option as `' '` or `''`.                                       |
+| autoFocus           | Boolean  | `false`        | Focus the input automatically as soon as it is rendered.                                                                                                                    |
+| removeDefaultStyles | Boolean  | `false`        | Completely remove any styles that are not required for the component to work properly. This is useful if you want to override the default styles.                           |
+| debug               | Boolean  | `false`        | Reveal what is going on behind the scenes, which might come in handy when trying to better understand the component. Obviously you don't want to use this in production. 😄 |
+| inputProps          | Object   | `{}`           | These props get forwarded to the input element.                                                                                                                             |
+| classNames          | Object   | `{}`           | Classnames to add to the specified elements. For more details see [Custom Styling](#custom-styling).                                                                        |
+| onChange            | Function | -              | Callback function that gets called with the value whenever it changes.                                                                                                      |
+| onFocus             | Function | -              | Callback function that gets called when the component gets focus.                                                                                                           |
+| onBlur              | Function | -              | Callback function that gets called when the component loses focus.                                                                                                          |
 
-## Custom styling
+## Custom Styling
 
 > **Note:** It's recommended to use the `removeDefaultStyles` option when applying custom styles, otherwise you may not be able to override the default styles.
 
@@ -71,21 +72,17 @@ Style the input by passing it your custom class names like so:
 ```js
 <VerificationInput
   removeDefaultStyles
-  container={{
-    className: "container",
-  }}
-  characters={{
-    className: "characters",
-  }}
-  character={{
-    className: "character",
-    classNameInactive: "character--inactive",
-    classNameSelected: "character--selected",
+  classNames={{
+    container: "container",
+    characters: "characters",
+    character: "character",
+    characterInactive: "character--inactive",
+    characterSelected: "character--selected",
   }}
 />
 ```
 
-There is also the `inputField` prop, which will attach styles to the actual input element, but you probably don't want to use this as it's outside the viewport and thus not visible.
+There is also the `input` property, which will assign a class name to the actual input element, but you probably don't want to use this as it's outside the viewport and thus not visible.
 
 Have a look at these two examples:
 
@@ -164,5 +161,4 @@ Have a look at these two examples:
 
 ## Contributing
 
-If you want to contribute, feel free to do so. I'd very much appreciate that.❤️
-Just keep it consistent and I'm very happy to review your PR.
+If you want to contribute, feel free to do so. I'd very much appreciate that. ❤️

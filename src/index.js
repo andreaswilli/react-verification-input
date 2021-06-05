@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useState, useEffect, forwardRef } from "react";
 import classNames from "classnames";
 import PropTypes from "prop-types";
 
@@ -6,277 +6,179 @@ import { KEY_CODE } from "./constants";
 
 import style from "./styles.scss";
 
-const VerificationInput = (props) => {
-  const [selectedIndex, setSelectedIndex] = useState(0);
-  const [tan, setTan] = useState("");
-  const [isActive, setActive] = useState(false);
+const VerificationInput = forwardRef(
+  (
+    {
+      value,
+      length,
+      validChars,
+      placeholder,
+      autoFocus,
+      removeDefaultStyles,
+      debug,
+      inputProps,
+      classNames: classes,
+      onChange,
+      onFocus,
+      onBlur,
+      ...restProps
+    },
+    ref
+  ) => {
+    const [localValue, setLocalValue] = useState("");
+    const [isActive, setActive] = useState(false);
 
-  const inputRef = useRef(null);
+    const inputRef = useRef(null);
 
-  useEffect(() => {
-    if (props.autoFocus) {
+    useEffect(() => {
+      if (autoFocus) {
+        inputRef.current.focus();
+      }
+    }, [autoFocus]);
+
+    const handleClick = () => {
       inputRef.current.focus();
-    }
-  }, [props.autoFocus]);
+    };
 
-  const getPlaceholder = () => {
-    return props.placeholder.trim() === ""
-      ? "\xa0" // \xa0 = non-breaking space
-      : props.placeholder;
-  };
-
-  const setSelection = (index) => {
-    if (index > props.length - 1) {
-      index = props.length - 1;
-    } else if (index < 0) {
-      index = 0;
-    }
-    inputRef.current.setSelectionRange(index, index + 1);
-    setSelectedIndex(index);
-  };
-
-  // positive offset = move to the right
-  // negative offset = move to the left
-  const moveSelectionBy = (offset) => {
-    setSelection(selectedIndex + offset);
-  };
-
-  // TODO: forwardRef
-  // const saveInputRef = (ref) => {
-  //   this.input = ref;
-  //   props.getInputRef(ref);
-  // };
-
-  const deleteCharacterAt = (index, string) => {
-    // replace with placeholder
-    const head = string.substring(0, index);
-    const tail = string.substring(index + 1);
-    return `${head}${getPlaceholder()}${tail}`;
-  };
-
-  const handleChange = (tan, selectedIndex) => {
-    const previousTan = tan;
-    let newTan = tan.replace(RegExp(`${getPlaceholder()}+$`), "");
-
-    if (newTan !== tan) {
-      selectedIndex = newTan.length;
-    }
-    if (
-      !RegExp(
-        `^[${props.validChars}${getPlaceholder()}]{0,${props.length}}$`
-      ).test(newTan)
-    ) {
-      inputRef.current.value = previousTan;
-      moveSelectionBy(0); // set to where it was before
-      return;
-    }
-    inputRef.current.value = newTan;
-    setSelection(selectedIndex);
-    setTan(newTan);
-    props.input?.onChange?.(newTan);
-  };
-
-  const handleKeyUp = (event) => {
-    const { keyCode } = event;
-
-    if (keyCode === KEY_CODE.ARROW_LEFT) {
-      moveSelectionBy(-1);
-      return;
-    }
-
-    if (keyCode === KEY_CODE.ARROW_RIGHT) {
-      if (selectedIndex >= tan.length) {
-        // don't move selection to disabled fields
-        moveSelectionBy(0);
-        return;
-      }
-      moveSelectionBy(1);
-      return;
-    }
-
-    let newSelectedIndex = inputRef.current.selectionStart;
-    let newTan = inputRef.current.value;
-    // if value not changed (and no arrow key pressed)
-    if (newTan === tan) {
-      if (event.key === "Tab") {
-        setSelection(newTan.length);
-      } else {
-        setSelection(newSelectedIndex);
-      }
-      return;
-    }
-
-    if (keyCode === KEY_CODE.BACKSPACE) {
-      newSelectedIndex = selectedIndex;
-      // if selection is empty
+    const handleKeyDown = (event) => {
       if (
-        tan[newSelectedIndex] === getPlaceholder() ||
-        tan[newSelectedIndex] === undefined
+        [
+          KEY_CODE.ARROW_LEFT,
+          KEY_CODE.ARROW_RIGHT,
+          KEY_CODE.ARROW_UP,
+          KEY_CODE.ARROW_DOWN,
+        ].includes(event.keyCode)
       ) {
-        // move selection to the left
-        newSelectedIndex -= 1;
+        // do not allow to change cursor position
+        event.preventDefault();
       }
-      newTan = deleteCharacterAt(newSelectedIndex, tan);
-      handleChange(newTan, newSelectedIndex);
-      return;
-    }
+    };
 
-    if (keyCode === KEY_CODE.DELETE) {
-      newSelectedIndex = selectedIndex;
+    const handleInputChange = (event) => {
+      const newInputVal = event.target.value.replace(/\s/g, "");
 
-      // if selection is empty
-      if (tan[newSelectedIndex] === getPlaceholder()) {
-        // move selection to the right
-        newSelectedIndex += 1;
-      }
-      newTan = deleteCharacterAt(newSelectedIndex, tan);
-      handleChange(newTan, newSelectedIndex);
-      return;
-    }
-
-    // some character key (valid or invalid) was pressed
-    handleChange(newTan, newSelectedIndex);
-  };
-
-  const handleClick = (event) => {
-    let index = parseInt(event.target.id.replace("field-", ""));
-    index = Math.min(index, inputRef.current.value.length);
-    inputRef.current.focus();
-    setSelection(index);
-  };
-
-  const handlePaste = (event) => {
-    const pastedData = event.clipboardData;
-    const pastedText = pastedData?.getData("Text")?.replace(/\s/g, "");
-
-    // this will only work for environments that properly support
-    // the clipboard api
-    if (pastedText != null) {
-      event.preventDefault();
-      handleChange(pastedText, pastedText.length);
-    }
-  };
-
-  const {
-    length,
-    removeDefaultStyles,
-    debug,
-    container,
-    inputField,
-    characters,
-    character,
-    input,
-  } = props;
-
-  const { className: containerClassName, ...containerProps } = container;
-  const { className: inputClassName, ...inputProps } = inputField;
-  const { className: charactersClassName, ...charactersProps } = characters;
-
-  const {
-    className: characterClassName,
-    classNameInactive: characterClassNameInactive,
-    classNameSelected: characterClassNameSelected,
-    ...characterProps
-  } = character;
-
-  return (
-    <div
-      className={classNames(
-        "verification-input__container",
-        containerClassName,
-        {
-          "verification-input__container--default": !removeDefaultStyles,
+      if (RegExp(`^[${validChars}]{0,${length}}$`).test(newInputVal)) {
+        if (onChange) {
+          onChange?.(newInputVal);
+        } else {
+          setLocalValue(newInputVal);
         }
-      )}
-      {...containerProps}
-    >
-      <input
-        ref={inputRef}
-        className={classNames("verification-input", inputClassName, {
-          "verification-input--debug": debug,
-        })}
-        onKeyUp={handleKeyUp}
-        onFocus={() => {
-          setActive(true);
-          input?.onFocus?.();
-        }}
-        onBlur={() => {
-          setActive(false);
-          input?.onBlur?.();
-        }}
-        onPaste={handlePaste}
-        {...inputProps}
-      />
+      }
+    };
+
+    const getValue = () => {
+      return value ?? localValue;
+    };
+
+    return (
       <div
-        data-testid="characters"
+        data-testid="container"
         className={classNames(
-          "verification-input__characters",
-          charactersClassName,
+          "verification-input__container",
+          classes.container,
           {
-            "verification-input__characters--default": !removeDefaultStyles,
+            "verification-input__container--default": !removeDefaultStyles,
           }
         )}
-        onClick={() => inputRef.current.focus()}
-        {...charactersProps}
+        {...restProps}
       >
-        {[...Array(length)].map((_, i) => (
-          <div
-            className={classNames(
-              "verification-input__character",
-              characterClassName,
-              {
-                "verification-input__character--default": !removeDefaultStyles,
-                "verification-input__character--selected--default":
-                  !removeDefaultStyles && selectedIndex === i && isActive,
-                [characterClassNameSelected]: selectedIndex === i && isActive,
-                "verification-input__character--inactive--default":
-                  !removeDefaultStyles && tan.length < i,
-                [characterClassNameInactive]: tan.length < i,
-              }
-            )}
-            onClick={handleClick}
-            id={`field-${i}`}
-            data-testid={`character-${i}`}
-            key={i}
-            onPaste={handlePaste}
-            {...characterProps}
-          >
-            {tan[i] || getPlaceholder()}
-          </div>
-        ))}
+        <input
+          value={getValue()}
+          onChange={handleInputChange}
+          ref={(node) => {
+            inputRef.current = node;
+            if (typeof ref === "function") {
+              ref(node);
+            } else if (ref) {
+              ref.current = node;
+            }
+          }}
+          className={classNames("verification-input", classes.input, {
+            "verification-input--debug": debug,
+          })}
+          onKeyDown={handleKeyDown}
+          onFocus={(e) => {
+            setActive(true);
+            const val = e.target.value;
+            e.target.setSelectionRange(val.length, val.length);
+            onFocus?.();
+          }}
+          onBlur={() => {
+            setActive(false);
+            onBlur?.();
+          }}
+          {...inputProps}
+        />
+        <div
+          data-testid="characters"
+          className={classNames(
+            "verification-input__characters",
+            classes.characters,
+            {
+              "verification-input__characters--default": !removeDefaultStyles,
+            }
+          )}
+          onClick={() => inputRef.current.focus()}
+        >
+          {[...Array(length)].map((_, i) => (
+            <div
+              className={classNames(
+                "verification-input__character",
+                classes.character,
+                {
+                  "verification-input__character--default":
+                    !removeDefaultStyles,
+                  "verification-input__character--selected--default":
+                    !removeDefaultStyles &&
+                    (getValue().length === i ||
+                      (getValue().length === i + 1 && length === i + 1)) &&
+                    isActive,
+                  [classes.characterSelected]:
+                    (getValue().length === i ||
+                      (getValue().length === i + 1 && length === i + 1)) &&
+                    isActive,
+                  "verification-input__character--inactive--default":
+                    !removeDefaultStyles && getValue().length < i,
+                  [classes.characterInactive]: getValue().length < i,
+                }
+              )}
+              onClick={handleClick}
+              id={`field-${i}`}
+              data-testid={`character-${i}`}
+              key={i}
+            >
+              {getValue()[i] || placeholder}
+            </div>
+          ))}
+        </div>
+        <style dangerouslySetInnerHTML={{ __html: style }} />
       </div>
-      <style dangerouslySetInnerHTML={{ __html: style }} />
-    </div>
-  );
-};
+    );
+  }
+);
+
+VerificationInput.displayName = "VerificationInput";
 
 VerificationInput.propTypes = {
+  value: PropTypes.string,
   length: PropTypes.number,
   validChars: PropTypes.string,
   placeholder: PropTypes.string,
   autoFocus: PropTypes.bool,
   removeDefaultStyles: PropTypes.bool,
   debug: PropTypes.bool,
-  // getInputRef: PropTypes.func,
-  container: PropTypes.shape({
-    className: PropTypes.string,
+  inputProps: PropTypes.object,
+  classNames: PropTypes.shape({
+    container: PropTypes.string,
+    input: PropTypes.string,
+    characters: PropTypes.string,
+    character: PropTypes.string,
+    characterInactive: PropTypes.string,
+    characterSelected: PropTypes.string,
   }),
-  inputField: PropTypes.shape({
-    className: PropTypes.string,
-  }),
-  characters: PropTypes.shape({
-    className: PropTypes.string,
-  }),
-  character: PropTypes.shape({
-    className: PropTypes.string,
-    classNameInactive: PropTypes.string,
-    classNameSelected: PropTypes.string,
-  }),
-  input: PropTypes.shape({
-    onChange: PropTypes.func,
-    onFocus: PropTypes.func,
-    onBlur: PropTypes.func,
-  }),
+  onChange: PropTypes.func,
+  onFocus: PropTypes.func,
+  onBlur: PropTypes.func,
 };
 
 VerificationInput.defaultProps = {
@@ -286,12 +188,8 @@ VerificationInput.defaultProps = {
   autoFocus: false,
   removeDefaultStyles: false,
   debug: false,
-  container: {},
-  inputField: {},
-  characters: {},
-  character: {},
-  input: null,
-  // getInputRef: () => {},
+  inputProps: {},
+  classNames: {},
 };
 
 export default VerificationInput;
