@@ -188,6 +188,7 @@ VerificationInput.defaultProps = {
   autoFocus: false,
   removeDefaultStyles: false,
   debug: false,
+  inputProps: {},
   classNames: {},
 };
 
