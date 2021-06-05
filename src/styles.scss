@@ -1,11 +1,7 @@
 $input-height: 50px;
 
-.verification-input__container {
+.verification-input__wrapper {
   position: relative;
-}
-
-.verification-input__container--default {
-  max-width: 500px;
 }
 
 .verification-input {
@@ -24,12 +20,12 @@ $input-height: 50px;
   transform: scale(1);
 }
 
-.verification-input__characters {
+.verification-input__container {
   display: flex;
   width: 300px;
 }
 
-.verification-input__characters--default {
+.verification-input__container--default {
   height: $input-height;
 }
 

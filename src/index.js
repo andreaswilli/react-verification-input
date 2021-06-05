@@ -71,17 +71,7 @@ const VerificationInput = forwardRef(
     };
 
     return (
-      <div
-        data-testid="container"
-        className={classNames(
-          "verification-input__container",
-          classes.container,
-          {
-            "verification-input__container--default": !removeDefaultStyles,
-          }
-        )}
-        {...restProps}
-      >
+      <div className="verification-input__wrapper">
         <input
           value={getValue()}
           onChange={handleInputChange}
@@ -93,7 +83,7 @@ const VerificationInput = forwardRef(
               ref.current = node;
             }
           }}
-          className={classNames("verification-input", classes.input, {
+          className={classNames("verification-input", {
             "verification-input--debug": debug,
           })}
           onKeyDown={handleKeyDown}
@@ -110,15 +100,16 @@ const VerificationInput = forwardRef(
           {...inputProps}
         />
         <div
-          data-testid="characters"
+          data-testid="container"
           className={classNames(
-            "verification-input__characters",
-            classes.characters,
+            "verification-input__container",
+            classes.container,
             {
-              "verification-input__characters--default": !removeDefaultStyles,
+              "verification-input__container--default": !removeDefaultStyles,
             }
           )}
           onClick={() => inputRef.current.focus()}
+          {...restProps}
         >
           {[...Array(length)].map((_, i) => (
             <div
@@ -170,8 +161,6 @@ VerificationInput.propTypes = {
   inputProps: PropTypes.object,
   classNames: PropTypes.shape({
     container: PropTypes.string,
-    input: PropTypes.string,
-    characters: PropTypes.string,
     character: PropTypes.string,
     characterInactive: PropTypes.string,
     characterSelected: PropTypes.string,

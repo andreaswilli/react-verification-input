@@ -74,15 +74,12 @@ Style the input by passing it your custom class names like so:
   removeDefaultStyles
   classNames={{
     container: "container",
-    characters: "characters",
     character: "character",
     characterInactive: "character--inactive",
     characterSelected: "character--selected",
   }}
 />
 ```
-
-There is also the `input` property, which will assign a class name to the actual input element, but you probably don't want to use this as it's outside the viewport and thus not visible.
 
 Have a look at these two examples:
 
