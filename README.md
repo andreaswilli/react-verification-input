@@ -82,80 +82,46 @@ Style the input by passing it your custom class names like so:
 />
 ```
 
-Have a look at these two examples:
+### Component Structure
 
-### Example 1
+The following illustration shows the component structure.
+
+![elements](https://user-images.githubusercontent.com/17298270/120887724-d61f4e00-c5f4-11eb-9971-0fc2f4ff9982.png)
+
+### Example
+
+Have a look at this example:
+
+![custom styles example](https://user-images.githubusercontent.com/17298270/120889453-8d1fc780-c5fd-11eb-9cc9-5cf463dec16c.png)
 
 ```css
 .container {
-  max-width: 350px;
-}
-
-.characters {
   height: 50px;
+  width: 300px;
 }
 
 .character {
   line-height: 50px;
   font-size: 36px;
+  color: white;
   background-color: rgba(255, 255, 255, 0.2);
   border: 1px solid transparent;
   border-radius: 8px;
-  color: white;
   margin-left: 8px;
+}
+
+.character:first-child {
+  margin-left: 0;
 }
 
 .character--inactive {
   background-color: rgba(255, 255, 255, 0.1);
-  box-shadow: none;
 }
 
 .character--selected {
   border: 1px solid white;
 }
 ```
-
-![react-verification-input_style2](https://user-images.githubusercontent.com/17298270/34587466-c17fdf6a-f1a8-11e7-8b6d-51d28a8dcf4f.gif)
-
-### Example 2
-
-```css
-.container {
-  max-width: 350px;
-}
-
-.characters {
-  height: 50px;
-}
-
-.character {
-  line-height: 50px;
-  font-size: 36px;
-  background-color: rgba(255, 255, 255, 0.8);
-  border: none;
-  border-radius: 8px;
-  color: black;
-  margin-left: 8px;
-  box-shadow: inset 0 0 2px black;
-
-  &:nth-child(4) {
-    margin-left: 24px;
-  }
-}
-
-.character--inactive {
-  background-color: rgba(0, 0, 0, 0.5);
-  box-shadow: none;
-}
-
-.character--selected {
-  color: black;
-  outline: red 2px;
-  background-color: white;
-}
-```
-
-![react-verification-input_style1](https://user-images.githubusercontent.com/17298270/34587481-cab83e7e-f1a8-11e7-95fd-ab5ec10967fc.gif)
 
 ## Contributing
 
