@@ -22,11 +22,11 @@ $input-height: 50px;
 
 .verification-input__container {
   display: flex;
-  width: 300px;
 }
 
 .verification-input__container--default {
   height: $input-height;
+  width: 300px;
 }
 
 .verification-input__character {
@@ -49,10 +49,6 @@ $input-height: 50px;
 
   &:first-child {
     margin-left: 0;
-  }
-
-  @media (min-width: 768px) {
-    margin-left: 16px;
   }
 }
 
