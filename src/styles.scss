@@ -1,10 +1,10 @@
 $input-height: 50px;
 
-.verification-input__wrapper {
+.vi__wrapper {
   position: relative;
 }
 
-.verification-input {
+.vi {
   height: 100%;
   box-sizing: border-box;
   position: absolute;
@@ -13,30 +13,30 @@ $input-height: 50px;
   transform: scale(0);
 }
 
-.verification-input--debug {
+.vi--debug {
   left: 0;
   bottom: -70px;
   opacity: 1;
   transform: scale(1);
 }
 
-.verification-input__container {
+.vi__container {
   display: flex;
 }
 
-.verification-input__container--default {
+.vi__container--default {
   height: $input-height;
   width: 300px;
 }
 
-.verification-input__character {
+.vi__character {
   height: 100%;
   flex-grow: 1;
   flex-basis: 0;
   text-align: center;
 }
 
-.verification-input__character--default {
+.vi__character--default {
   font-size: 36px;
   line-height: $input-height;
   color: black;
@@ -52,12 +52,12 @@ $input-height: 50px;
   }
 }
 
-.verification-input__character--inactive--default {
+.vi__character--inactive--default {
   color: dimgray;
   background-color: lightgray;
 }
 
-.verification-input__character--selected--default {
+.vi__character--selected--default {
   outline: 2px solid cornflowerblue;
   color: cornflowerblue;
 }

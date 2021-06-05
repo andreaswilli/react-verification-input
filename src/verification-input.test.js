@@ -97,7 +97,7 @@ describe("VerificationInput", () => {
     userEvent.click(inactiveField);
 
     expect(rightmostActiveField).toHaveClass(
-      "verification-input__character--selected--default"
+      "vi__character--selected--default"
     );
   });
 
@@ -107,9 +107,7 @@ describe("VerificationInput", () => {
 
     userEvent.click(screen.getByTestId("container"));
 
-    expect(rightmostField).toHaveClass(
-      "verification-input__character--selected--default"
-    );
+    expect(rightmostField).toHaveClass("vi__character--selected--default");
   });
 
   it("should select the next field", () => {
@@ -118,9 +116,7 @@ describe("VerificationInput", () => {
 
     userEvent.type(screen.getByRole("textbox"), "012");
 
-    expect(nextField).toHaveClass(
-      "verification-input__character--selected--default"
-    );
+    expect(nextField).toHaveClass("vi__character--selected--default");
   });
 
   it("should select the last field if full", () => {
@@ -129,9 +125,7 @@ describe("VerificationInput", () => {
 
     userEvent.type(screen.getByRole("textbox"), "012345");
 
-    expect(lastField).toHaveClass(
-      "verification-input__character--selected--default"
-    );
+    expect(lastField).toHaveClass("vi__character--selected--default");
   });
 
   it("should only activate one empty field to the right", () => {
@@ -140,15 +134,9 @@ describe("VerificationInput", () => {
     userEvent.type(screen.getByRole("textbox"), "012");
 
     const emptyFields = screen.getAllByText("·");
-    expect(emptyFields[0]).not.toHaveClass(
-      "verification-input__character--inactive--default"
-    );
-    expect(emptyFields[1]).toHaveClass(
-      "verification-input__character--inactive--default"
-    );
-    expect(emptyFields[2]).toHaveClass(
-      "verification-input__character--inactive--default"
-    );
+    expect(emptyFields[0]).not.toHaveClass("vi__character--inactive--default");
+    expect(emptyFields[1]).toHaveClass("vi__character--inactive--default");
+    expect(emptyFields[2]).toHaveClass("vi__character--inactive--default");
   });
 
   it("should delete characters to the left (backspace)", () => {
@@ -205,7 +193,7 @@ describe("VerificationInput", () => {
     });
 
     expect(screen.getByTestId("character-3")).toHaveClass(
-      "verification-input__character--selected--default"
+      "vi__character--selected--default"
     );
   });
 
@@ -223,7 +211,7 @@ describe("VerificationInput", () => {
     userEvent.tab(otherElement);
 
     expect(screen.getByTestId("character-3")).toHaveClass(
-      "verification-input__character--selected--default"
+      "vi__character--selected--default"
     );
     expect(screen.getByTestId("container")).toHaveTextContent(/^012···$/);
     // TODO: by default this is behaving differently in a real browser (whole
@@ -235,7 +223,7 @@ describe("VerificationInput", () => {
     userEvent.tab(otherElement);
 
     expect(screen.getByTestId("character-5")).toHaveClass(
-      "verification-input__character--selected--default"
+      "vi__character--selected--default"
     );
     expect(screen.getByTestId("container")).toHaveTextContent(/^01234·$/);
     expect(screen.getByRole("textbox").selectionStart).toBe(5);
@@ -360,15 +348,15 @@ describe("VerificationInput", () => {
     render(<VerificationInput autoFocus />);
 
     expect(screen.getByTestId("container")).toHaveClass(
-      "verification-input__container--default"
+      "vi__container--default"
     );
     expect(screen.getByTestId("character-0")).toHaveClass(
-      "verification-input__character--default",
-      "verification-input__character--selected--default"
+      "vi__character--default",
+      "vi__character--selected--default"
     );
     expect(screen.getByTestId("character-1")).toHaveClass(
-      "verification-input__character--default",
-      "verification-input__character--inactive--default"
+      "vi__character--default",
+      "vi__character--inactive--default"
     );
   });
 
@@ -376,15 +364,15 @@ describe("VerificationInput", () => {
     render(<VerificationInput autoFocus removeDefaultStyles />);
 
     expect(screen.getByTestId("container")).not.toHaveClass(
-      "verification-input__container--default"
+      "vi__container--default"
     );
     expect(screen.getByTestId("character-0")).not.toHaveClass(
-      "verification-input__character--default",
-      "verification-input__character--selected--default"
+      "vi__character--default",
+      "vi__character--selected--default"
     );
     expect(screen.getByTestId("character-1")).not.toHaveClass(
-      "verification-input__character--default",
-      "verification-input__character--inactive--default"
+      "vi__character--default",
+      "vi__character--inactive--default"
     );
   });
 });
