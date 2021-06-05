@@ -62,6 +62,7 @@ All of these props are optional and some also come with a default value. However
 | onChange            | Function | -              | Callback function that gets called with the value whenever it changes.                                                                                                      |
 | onFocus             | Function | -              | Callback function that gets called when the component gets focus.                                                                                                           |
 | onBlur              | Function | -              | Callback function that gets called when the component loses focus.                                                                                                          |
+| (any other prop)    | Any      | -              | Any props not listed above will be directly forwarded to the `container` element.                                                                                           |
 
 ## Custom Styling
 
