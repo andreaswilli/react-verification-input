@@ -24,15 +24,9 @@ module.exports = {
         use: [
           {
             loader: "postcss-loader",
-            options: {
-              sourceMap: "inline",
-            },
           },
           {
             loader: "sass-loader",
-            options: {
-              sourceMap: true,
-            },
           },
         ],
       },
