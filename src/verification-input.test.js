@@ -355,4 +355,36 @@ describe("VerificationInput", () => {
 
     expect(screen.getByTestId("container")).toHaveAttribute("prop", "value");
   });
+
+  it("should apply default styles by default", () => {
+    render(<VerificationInput autoFocus />);
+
+    expect(screen.getByTestId("container")).toHaveClass(
+      "verification-input__container--default"
+    );
+    expect(screen.getByTestId("character-0")).toHaveClass(
+      "verification-input__character--default",
+      "verification-input__character--selected--default"
+    );
+    expect(screen.getByTestId("character-1")).toHaveClass(
+      "verification-input__character--default",
+      "verification-input__character--inactive--default"
+    );
+  });
+
+  it("should remove default styles if removeDefaultStyles is true", () => {
+    render(<VerificationInput autoFocus removeDefaultStyles />);
+
+    expect(screen.getByTestId("container")).not.toHaveClass(
+      "verification-input__container--default"
+    );
+    expect(screen.getByTestId("character-0")).not.toHaveClass(
+      "verification-input__character--default",
+      "verification-input__character--selected--default"
+    );
+    expect(screen.getByTestId("character-1")).not.toHaveClass(
+      "verification-input__character--default",
+      "verification-input__character--inactive--default"
+    );
+  });
 });
