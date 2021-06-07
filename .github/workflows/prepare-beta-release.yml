@@ -1,0 +1,69 @@
+name: Prepare Beta Release
+
+on:
+  pull_request:
+    types: [closed]
+    branches:
+      - develop
+
+jobs:
+  prepareBetaRelease:
+    name: Prepare beta release
+    if: "${{ github.event.pull_request.merged && (
+          contains(github.event.pull_request.labels.*.name, 'release: patch') ||
+          contains(github.event.pull_request.labels.*.name, 'release: minor') ||
+          contains(github.event.pull_request.labels.*.name, 'release: major')
+        ) }}"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          ref: ${{ github.event.pull_request.base.ref }}
+
+      - name: Use Node.js ${{ matrix.node-verison }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: '12.x'
+
+      - uses: oleksiyrudenko/gha-git-credentials@v2-latest
+        with:
+          token: '${{ secrets.GITHUB_TOKEN }}'
+
+      - name: Extract version
+        id: extract_version
+        uses: Saionaro/extract-package-version@v1.0.6
+
+      - name: Bump to next prerelease
+        if: contains(steps.extract_version.outputs.version, '-')
+        run: npm run bump-prerelease
+
+      - name: Bump version to next prepatch
+        if: "${{ contains(github.event.pull_request.labels.*.name, 'release: patch') &&
+                 !contains(steps.extract_version.outputs.version, '-') }}"
+        run: npm run bump-prepatch
+
+      - name: Bump version to next preminor
+        if: "${{ contains(github.event.pull_request.labels.*.name, 'release: minor') &&
+                 !contains(steps.extract_version.outputs.version, '-') }}"
+        run: npm run bump-preminor
+
+      - name: Bump version to next premajor
+        if: "${{ contains(github.event.pull_request.labels.*.name, 'release: major') &&
+                 !contains(steps.extract_version.outputs.version, '-') }}"
+        run: npm run bump-premajor
+
+      - name: Push commit and tag
+        run: git push --follow-tags
+
+      - name: Get Latest Tag
+        id: previoustag
+        uses: "WyriHaximus/github-action-get-previous-tag@v1"
+
+      - name: Create Prerelease Draft
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: ${{ steps.previoustag.outputs.tag }}
+          draft: true
+          prerelease: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
