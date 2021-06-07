@@ -1,6 +1,7 @@
 .github/
 src/
 dist/
+coverage/
 .babelrc
 postcss.config.js
 webpack.config.js
