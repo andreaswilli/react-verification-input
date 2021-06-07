@@ -1,5 +1,9 @@
+.github/
 src/
+dist/
 .babelrc
 postcss.config.js
 webpack.config.js
+.eslintrc.js
+jest.config.js
 yarn.lock
