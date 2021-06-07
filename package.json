@@ -22,11 +22,9 @@
     "push-tags": "git push --follow-tags",
     "publish-beta": "npm publish --tag beta"
   },
-  "dependencies": {
-    "postcss-loader": "^2.1.6",
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1",
-    "webpack": "^4.44.2"
+  "peerDependencies": {
+    "react": "16.8.0 - 17.x.x",
+    "react-dom": "16.8.0 - 17.x.x"
   },
   "devDependencies": {
     "@babel/core": "^7.0.0",
@@ -62,10 +60,14 @@
     "eslint-plugin-react-hooks": "^4.1.2",
     "jest": "^26.4.2",
     "node-sass": "^6.0.0",
+    "postcss-loader": "^2.1.6",
     "prop-types": "^15.7.2",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
     "regenerator-runtime": "^0.13.7",
     "sass-loader": "^6.0.6",
     "style-loader": "^0.19.0",
+    "webpack": "^4.44.2",
     "webpack-cli": "^3.3.12"
   }
 }
