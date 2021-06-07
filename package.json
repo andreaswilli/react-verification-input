@@ -20,7 +20,6 @@
     "bump-prepatch": "npm version prepatch --preid beta",
     "bump-prerelease": "npm version prerelease --preid beta",
     "push-tags": "git push --follow-tags",
-    "publish": "npm publish",
     "publish-beta": "npm publish --tag beta"
   },
   "dependencies": {
