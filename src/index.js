@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 
 import { KEY_CODE } from "./constants";
 
-import style from "./styles.scss";
+import style from "./styles.css";
 
 const VerificationInput = forwardRef(
   (
