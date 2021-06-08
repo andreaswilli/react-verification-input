@@ -7,7 +7,7 @@
 
 `react-verification-input` is a customizable, masked input that can be used to enter all sorts of codes e.g. security codes when two-factor authenticating. Also I'm sure you can think of many more creative use cases.
 
-![verification-input](https://user-images.githubusercontent.com/17298270/120872091-e821d200-c59d-11eb-87f5-729692c6b40a.gif)
+<img width="400px" alt="verification-input" src="https://user-images.githubusercontent.com/17298270/120872091-e821d200-c59d-11eb-87f5-729692c6b40a.gif" />
 
 ## Features
 
@@ -85,13 +85,13 @@ Style the input by passing it your custom class names like so:
 
 The following illustration shows the component structure.
 
-![elements](https://user-images.githubusercontent.com/17298270/120887724-d61f4e00-c5f4-11eb-9971-0fc2f4ff9982.png)
+<img width="500px" alt="elements" src="https://user-images.githubusercontent.com/17298270/120887724-d61f4e00-c5f4-11eb-9971-0fc2f4ff9982.png" />
 
 ### Example
 
 Have a look at this example:
 
-![custom styles example](https://user-images.githubusercontent.com/17298270/120889453-8d1fc780-c5fd-11eb-9cc9-5cf463dec16c.png)
+<img width="400px" alt="custom styles example" src="https://user-images.githubusercontent.com/17298270/120889453-8d1fc780-c5fd-11eb-9cc9-5cf463dec16c.png" />
 
 ```css
 .container {
