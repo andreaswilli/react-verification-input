@@ -17,6 +17,8 @@
 
 💅🏼 **Custom Styling**: [Customize](#custom-styling) the component's styling to match the look of your application.
 
+👨🏼‍💻 **TypeScript Support**: The package contains TypeScript declarations so you can enjoy IntelliSense in your editor.
+
 ✅ **Compatibility**: Compatible with React 16 (>=16.8.0) and React 17. Support of new versions of React as they are released will be ensured.
 
 ## Getting Started
