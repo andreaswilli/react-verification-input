@@ -251,6 +251,18 @@ describe("VerificationInput", () => {
     expect(spyHandleChange).toHaveBeenCalledWith("01");
   });
 
+  it("should trigger onChange callback even if value is not provided", () => {
+    const spyHandleChange = jest.fn();
+
+    render(<VerificationInput onChange={spyHandleChange} />);
+
+    userEvent.type(screen.getByRole("textbox"), "01");
+
+    expect(spyHandleChange).toHaveBeenCalledTimes(2);
+    expect(spyHandleChange).toHaveBeenCalledWith("0");
+    expect(spyHandleChange).toHaveBeenCalledWith("01");
+  });
+
   it("should trigger onFocus and onBlur callbacks", () => {
     const spyHandleFocus = jest.fn();
     const spyHandleBlur = jest.fn();
