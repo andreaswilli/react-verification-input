@@ -60,9 +60,8 @@ const VerificationInput = forwardRef(
       if (RegExp(`^[${validChars}]{0,${length}}$`).test(newInputVal)) {
         if (onChange) {
           onChange?.(newInputVal);
-        } else {
-          setLocalValue(newInputVal);
         }
+        setLocalValue(newInputVal);
       }
     };
 

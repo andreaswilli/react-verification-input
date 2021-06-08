@@ -10,7 +10,7 @@
   "scripts": {
     "build": "webpack",
     "build:prod": "webpack --mode=production",
-    "serve": "webpack --watch",
+    "serve": "webpack --watch --mode=production",
     "lint": "eslint src",
     "test": "jest --coverage",
     "bump-major": "npm version major",
