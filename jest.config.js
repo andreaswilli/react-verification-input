@@ -3,4 +3,5 @@ module.exports = {
     "^.+\\.(css|less|scss)$": "babel-jest",
   },
   setupFilesAfterEnv: ["<rootDir>/src/setupTests.js"],
+  testEnvironment: "jsdom",
 };

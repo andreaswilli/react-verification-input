@@ -1,10 +1,11 @@
 const path = require("path");
 const webpack = require("webpack");
+const CopyPlugin = require("copy-webpack-plugin");
 
 module.exports = {
   entry: "./src/index.js",
   output: {
-    path: path.resolve(__dirname, "dist"),
+    path: path.resolve(__dirname, "lib"),
     filename: "index.js",
     libraryTarget: "commonjs2",
   },
@@ -17,24 +18,16 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        loader: "postcss-loader!css-loader",
-      },
-      {
-        test: /\.scss$/,
-        use: [
-          {
-            loader: "postcss-loader",
-          },
-          {
-            loader: "sass-loader",
-          },
-        ],
+        use: ["css-loader"],
       },
     ],
   },
   plugins: [
     new webpack.DefinePlugin({
       "process.env.NODE_ENV": JSON.stringify("production"),
+    }),
+    new CopyPlugin({
+      patterns: ["src/index.d.ts"],
     }),
   ],
   externals: {

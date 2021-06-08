@@ -1,0 +1,43 @@
+name: Publish Release
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  publishRelease:
+    name: Publish release
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Use Node.js ${{ matrix.node-verison }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: '12.x'
+
+      - name: Install dependencies
+        run: yarn --frozen-lockfile
+
+      - name: Lint
+        run: yarn lint
+
+      - name: Test
+        run: yarn test
+
+      - name: Production build
+        run: yarn build:prod
+ 
+      - name: Publish Prerelease to NPM
+        if: github.event.release.prerelease
+        uses: JS-DevTools/npm-publish@v1
+        with:
+          tag: beta
+          token: ${{ secrets.NPM_TOKEN }}
+        
+      - name: Publish Release to NPM
+        if: "!github.event.release.prerelease"
+        uses: JS-DevTools/npm-publish@v1
+        with:
+          tag: latest
+          token: ${{ secrets.NPM_TOKEN }}

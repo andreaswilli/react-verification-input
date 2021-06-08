@@ -1,0 +1,68 @@
+name: Prepare Release
+
+on:
+  pull_request:
+    types: [closed]
+    branches:
+      - master
+
+jobs:
+  prepareRelease:
+    name: Prepare release
+    if: "${{ github.event.pull_request.merged && (
+          contains(github.event.pull_request.labels.*.name, 'release: patch') ||
+          contains(github.event.pull_request.labels.*.name, 'release: minor') ||
+          contains(github.event.pull_request.labels.*.name, 'release: major')
+        ) }}"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          ref: ${{ github.event.pull_request.base.ref }}
+
+      - name: Use Node.js ${{ matrix.node-verison }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: '12.x'
+
+      - uses: oleksiyrudenko/gha-git-credentials@v2-latest
+        with:
+          token: '${{ secrets.GITHUB_TOKEN }}'
+
+      - name: Bump version to next patch
+        if: "${{ contains(github.event.pull_request.labels.*.name, 'release: patch') }}"
+        run: npm run bump-patch
+
+      - name: Bump version to next minor
+        if: "${{ contains(github.event.pull_request.labels.*.name, 'release: minor') }}"
+        run: npm run bump-minor
+
+      - name: Bump version to next major
+        if: "${{ contains(github.event.pull_request.labels.*.name, 'release: major') }}"
+        run: npm run bump-major
+
+      - name: Push commit and tag
+        run: git push --follow-tags
+
+      - uses: actions/checkout@v2
+        with:
+          ref: develop
+          fetch-depth: 0
+
+      - name: Merge master -> develop
+        run: |
+          git merge origin/master
+          git push
+
+      - name: Get Latest Tag
+        id: previoustag
+        uses: "WyriHaximus/github-action-get-previous-tag@v1"
+
+      - name: Create Release Draft
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: ${{ steps.previoustag.outputs.tag }}
+          draft: true
+          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
