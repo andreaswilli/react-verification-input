@@ -1,8 +1,8 @@
 {
   "name": "react-verification-input",
   "version": "2.0.0-beta.8",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
   "repository": "https://github.com/andreaswilli/react-verification-input.git",
   "description": "Customizable, masked input, which can be used for all sorts of codes.",
   "author": "Andreas Willi",
@@ -23,6 +23,9 @@
     "push-tags": "git push --follow-tags",
     "publish-beta": "npm publish --tag beta"
   },
+  "files": [
+    "lib/"
+  ],
   "peerDependencies": {
     "react": "16.8.0 - 17.x.x",
     "react-dom": "16.8.0 - 17.x.x"
