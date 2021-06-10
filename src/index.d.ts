@@ -1,5 +1,3 @@
-import React from "react";
-
 export interface VerificationInputProps {
   value?: string;
   length?: number;
@@ -20,5 +18,8 @@ export interface VerificationInputProps {
   onBlur?: () => void;
 }
 
-declare const VerificationInput: React.FC<VerificationInputProps>;
+declare const VerificationInput: React.ForwardRefExoticComponent<
+  React.PropsWithoutRef<VerificationInputProps> &
+    React.RefAttributes<HTMLInputElement>
+>;
 export default VerificationInput;
