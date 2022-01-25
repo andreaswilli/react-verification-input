@@ -142,4 +142,4 @@ Have a look at this example:
 
 ## Contributing
 
-If you want to contribute, feel free to do so. I'd very much appreciate it. ❤️
+Contributions welcome ❤️. If you want to contribute, feel free to have a look at the [contribution guide](/CONTRIBUTING.md).
