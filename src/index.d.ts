@@ -16,6 +16,7 @@ export interface VerificationInputProps {
   onChange?: (value: string) => void;
   onFocus?: () => void;
   onBlur?: () => void;
+  [key: string]: any;
 }
 
 declare const VerificationInput: React.ForwardRefExoticComponent<
