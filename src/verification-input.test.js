@@ -60,7 +60,7 @@ describe("VerificationInput", () => {
 
     userEvent.paste(screen.getByRole("textbox"), "012345");
 
-    expect(screen.getByTestId("container")).toHaveTextContent("012345");
+    expect(screen.getByTestId("container")).toHaveTextContent("012346");
   });
 
   it("should keep previous value if invalid code is pasted", () => {
