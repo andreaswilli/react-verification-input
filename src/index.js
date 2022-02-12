@@ -17,11 +17,11 @@ const VerificationInput = forwardRef(
       removeDefaultStyles,
       debug,
       inputProps,
+      containerProps,
       classNames: classes,
       onChange,
       onFocus,
       onBlur,
-      ...restProps
     },
     ref
   ) => {
@@ -104,7 +104,7 @@ const VerificationInput = forwardRef(
             "vi__container--default": !removeDefaultStyles,
           })}
           onClick={() => inputRef.current.focus()}
-          {...restProps}
+          {...containerProps}
         >
           {[...Array(length)].map((_, i) => (
             <div
@@ -149,6 +149,7 @@ VerificationInput.propTypes = {
   removeDefaultStyles: PropTypes.bool,
   debug: PropTypes.bool,
   inputProps: PropTypes.object,
+  containerProps: PropTypes.object,
   classNames: PropTypes.shape({
     container: PropTypes.string,
     character: PropTypes.string,
@@ -168,6 +169,7 @@ VerificationInput.defaultProps = {
   removeDefaultStyles: false,
   debug: false,
   inputProps: {},
+  containerProps: {},
   classNames: {},
 };
 

@@ -7,6 +7,7 @@ export interface VerificationInputProps {
   removeDefaultStyles?: boolean;
   debug?: boolean;
   inputProps?: object;
+  containerProps?: object;
   classNames?: {
     container?: string;
     character?: string;
