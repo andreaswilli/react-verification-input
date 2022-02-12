@@ -350,8 +350,8 @@ describe("VerificationInput", () => {
     expect(screen.getByRole("textbox")).toHaveAttribute("type", "tel");
   });
 
-  it("should forward unknown props to container element", () => {
-    render(<VerificationInput prop="value" />);
+  it("should forward containerProps to container element", () => {
+    render(<VerificationInput containerProps={{ prop: "value" }} />);
 
     expect(screen.getByTestId("container")).toHaveAttribute("prop", "value");
   });
