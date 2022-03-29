@@ -19,7 +19,7 @@
 
 👨🏼‍💻 **TypeScript Support**: The package contains TypeScript declarations so you can enjoy IntelliSense in your editor.
 
-✅ **Compatibility**: Compatible with React 16 (>=16.8.0) and React 17. Support of new versions of React as they are released will be ensured.
+✅ **Compatibility**: Compatible with React 16 (>=16.8.0), React 17 and React 18. Support of new versions of React as they are released will be ensured.
 
 ## Getting Started
 
