@@ -1,6 +1,6 @@
 {
   "name": "react-verification-input",
-  "version": "2.0.5",
+  "version": "2.0.6-beta.0",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "repository": "https://github.com/andreaswilli/react-verification-input.git",
@@ -27,8 +27,8 @@
     "lib/"
   ],
   "peerDependencies": {
-    "react": "16.8.0 - 17.x.x",
-    "react-dom": "16.8.0 - 17.x.x"
+    "react": ">=16.8.0",
+    "react-dom": ">=16.8.0"
   },
   "devDependencies": {
     "@babel/core": "^7.0.0",
