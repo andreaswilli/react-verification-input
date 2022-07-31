@@ -122,6 +122,9 @@ const VerificationInput = forwardRef(
                 "vi__character--inactive--default":
                   !removeDefaultStyles && getValue().length < i,
                 [classes.characterInactive]: getValue().length < i,
+                [classes.characterValidated]: RegExp(`[${validChars}]`).test(
+                  getValue()[i]
+                ),
               })}
               onClick={handleClick}
               id={`field-${i}`}
@@ -154,6 +157,7 @@ VerificationInput.propTypes = {
     character: PropTypes.string,
     characterInactive: PropTypes.string,
     characterSelected: PropTypes.string,
+    characterValidated: PropTypes.string,
   }),
   onChange: PropTypes.func,
   onFocus: PropTypes.func,

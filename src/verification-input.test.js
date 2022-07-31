@@ -312,6 +312,7 @@ describe("VerificationInput", () => {
           character: "custom-character",
           characterInactive: "custom-character-inactive",
           characterSelected: "custom-character-selected",
+          characterValidated: "custom-character-validated",
         }}
         autoFocus
       />
@@ -341,6 +342,36 @@ describe("VerificationInput", () => {
     expect(screen.getByTestId("character-5")).toHaveClass(
       "custom-character",
       "custom-character-inactive"
+    );
+  });
+
+  it("should apply custom class names when valid value ", () => {
+    render(
+      <VerificationInput
+        classNames={{
+          characterValidated: "custom-character-validated",
+        }}
+        autoFocus
+        value={"123456"}
+      />
+    );
+
+    expect(screen.getByTestId("character-1")).toHaveClass(
+      "custom-character-validated"
+    );
+    expect(screen.getByTestId("character-2")).toHaveClass(
+      "custom-character-validated"
+    );
+    expect(screen.getByTestId("character-3")).toHaveClass(
+      "custom-character-validated"
+    );
+
+    expect(screen.getByTestId("character-4")).toHaveClass(
+      "custom-character-validated"
+    );
+
+    expect(screen.getByTestId("character-5")).toHaveClass(
+      "custom-character-validated"
     );
   });
 
