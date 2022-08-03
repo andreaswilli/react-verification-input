@@ -12,7 +12,6 @@ const VerificationInput = forwardRef(
       validChars,
       placeholder,
       autoFocus,
-      removeDefaultStyles,
       debug,
       inputProps,
       containerProps,
@@ -93,18 +92,14 @@ const VerificationInput = forwardRef(
         />
         <div
           data-testid="container"
-          className={classNames("vi__container", classes.container, {
-            "vi__container--default": !removeDefaultStyles,
-          })}
+          className={classNames("vi__container", classes.container)}
           onClick={() => inputRef.current.focus()}
           {...containerProps}
         >
           {[...Array(length)].map((_, i) => (
             <div
               className={classNames("vi__character", classes.character, {
-                "vi__character--default": !removeDefaultStyles,
-                "vi__character--selected--default":
-                  !removeDefaultStyles &&
+                "vi__character--selected":
                   (getValue().length === i ||
                     (getValue().length === i + 1 && length === i + 1)) &&
                   isActive,
@@ -112,8 +107,7 @@ const VerificationInput = forwardRef(
                   (getValue().length === i ||
                     (getValue().length === i + 1 && length === i + 1)) &&
                   isActive,
-                "vi__character--inactive--default":
-                  !removeDefaultStyles && getValue().length < i,
+                "vi__character--inactive": getValue().length < i,
                 [classes.characterInactive]: getValue().length < i,
               })}
               onClick={handleClick}
@@ -139,7 +133,6 @@ VerificationInput.propTypes = {
   validChars: PropTypes.string,
   placeholder: PropTypes.string,
   autoFocus: PropTypes.bool,
-  removeDefaultStyles: PropTypes.bool,
   debug: PropTypes.bool,
   inputProps: PropTypes.object,
   containerProps: PropTypes.object,
@@ -159,7 +152,6 @@ VerificationInput.defaultProps = {
   validChars: "A-Za-z0-9",
   placeholder: "·",
   autoFocus: false,
-  removeDefaultStyles: false,
   debug: false,
   inputProps: {},
   containerProps: {},
