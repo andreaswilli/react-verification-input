@@ -2,8 +2,6 @@ import React, { useRef, useState, useEffect, forwardRef } from "react";
 import classNames from "classnames";
 import PropTypes from "prop-types";
 
-import { KEY_CODE } from "./constants";
-
 import style from "./styles.css";
 
 const VerificationInput = forwardRef(
@@ -42,12 +40,7 @@ const VerificationInput = forwardRef(
 
     const handleKeyDown = (event) => {
       if (
-        [
-          KEY_CODE.ARROW_LEFT,
-          KEY_CODE.ARROW_RIGHT,
-          KEY_CODE.ARROW_UP,
-          KEY_CODE.ARROW_DOWN,
-        ].includes(event.keyCode)
+        ["ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown"].includes(event.key)
       ) {
         // do not allow to change cursor position
         event.preventDefault();
