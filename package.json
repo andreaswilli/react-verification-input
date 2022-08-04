@@ -27,8 +27,8 @@
     "lib/"
   ],
   "peerDependencies": {
-    "react": ">=16.8.0",
-    "react-dom": ">=16.8.0"
+    "react": "16.8.0 - 18.x.x",
+    "react-dom": "16.8.0 - 18.x.x"
   },
   "devDependencies": {
     "@babel/core": "^7.0.0",
