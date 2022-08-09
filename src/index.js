@@ -2,8 +2,6 @@ import React, { useRef, useState, useEffect, forwardRef } from "react";
 import classNames from "classnames";
 import PropTypes from "prop-types";
 
-import { KEY_CODE } from "./constants";
-
 import style from "./styles.css";
 
 const VerificationInput = forwardRef(
@@ -14,14 +12,13 @@ const VerificationInput = forwardRef(
       validChars,
       placeholder,
       autoFocus,
-      removeDefaultStyles,
       debug,
       inputProps,
+      containerProps,
       classNames: classes,
       onChange,
       onFocus,
       onBlur,
-      ...restProps
     },
     ref
   ) => {
@@ -42,12 +39,7 @@ const VerificationInput = forwardRef(
 
     const handleKeyDown = (event) => {
       if (
-        [
-          KEY_CODE.ARROW_LEFT,
-          KEY_CODE.ARROW_RIGHT,
-          KEY_CODE.ARROW_UP,
-          KEY_CODE.ARROW_DOWN,
-        ].includes(event.keyCode)
+        ["ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown"].includes(event.key)
       ) {
         // do not allow to change cursor position
         event.preventDefault();
@@ -100,18 +92,14 @@ const VerificationInput = forwardRef(
         />
         <div
           data-testid="container"
-          className={classNames("vi__container", classes.container, {
-            "vi__container--default": !removeDefaultStyles,
-          })}
+          className={classNames("vi__container", classes.container)}
           onClick={() => inputRef.current.focus()}
-          {...restProps}
+          {...containerProps}
         >
           {[...Array(length)].map((_, i) => (
             <div
               className={classNames("vi__character", classes.character, {
-                "vi__character--default": !removeDefaultStyles,
-                "vi__character--selected--default":
-                  !removeDefaultStyles &&
+                "vi__character--selected":
                   (getValue().length === i ||
                     (getValue().length === i + 1 && length === i + 1)) &&
                   isActive,
@@ -119,8 +107,7 @@ const VerificationInput = forwardRef(
                   (getValue().length === i ||
                     (getValue().length === i + 1 && length === i + 1)) &&
                   isActive,
-                "vi__character--inactive--default":
-                  !removeDefaultStyles && getValue().length < i,
+                "vi__character--inactive": getValue().length < i,
                 [classes.characterInactive]: getValue().length < i,
               })}
               onClick={handleClick}
@@ -146,9 +133,9 @@ VerificationInput.propTypes = {
   validChars: PropTypes.string,
   placeholder: PropTypes.string,
   autoFocus: PropTypes.bool,
-  removeDefaultStyles: PropTypes.bool,
   debug: PropTypes.bool,
   inputProps: PropTypes.object,
+  containerProps: PropTypes.object,
   classNames: PropTypes.shape({
     container: PropTypes.string,
     character: PropTypes.string,
@@ -165,9 +152,9 @@ VerificationInput.defaultProps = {
   validChars: "A-Za-z0-9",
   placeholder: "·",
   autoFocus: false,
-  removeDefaultStyles: false,
   debug: false,
   inputProps: {},
+  containerProps: {},
   classNames: {},
 };
 

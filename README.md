@@ -54,24 +54,20 @@ All of these props are optional and some also come with a default value. However
 | validChars          | String   | `'A-Za-z0-9'`  | Set of characters the input should allow. The string is inserted into a regexp character set ( `/[]/` ) for input validation.                                                                                                                                                                                            |
 | placeholder         | String   | `'·'` (U+00B7) | The character to display in empty fields. In order to use the blank character as a placeholder, specify this option as `' '` or `''`.                                                                                                                                                                                    |
 | autoFocus           | Boolean  | `false`        | Focus the input automatically as soon as it is rendered.                                                                                                                                                                                                                                                                 |
-| removeDefaultStyles | Boolean  | `false`        | Completely remove any styles that are not required for the component to work properly. This is useful if you want to override the default styles (see [Custom Styling](#custom-styling)).                                                                                                                                |
 | debug               | Boolean  | `false`        | Reveal what is going on behind the scenes, which might come in handy when trying to better understand the component. Obviously you don't want to use this in production. 😄                                                                                                                                              |
-| inputProps          | Object   | `{}`           | These props get forwarded to the input element.                                                                                                                                                                                                                                                                          |
+| inputProps          | Object   | `{}`           | The properties of this object get forwarded as props to the input element.                                                                                                                                                                                                                                               |
+| containerProps      | Object   | `{}`           | The properties of this object get forwarded as props to the container element.                                                                                                                                                                                                                                           |
 | classNames          | Object   | `{}`           | CSS class names to add to the specified elements. For more details see [Custom Styling](#custom-styling).                                                                                                                                                                                                                |
 | onChange            | Function | -              | Callback function that gets called with the string value whenever it changes.                                                                                                                                                                                                                                            |
 | onFocus             | Function | -              | Callback function that gets called when the component obtains focus.                                                                                                                                                                                                                                                     |
 | onBlur              | Function | -              | Callback function that gets called when the component loses focus.                                                                                                                                                                                                                                                       |
-| (any other prop)    | Any      | -              | Any props not listed above will be directly forwarded to the `container` element.                                                                                                                                                                                                                                        |
 
 ## Custom Styling
-
-> **Note:** It's recommended to use the `removeDefaultStyles` option when applying custom styles, otherwise you may not be able to override the default styles.
 
 Style the input by passing it your custom class names like so:
 
 ```js
 <VerificationInput
-  removeDefaultStyles
   classNames={{
     container: "container",
     character: "character",
@@ -121,6 +117,16 @@ Have a look at this example:
   border: 1px solid white;
 }
 ```
+
+## Migration Guide: `v2` --> `v3`
+
+- **Additional props**
+
+  Custom props are no longer forwarded to the container element. Use the new prop `containerProps` instead and specify the custom props in object literal form.
+
+- **prop: `removeDefaultStyles`**
+
+  The `removeDefaultStyles` prop has been removed. Styles are now overridable by default. Thus this prop can be removed safely.
 
 ## Migration Guide: `v0.1.x` --> `v2`
 
