@@ -1,4 +1,4 @@
-![logo](https://user-images.githubusercontent.com/17298270/184373869-cbf8c1de-a1e9-4e3a-a655-829854e5071f.png)
+![logo](https://user-images.githubusercontent.com/17298270/184383285-616eaa7c-d911-4203-ad0a-9ddfa32e4e4b.png)
 
 [![npm](https://img.shields.io/npm/v/react-verification-input?color=orange)](https://www.npmjs.com/package/react-verification-input)
 [![npm downloads](https://img.shields.io/npm/dm/react-verification-input.svg?style=flat)](https://www.npmjs.com/package/react-verification-input)
