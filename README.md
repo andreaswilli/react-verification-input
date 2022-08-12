@@ -1,4 +1,4 @@
-# react-verification-input
+![logo](https://user-images.githubusercontent.com/17298270/184373869-cbf8c1de-a1e9-4e3a-a655-829854e5071f.png)
 
 [![npm](https://img.shields.io/npm/v/react-verification-input?color=orange)](https://www.npmjs.com/package/react-verification-input)
 [![npm downloads](https://img.shields.io/npm/dm/react-verification-input.svg?style=flat)](https://www.npmjs.com/package/react-verification-input)
@@ -6,6 +6,8 @@
 ![npm bundle size](https://img.shields.io/bundlephobia/min/react-verification-input?color=cornflowerblue)
 
 `react-verification-input` is a customizable, masked input that can be used to enter all sorts of codes e.g. security codes when two-factor authenticating. Also I'm sure you can think of many more creative use cases.
+
+## Demo
 
 <img width="400px" alt="verification-input" src="https://user-images.githubusercontent.com/17298270/120872091-e821d200-c59d-11eb-87f5-729692c6b40a.gif" />
 
