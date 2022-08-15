@@ -9,6 +9,8 @@
 
 ## Demo
 
+🔴 [**Try it out yourself!**](https://andreaswilli.github.io/react-verification-input)
+
 <img width="400px" alt="verification-input" src="https://user-images.githubusercontent.com/17298270/120872091-e821d200-c59d-11eb-87f5-729692c6b40a.gif" />
 
 ## Features
@@ -79,46 +81,15 @@ Style the input by passing it your custom class names like so:
 />
 ```
 
+### Example
+
+🔴 [**View live example!**](https://andreaswilli.github.io/react-verification-input/styling)
+
 ### Component Structure
 
 The following illustration shows the component structure.
 
 <img width="500px" alt="elements" src="https://user-images.githubusercontent.com/17298270/120887724-d61f4e00-c5f4-11eb-9971-0fc2f4ff9982.png" />
-
-### Example
-
-Have a look at this example:
-
-<img width="400px" alt="custom styles example" src="https://user-images.githubusercontent.com/17298270/120889453-8d1fc780-c5fd-11eb-9cc9-5cf463dec16c.png" />
-
-```css
-.container {
-  height: 50px;
-  width: 300px;
-}
-
-.character {
-  line-height: 50px;
-  font-size: 36px;
-  color: white;
-  background-color: rgba(255, 255, 255, 0.2);
-  border: 1px solid transparent;
-  border-radius: 8px;
-  margin-left: 8px;
-}
-
-.character:first-child {
-  margin-left: 0;
-}
-
-.character--inactive {
-  background-color: rgba(255, 255, 255, 0.1);
-}
-
-.character--selected {
-  border: 1px solid white;
-}
-```
 
 ## Migration Guide: `v2` --> `v3`
 
