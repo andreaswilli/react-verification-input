@@ -6,4 +6,5 @@ module.exports = withNextra({
   eslint: {
     ignoreDuringBuilds: true,
   },
+  basePath: "/react-verification-input",
 });
