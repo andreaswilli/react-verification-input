@@ -1,0 +1,39 @@
+---
+title: 'Styling'
+---
+
+import VerificationInput from '../../lib/index.js'
+import Readme from '../../README.md'
+import Section from '../components/Section.jsx'
+
+# Styling
+
+<Section markdown={Readme} type="h3" name="Custom Styling" removeHeading />
+
+## Example
+
+<br />
+<VerificationInput
+  length={5}
+  classNames={{
+    character: "character",
+  }}
+/>
+
+```css
+.character {
+  border: none;
+  font-size: 20px;
+  border-radius: 8px;
+
+  /* light theme */
+  color: #272729;
+  background-color: #f6f5fa;
+  box-shadow: 0 2px 0 #e4e2f5;
+
+  /* dark theme */
+  color: #fff;
+  background-color: #222;
+  box-shadow: 0 2px 0 #444;
+}
+```

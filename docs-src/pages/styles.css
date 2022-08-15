@@ -1,0 +1,17 @@
+.character {
+  border: none;
+  font-size: 20px;
+  border-radius: 8px;
+}
+
+html.light .character {
+  color: #272729;
+  background-color: #f6f5fa;
+  box-shadow: 0 2px 0 #e4e2f5;
+}
+
+html.dark .character {
+  color: #fff;
+  background-color: #222;
+  box-shadow: 0 2px 0 #444;
+}
