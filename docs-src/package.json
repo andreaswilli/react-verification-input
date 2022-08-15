@@ -1,0 +1,13 @@
+{
+  "name": "rvi-docs",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "next": "^12.2.5",
+    "nextra": "^1.1.0",
+    "nextra-theme-docs": "^1.2.6",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  }
+}
