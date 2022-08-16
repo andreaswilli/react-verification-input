@@ -91,34 +91,6 @@ The following illustration shows the component structure.
 
 <img width="500px" alt="elements" src="https://user-images.githubusercontent.com/17298270/120887724-d61f4e00-c5f4-11eb-9971-0fc2f4ff9982.png" />
 
-## Migration Guide: `v2` --> `v3`
-
-- **Additional props**
-
-  Custom props are no longer forwarded to the container element. Use the new prop `containerProps` instead and specify the custom props in object literal form.
-
-- **prop: `removeDefaultStyles`**
-
-  The `removeDefaultStyles` prop has been removed. Styles are now overridable by default. Thus this prop can be removed safely.
-
-## Migration Guide: `v0.1.x` --> `v2`
-
-- **prop: `input`**
-
-  The `input` prop has been renamed to `inputProps` in order to be more explicit about the props being forwarded to the input element. Also, the `onChange` callback is now available on the top level. This matches the interface of a regular input element more closely (there is also a new top-level prop `value`).
-
-- **props: `container`, `inputField`, `characters`, `character`**
-
-  These props have been removed. Your custom CSS classes can be passed to the new `classNames` prop. In order to simplify the component structure, the `characters` element has been removed, use `container` instead. For more details see [Custom Styling](#custom-styling). Additional props can no longer be forwarded to these elements.
-
-- **prop: `getInputRef`**
-
-  This callback has been removed. The new way to receive the input ref is to use the [standard `ref` prop](https://reactjs.org/docs/refs-and-the-dom.html). The result will be a ref to the actual (invisible) input element.
-
-- **Additional props**
-
-  Any additional props will now be forwarded to the container element. However, you probably don't need to change anything.
-
 ## Contributing
 
 Contributions welcome ❤️. If you want to contribute, feel free to have a look at the [contribution guide](/CONTRIBUTING.md).
