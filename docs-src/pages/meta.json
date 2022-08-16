@@ -1,3 +1,6 @@
 {
-  "index": "Demo"
+  "index": "Demo",
+  "API": "API",
+  "styling": "Styling",
+  "migration": "Migration Guide"
 }

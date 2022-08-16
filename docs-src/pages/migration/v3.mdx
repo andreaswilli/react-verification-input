@@ -1,0 +1,52 @@
+---
+title: Migrating to Version 3
+---
+
+# Migrating to Version 3
+
+This guide is aimed at developers wanting to update from `v2.x.x` to `v3.x.x`.
+
+Check the following steps one by one and execute the ones that apply to your
+situation.
+
+## New prop: `containerProps`
+
+Custom props are no longer forwarded to the container element. Use the new
+prop `containerProps` instead and specify the custom props in object literal
+form.
+
+```jsx
+// v2
+<VerificationInput
+  id="input-container"
+/>
+
+// v3
+<VerificationInput
+  containerProps={{
+    id: "input-container"
+  }}
+/>
+```
+
+## Remove prop: `removeDefaultStyles`
+
+The `removeDefaultStyles` prop has been removed. Styles are now overridable by
+default. Thus this prop can be removed safely.
+
+```jsx
+// v2
+<VerificationInput
+  removeDefaultStyles
+  classNames={{
+    character: "character"
+  }}
+/>
+
+// v3
+<VerificationInput
+  classNames={{
+    character: "character"
+  }}
+/>
+```
