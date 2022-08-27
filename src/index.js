@@ -78,15 +78,17 @@ const VerificationInput = forwardRef(
             "vi--debug": debug,
           })}
           onKeyDown={handleKeyDown}
-          onFocus={(e) => {
+          onFocus={() => {
             setActive(true);
-            const val = e.target.value;
-            e.target.setSelectionRange(val.length, val.length);
             onFocus?.();
           }}
           onBlur={() => {
             setActive(false);
             onBlur?.();
+          }}
+          onSelect={(e) => {
+            const val = e.target.value;
+            e.target.setSelectionRange(val.length, val.length);
           }}
           {...inputProps}
         />
