@@ -1,22 +1,22 @@
 /* :where() gives the styles specificity 0, which makes them overridable */
 :where(.vi__wrapper) {
   position: relative;
+  width: min-content;
 }
 
-:where(.vi) {
+.vi {
   height: 100%;
+  width: 100%;
   box-sizing: border-box;
   position: absolute;
-  left: -2000px;
-  opacity: 0;
-  transform: scale(0);
+  color: transparent;
+  background: transparent;
+  caret-color: transparent;
+  outline: none;
 }
 
-.vi--debug {
-  left: 0;
-  bottom: -70px;
-  opacity: 1;
-  transform: scale(1);
+.vi::selection {
+  background: transparent;
 }
 
 :where(.vi__container) {

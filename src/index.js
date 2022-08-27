@@ -12,7 +12,6 @@ const VerificationInput = forwardRef(
       validChars,
       placeholder,
       autoFocus,
-      debug,
       inputProps,
       containerProps,
       classNames: classes,
@@ -74,19 +73,19 @@ const VerificationInput = forwardRef(
               ref.current = node;
             }
           }}
-          className={classNames("vi", {
-            "vi--debug": debug,
-          })}
+          className="vi"
           onKeyDown={handleKeyDown}
-          onFocus={(e) => {
+          onFocus={() => {
             setActive(true);
-            const val = e.target.value;
-            e.target.setSelectionRange(val.length, val.length);
             onFocus?.();
           }}
           onBlur={() => {
             setActive(false);
             onBlur?.();
+          }}
+          onSelect={(e) => {
+            const val = e.target.value;
+            e.target.setSelectionRange(val.length, val.length);
           }}
           {...inputProps}
         />
@@ -133,7 +132,6 @@ VerificationInput.propTypes = {
   validChars: PropTypes.string,
   placeholder: PropTypes.string,
   autoFocus: PropTypes.bool,
-  debug: PropTypes.bool,
   inputProps: PropTypes.object,
   containerProps: PropTypes.object,
   classNames: PropTypes.shape({
@@ -152,7 +150,6 @@ VerificationInput.defaultProps = {
   validChars: "A-Za-z0-9",
   placeholder: "·",
   autoFocus: false,
-  debug: false,
   inputProps: {},
   containerProps: {},
   classNames: {},

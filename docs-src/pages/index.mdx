@@ -9,10 +9,11 @@ import VerificationInput from '../../lib/index.js'
 
 ## Default
 
-Default configuration without specifying any props.
 <br />
 
 <VerificationInput />
+
+Default configuration without specifying any props.
 
 ```jsx
 <VerificationInput />
@@ -20,10 +21,11 @@ Default configuration without specifying any props.
 
 ## Numbers only
 
-Accept only numbers and use numpad on mobile devices.
 <br />
 
 <VerificationInput validChars="0-9" inputProps={{type: "tel"}} />
+
+Accept only numbers and use numpad on mobile devices.
 
 ```jsx
 <VerificationInput
@@ -34,10 +36,11 @@ Accept only numbers and use numpad on mobile devices.
 
 ## Custom length
 
-Configure the input to accept 5 digits.
 <br />
 
 <VerificationInput length={5} />
+
+Configure the input to accept 5 digits.
 
 ```jsx
 <VerificationInput length={5} />
@@ -45,16 +48,21 @@ Configure the input to accept 5 digits.
 
 ## Custom placeholder
 
-Use any character as placeholder (empty string for no placeholder).
 <br />
 
 <VerificationInput placeholder="_" />
+
+Use any character as placeholder (empty string for no placeholder).
 
 ```jsx
 <VerificationInput placeholder="_" />
 ```
 
 ## Autofill OTP (iOS)
+
+<br />
+
+<VerificationInput inputProps={{ autoComplete: "one-time-code" }} />
 
 Let iOS read OTP codes from text message notifications (see <a
   href="https://developer.apple.com/documentation/security/password_autofill/enabling_password_autofill_on_an_html_input_element"
@@ -63,10 +71,6 @@ Let iOS read OTP codes from text message notifications (see <a
   In order to test this, you need to send a text message containing e.g.
   `Code: 123456` to your phone.
 </Callout>
-
-<br />
-
-<VerificationInput inputProps={{ autoComplete: "one-time-code" }} />
 
 ```jsx
 <VerificationInput
