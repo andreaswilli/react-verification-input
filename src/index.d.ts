@@ -4,7 +4,6 @@ export interface VerificationInputProps {
   validChars?: string;
   placeholder?: string;
   autoFocus?: boolean;
-  debug?: boolean;
   inputProps?: object;
   containerProps?: object;
   classNames?: {

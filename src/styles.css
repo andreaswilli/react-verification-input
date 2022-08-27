@@ -19,13 +19,6 @@
   background: transparent;
 }
 
-.vi--debug {
-  left: 0;
-  bottom: -70px;
-  opacity: 1;
-  transform: scale(1);
-}
-
 :where(.vi__container) {
   display: flex;
   gap: 8px;
