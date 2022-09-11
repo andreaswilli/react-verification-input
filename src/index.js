@@ -60,6 +60,10 @@ const VerificationInput = forwardRef(
       return value ?? localValue;
     };
 
+    const { className: inputClassName, ...restInputProps } = inputProps;
+    const { className: containerClassName, ...restContainerProps } =
+      containerProps;
+
     return (
       <div className="vi__wrapper">
         <input
@@ -73,7 +77,7 @@ const VerificationInput = forwardRef(
               ref.current = node;
             }
           }}
-          className="vi"
+          className={classNames("vi", inputClassName)}
           onKeyDown={handleKeyDown}
           onFocus={() => {
             setActive(true);
@@ -87,13 +91,17 @@ const VerificationInput = forwardRef(
             const val = e.target.value;
             e.target.setSelectionRange(val.length, val.length);
           }}
-          {...inputProps}
+          {...restInputProps}
         />
         <div
           data-testid="container"
-          className={classNames("vi__container", classes.container)}
+          className={classNames(
+            "vi__container",
+            classes.container,
+            containerClassName
+          )}
           onClick={() => inputRef.current.focus()}
-          {...containerProps}
+          {...restContainerProps}
         >
           {[...Array(length)].map((_, i) => (
             <div
