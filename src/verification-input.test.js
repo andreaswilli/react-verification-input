@@ -357,6 +357,25 @@ describe("VerificationInput", () => {
     expect(screen.getByRole("textbox")).toHaveAttribute("type", "tel");
   });
 
+  it("should combine default and custom class names on input", () => {
+    render(<VerificationInput inputProps={{ className: "custom" }} />);
+
+    expect(screen.getByRole("textbox")).toHaveClass("vi custom");
+  });
+
+  it("should combine default and custom class names on container", () => {
+    render(
+      <VerificationInput
+        classNames={{ container: "custom-1" }}
+        containerProps={{ className: "custom-2" }}
+      />
+    );
+
+    expect(screen.getByTestId("container")).toHaveClass(
+      "vi__container custom-1 custom-2"
+    );
+  });
+
   it("should forward containerProps to container element", () => {
     render(<VerificationInput containerProps={{ prop: "value" }} />);
 
