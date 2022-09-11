@@ -67,6 +67,7 @@ const VerificationInput = forwardRef(
     return (
       <div className="vi__wrapper">
         <input
+          spellCheck={false}
           value={getValue()}
           onChange={handleInputChange}
           ref={(node) => {
