@@ -381,4 +381,10 @@ describe("VerificationInput", () => {
 
     expect(screen.getByTestId("container")).toHaveAttribute("prop", "value");
   });
+
+  it("should disable spell check", () => {
+    render(<VerificationInput />);
+
+    expect(screen.getByRole("textbox")).toHaveAttribute("spellcheck", "false");
+  });
 });
