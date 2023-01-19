@@ -7,4 +7,7 @@ module.exports = withNextra({
     ignoreDuringBuilds: true,
   },
   basePath: process.env.BASE_PATH ?? "",
+  images: {
+    unoptimized: true,
+  },
 });
