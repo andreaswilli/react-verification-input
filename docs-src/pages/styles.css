@@ -15,3 +15,8 @@ html.dark .character {
   background-color: #222;
   box-shadow: 0 2px 0 #444;
 }
+
+/* disable tailwind focus indicator */
+.vi.focus-visible {
+  box-shadow: none;
+}

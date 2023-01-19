@@ -3,10 +3,14 @@
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
+  "scripts": {
+    "start": "yarn copyReadme && next",
+    "copyReadme": "cp ../README.md assets"
+  },
   "dependencies": {
-    "next": "^12.2.5",
-    "nextra": "^1.1.0",
-    "nextra-theme-docs": "^1.2.6",
+    "next": "^13.0.0",
+    "nextra": "^2.0.0",
+    "nextra-theme-docs": "^2.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   }
