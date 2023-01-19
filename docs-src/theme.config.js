@@ -1,15 +1,15 @@
 export default {
-  github: "https://github.com/andreaswilli/react-verification-input", // GitHub link in the navbar
-  docsRepositoryBase: null, // base URL for the docs repository
-  titleSuffix: " | react-verification-input",
-  nextLinks: true,
-  prevLinks: true,
-  search: true,
-  customSearch: null, // customizable, you can use algolia for example
+  project: {
+    link: "https://github.com/andreaswilli/react-verification-input",
+  },
+  docsRepositoryBase:
+    "https://github.com/andreaswilli/react-verification-input/tree/master/docs-src",
+  useNextSeoProps() {
+    return {
+      titleTemplate: "%s | react-verification-input",
+    };
+  },
   darkMode: true,
-  footer: false,
-  footerText: null,
-  footerEditLink: null,
   logo: (
     <>
       <svg
@@ -107,8 +107,11 @@ export default {
   head: (
     <>
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      <meta name="description" content="Nextra: the next docs builder" />
-      <meta name="og:title" content="Nextra: the next docs builder" />
+      <meta property="og:title" content="react-verification-input" />
+      <meta
+        property="og:description"
+        content="Customizable, masked input for React."
+      />
     </>
   ),
 };
