@@ -5,6 +5,7 @@ title: "Styling"
 import VerificationInput from "../../lib/index.js";
 import Readme from "../assets/README.md";
 import Section from "../components/Section.jsx";
+import { Callout } from "nextra-theme-docs";
 
 # Styling
 
@@ -35,5 +36,46 @@ import Section from "../components/Section.jsx";
   color: #fff;
   background-color: #222;
   box-shadow: 0 2px 0 #444;
+}
+```
+
+## With Cursor (Caret)
+
+<Callout>This currently only works with `placeholder` set to `""`.</Callout>
+
+<br />
+<VerificationInput
+  placeholder=""
+  classNames={{
+    character: "cursor_character",
+    characterSelected: "cursor_character--selected",
+  }}
+/>
+
+```css
+.character--selected {
+  position: relative;
+}
+
+.character--selected:empty::after {
+  content: "";
+  width: 1px;
+  height: 30px;
+  background-color: #333;
+  display: block;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  animation: blink 1s infinite step-end;
+}
+
+@keyframes blink {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
 }
 ```
