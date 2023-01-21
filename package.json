@@ -13,7 +13,7 @@
     "serve": "webpack --watch --mode=production",
     "lint": "eslint src",
     "test": "jest --coverage",
-    "docs": "yarn build:prod && cd docs-src && yarn copyReadme && BASE_PATH=/react-verification-input yarn next build && yarn next export -o ../docs && cd - && touch docs/.nojekyll",
+    "docs": "yarn build:prod && cd docs-src && BASE_PATH=/react-verification-input yarn next build && yarn next export -o ../docs && cd - && touch docs/.nojekyll",
     "bump-major": "npm version major",
     "bump-minor": "npm version minor",
     "bump-patch": "npm version patch",
@@ -24,9 +24,7 @@
     "push-tags": "git push --follow-tags",
     "publish-beta": "npm publish --tag beta"
   },
-  "files": [
-    "lib/"
-  ],
+  "files": ["lib/"],
   "peerDependencies": {
     "react": "16.8.0 - 18.x.x",
     "react-dom": "16.8.0 - 18.x.x"

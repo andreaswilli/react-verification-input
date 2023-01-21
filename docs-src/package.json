@@ -4,8 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "start": "yarn copyReadme && next",
-    "copyReadme": "cp ../README.md assets"
+    "start": "next"
   },
   "dependencies": {
     "next": "^13.0.0",
