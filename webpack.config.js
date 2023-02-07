@@ -7,7 +7,10 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, "lib"),
     filename: "index.js",
-    libraryTarget: "commonjs2",
+    library: {
+      name: "VerificationInput",
+      type: "umd",
+    },
   },
   module: {
     rules: [
