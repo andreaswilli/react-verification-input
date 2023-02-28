@@ -31,6 +31,23 @@ Accept only numbers and use numpad on mobile devices.
 <VerificationInput validChars="0-9" inputProps={{ type: "tel" }} />
 ```
 
+## Password mode
+
+<br />
+
+To masked the input, you can use the `passwordMode` option. This will set the input type as `password` and masked the values. 
+
+```jsx copy
+<VerificationInput passwordMode={true} />
+```
+
+To use Numbers only and password mode, you can use the following snippet where we set the `validChars` 
+and `inputmode` to `decimal` (this enforce mobile devices to use the number keypad).
+
+```jsx copy
+<VerificationInput passwordMode={true} validChars="0-9" inputProps={{ inputmode: "decimal" }} />
+```
+
 ## Custom length
 
 <br />
