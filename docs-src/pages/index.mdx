@@ -23,12 +23,24 @@ Default configuration without specifying any props.
 
 <br />
 
-<VerificationInput validChars="0-9" inputProps={{ type: "tel" }} />
+<VerificationInput validChars="0-9" inputProps={{ inputMode: "numeric" }} />
 
 Accept only numbers and use numpad on mobile devices.
 
 ```jsx copy
-<VerificationInput validChars="0-9" inputProps={{ type: "tel" }} />
+<VerificationInput validChars="0-9" inputProps={{ inputMode: "numeric" }} />
+```
+
+## Password mode
+
+<br />
+
+<VerificationInput passwordMode={true} />
+
+Hide the input value. This will also set the input type as `password`.
+
+```jsx copy
+<VerificationInput passwordMode={true} />
 ```
 
 ## Custom length

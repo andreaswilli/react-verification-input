@@ -12,6 +12,7 @@ const VerificationInput = forwardRef(
       validChars,
       placeholder,
       autoFocus,
+      passwordMode,
       inputProps,
       containerProps,
       classNames: classes,
@@ -60,13 +61,14 @@ const VerificationInput = forwardRef(
       return value ?? localValue;
     };
 
-    const { className: inputClassName, ...restInputProps } = inputProps;
+    const { className: inputClassName, type: inputType, ...restInputProps } = inputProps;
     const { className: containerClassName, ...restContainerProps } =
       containerProps;
 
     return (
       <div className="vi__wrapper">
         <input
+          aria-label="verification input"
           spellCheck={false}
           value={getValue()}
           onChange={handleInputChange}
@@ -92,6 +94,7 @@ const VerificationInput = forwardRef(
             const val = e.target.value;
             e.target.setSelectionRange(val.length, val.length);
           }}
+          type={passwordMode ? 'password' : inputType}
           {...restInputProps}
         />
         <div
@@ -123,7 +126,9 @@ const VerificationInput = forwardRef(
               data-testid={`character-${i}`}
               key={i}
             >
-              {getValue()[i] || placeholder}
+              {passwordMode && getValue()[i]
+                ? "*"
+                : getValue()[i] || placeholder}
             </div>
           ))}
         </div>
@@ -141,6 +146,7 @@ VerificationInput.propTypes = {
   validChars: PropTypes.string,
   placeholder: PropTypes.string,
   autoFocus: PropTypes.bool,
+  passwordMode: PropTypes.bool,
   inputProps: PropTypes.object,
   containerProps: PropTypes.object,
   classNames: PropTypes.shape({

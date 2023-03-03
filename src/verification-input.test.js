@@ -53,6 +53,14 @@ describe("VerificationInput", () => {
     expect(screen.getByTestId("container")).toHaveTextContent(/^012345$/);
   });
 
+  it("Should show only (*) in password mode", async () => {
+    render(<VerificationInput  passwordMode={true} />);
+
+    await userEvent.type(screen.getByLabelText("verification input"), "012345");
+
+    expect(screen.getByTestId("container")).toHaveTextContent(/^\*\*\*\*\*\*$/);
+  });
+
   it("should not allow placeholder character", async () => {
     render(<VerificationInput />);
 
