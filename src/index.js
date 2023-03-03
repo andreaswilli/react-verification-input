@@ -68,7 +68,7 @@ const VerificationInput = forwardRef(
     return (
       <div className="vi__wrapper">
         <input
-          aria-label="verification_input"
+          aria-label="verification input"
           spellCheck={false}
           value={getValue()}
           onChange={handleInputChange}
