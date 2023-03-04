@@ -278,6 +278,17 @@ describe("VerificationInput", () => {
     expect(spyHandleChange).toHaveBeenCalledWith("01");
   });
 
+  it("should trigger onComplete callback when value.length is equal to length", async () => {
+    const spyOnComplete = jest.fn();
+
+    render(<VerificationInput onComplete={spyOnComplete} />);
+
+    await userEvent.type(screen.getByRole("textbox"), "012345");
+
+    expect(spyOnComplete).toHaveBeenCalledTimes(1);
+    expect(spyOnComplete).toHaveBeenCalledWith("012345");
+  });
+
   it("should trigger onFocus and onBlur callbacks", async () => {
     const spyHandleFocus = jest.fn();
     const spyHandleBlur = jest.fn();

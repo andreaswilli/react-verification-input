@@ -19,6 +19,7 @@ const VerificationInput = forwardRef(
       onChange,
       onFocus,
       onBlur,
+      onComplete,
     },
     ref
   ) => {
@@ -54,6 +55,10 @@ const VerificationInput = forwardRef(
           onChange?.(newInputVal);
         }
         setLocalValue(newInputVal);
+
+        if (newInputVal.length === length) {
+          onComplete?.(newInputVal);
+        }
       }
     };
 
@@ -158,6 +163,7 @@ VerificationInput.propTypes = {
   onChange: PropTypes.func,
   onFocus: PropTypes.func,
   onBlur: PropTypes.func,
+  onComplete: PropTypes.func,
 };
 
 VerificationInput.defaultProps = {
