@@ -66,7 +66,11 @@ const VerificationInput = forwardRef(
       return value ?? localValue;
     };
 
-    const { className: inputClassName, type: inputType, ...restInputProps } = inputProps;
+    const {
+      className: inputClassName,
+      type: inputType,
+      ...restInputProps
+    } = inputProps;
     const { className: containerClassName, ...restContainerProps } =
       containerProps;
 
@@ -99,7 +103,7 @@ const VerificationInput = forwardRef(
             const val = e.target.value;
             e.target.setSelectionRange(val.length, val.length);
           }}
-          type={passwordMode ? 'password' : inputType}
+          type={passwordMode ? "password" : inputType}
           {...restInputProps}
         />
         <div
