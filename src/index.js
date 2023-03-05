@@ -19,6 +19,7 @@ const VerificationInput = forwardRef(
       onChange,
       onFocus,
       onBlur,
+      onComplete,
     },
     ref
   ) => {
@@ -54,6 +55,10 @@ const VerificationInput = forwardRef(
           onChange?.(newInputVal);
         }
         setLocalValue(newInputVal);
+
+        if (newInputVal.length === length) {
+          onComplete?.(newInputVal);
+        }
       }
     };
 
@@ -61,7 +66,11 @@ const VerificationInput = forwardRef(
       return value ?? localValue;
     };
 
-    const { className: inputClassName, type: inputType, ...restInputProps } = inputProps;
+    const {
+      className: inputClassName,
+      type: inputType,
+      ...restInputProps
+    } = inputProps;
     const { className: containerClassName, ...restContainerProps } =
       containerProps;
 
@@ -94,7 +103,7 @@ const VerificationInput = forwardRef(
             const val = e.target.value;
             e.target.setSelectionRange(val.length, val.length);
           }}
-          type={passwordMode ? 'password' : inputType}
+          type={passwordMode ? "password" : inputType}
           {...restInputProps}
         />
         <div
@@ -158,6 +167,7 @@ VerificationInput.propTypes = {
   onChange: PropTypes.func,
   onFocus: PropTypes.func,
   onBlur: PropTypes.func,
+  onComplete: PropTypes.func,
 };
 
 VerificationInput.defaultProps = {
