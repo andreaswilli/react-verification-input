@@ -18,6 +18,11 @@
   border: 0 none transparent;
 }
 
+.vi::-ms-reveal,
+.vi::-ms-clear {
+  display: none;
+}
+
 .vi::selection {
   background: transparent;
 }
