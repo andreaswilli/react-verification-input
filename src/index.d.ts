@@ -17,6 +17,7 @@ export interface VerificationInputProps {
   onFocus?: () => void;
   onBlur?: () => void;
   onComplete?: (value: string) => void;
+  wrapWithContainer?: boolean;
 }
 
 declare const VerificationInput: React.ForwardRefExoticComponent<

@@ -12,25 +12,25 @@ import VerificationInput from "./index";
 
 describe("VerificationInput", () => {
   it("should render 6 empty fields with placeholder", () => {
-    render(<VerificationInput />);
+    render(<VerificationInput wrapWithContainer={false} />);
 
     expect(screen.getByTestId("container")).toHaveTextContent(/^······$/);
   });
 
   it("should change the number of fields", () => {
-    render(<VerificationInput length={4} />);
+    render(<VerificationInput wrapWithContainer={false} length={4} />);
 
     expect(screen.getByTestId("container")).toHaveTextContent(/^····$/);
   });
 
   it("should change the placeholder", () => {
-    render(<VerificationInput placeholder="_" />);
+    render(<VerificationInput wrapWithContainer={false} placeholder="_" />);
 
     expect(screen.getByTestId("container")).toHaveTextContent(/^______$/);
   });
 
   it("should allow digits as well as upper- and lowercase letters", async () => {
-    render(<VerificationInput />);
+    render(<VerificationInput wrapWithContainer={false} />);
 
     await userEvent.type(screen.getByRole("textbox"), "0aA1bB");
 
@@ -38,7 +38,7 @@ describe("VerificationInput", () => {
   });
 
   it("should not allow special characters", async () => {
-    render(<VerificationInput />);
+    render(<VerificationInput wrapWithContainer={false} />);
 
     await userEvent.type(screen.getByRole("textbox"), "abc$+!?def");
 
@@ -46,7 +46,7 @@ describe("VerificationInput", () => {
   });
 
   it("should only allow digits", async () => {
-    render(<VerificationInput validChars="0-9" />);
+    render(<VerificationInput wrapWithContainer={false} validChars="0-9" />);
 
     await userEvent.type(screen.getByRole("textbox"), "0a1B2$3?4*5_");
 
@@ -54,7 +54,7 @@ describe("VerificationInput", () => {
   });
 
   it("Should show only (*) in password mode", async () => {
-    render(<VerificationInput  passwordMode={true} />);
+    render(<VerificationInput wrapWithContainer={false}  passwordMode={true} />);
 
     await userEvent.type(screen.getByLabelText("verification input"), "012345");
 
@@ -62,7 +62,7 @@ describe("VerificationInput", () => {
   });
 
   it("should not allow placeholder character", async () => {
-    render(<VerificationInput />);
+    render(<VerificationInput wrapWithContainer={false} />);
 
     await userEvent.type(screen.getByRole("textbox"), "·0·1·2");
 
@@ -70,7 +70,7 @@ describe("VerificationInput", () => {
   });
 
   it("should insert valid code on paste", async () => {
-    render(<VerificationInput />);
+    render(<VerificationInput wrapWithContainer={false} />);
 
     act(() => screen.getByRole("textbox").focus());
     await userEvent.paste("012345");
@@ -79,7 +79,7 @@ describe("VerificationInput", () => {
   });
 
   it("should keep previous value if invalid code is pasted", async () => {
-    render(<VerificationInput />);
+    render(<VerificationInput wrapWithContainer={false} />);
     await userEvent.type(screen.getByRole("textbox"), "012345");
 
     act(() => screen.getByRole("textbox").focus());
@@ -89,7 +89,7 @@ describe("VerificationInput", () => {
   });
 
   it("should allow the code to have blanks when pasting", async () => {
-    render(<VerificationInput />);
+    render(<VerificationInput wrapWithContainer={false} />);
 
     act(() => screen.getByRole("textbox").focus());
     await userEvent.paste("012 345");
@@ -98,7 +98,7 @@ describe("VerificationInput", () => {
   });
 
   it("should auto focus the input if specified", async () => {
-    render(<VerificationInput autoFocus />);
+    render(<VerificationInput wrapWithContainer={false} autoFocus />);
 
     await waitFor(() => {
       expect(screen.getByRole("textbox")).toHaveFocus();
@@ -106,7 +106,7 @@ describe("VerificationInput", () => {
   });
 
   it("should select the rightmost active field", async () => {
-    render(<VerificationInput />);
+    render(<VerificationInput wrapWithContainer={false} />);
     await userEvent.type(screen.getByRole("textbox"), "01");
     const rightmostActiveField = screen.getByTestId("character-2");
     const inactiveField = screen.getByTestId("character-3");
@@ -117,7 +117,7 @@ describe("VerificationInput", () => {
   });
 
   it("should select the first field if empty", async () => {
-    render(<VerificationInput />);
+    render(<VerificationInput wrapWithContainer={false} />);
     const rightmostField = screen.getByTestId("character-0");
 
     await userEvent.click(screen.getByTestId("container"));
@@ -126,7 +126,7 @@ describe("VerificationInput", () => {
   });
 
   it("should select the next field", async () => {
-    render(<VerificationInput />);
+    render(<VerificationInput wrapWithContainer={false} />);
     const nextField = screen.getByTestId("character-3");
 
     await userEvent.type(screen.getByRole("textbox"), "012");
@@ -135,7 +135,7 @@ describe("VerificationInput", () => {
   });
 
   it("should select the last field if full", async () => {
-    render(<VerificationInput />);
+    render(<VerificationInput wrapWithContainer={false} />);
     const lastField = screen.getByTestId("character-5");
 
     await userEvent.type(screen.getByRole("textbox"), "012345");
@@ -144,7 +144,7 @@ describe("VerificationInput", () => {
   });
 
   it("should only activate one empty field to the right", async () => {
-    render(<VerificationInput />);
+    render(<VerificationInput wrapWithContainer={false} />);
 
     await userEvent.type(screen.getByRole("textbox"), "012");
 
@@ -155,7 +155,7 @@ describe("VerificationInput", () => {
   });
 
   it("should delete characters to the left (backspace)", async () => {
-    render(<VerificationInput />);
+    render(<VerificationInput wrapWithContainer={false} />);
     await userEvent.type(screen.getByRole("textbox"), "012345");
 
     await userEvent.type(screen.getByRole("textbox"), "{backspace}");
@@ -168,7 +168,7 @@ describe("VerificationInput", () => {
   });
 
   it("should not do anything when delete is pressed", async () => {
-    render(<VerificationInput />);
+    render(<VerificationInput wrapWithContainer={false} />);
     await userEvent.type(screen.getByRole("textbox"), "0123");
 
     expect(screen.getByTestId("container")).toHaveTextContent(/^0123··$/);
@@ -179,7 +179,7 @@ describe("VerificationInput", () => {
   });
 
   it("should allow to delete all the characters", async () => {
-    render(<VerificationInput />);
+    render(<VerificationInput wrapWithContainer={false} />);
     await userEvent.type(screen.getByRole("textbox"), "01");
 
     await userEvent.type(screen.getByRole("textbox"), "{backspace}{backspace}");
@@ -188,7 +188,7 @@ describe("VerificationInput", () => {
   });
 
   it("should not move the cursor position with arrow keys", async () => {
-    render(<VerificationInput />);
+    render(<VerificationInput wrapWithContainer={false} />);
     const input = screen.getByRole("textbox");
 
     await userEvent.type(
@@ -200,7 +200,7 @@ describe("VerificationInput", () => {
   });
 
   it("should not move the selection to an inactive field", async () => {
-    render(<VerificationInput />);
+    render(<VerificationInput wrapWithContainer={false} />);
     const input = screen.getByRole("textbox");
     await userEvent.type(input, "012");
 
@@ -215,7 +215,7 @@ describe("VerificationInput", () => {
     render(
       <>
         <button>other element</button>
-        <VerificationInput />
+        <VerificationInput wrapWithContainer={false} />
       </>
     );
     await userEvent.type(screen.getByRole("textbox"), "012");
@@ -255,7 +255,7 @@ describe("VerificationInput", () => {
         _setValue(v);
       };
 
-      return <VerificationInput value={value} onChange={setValue} />;
+      return <VerificationInput wrapWithContainer={false} value={value} onChange={setValue} />;
     };
     render(<Wrapper />);
 
@@ -269,7 +269,7 @@ describe("VerificationInput", () => {
   it("should trigger onChange callback even if value is not provided", async () => {
     const spyHandleChange = jest.fn();
 
-    render(<VerificationInput onChange={spyHandleChange} />);
+    render(<VerificationInput wrapWithContainer={false} onChange={spyHandleChange} />);
 
     await userEvent.type(screen.getByRole("textbox"), "01");
 
@@ -281,7 +281,7 @@ describe("VerificationInput", () => {
   it("should trigger onComplete callback when value.length is equal to length", async () => {
     const spyOnComplete = jest.fn();
 
-    render(<VerificationInput onComplete={spyOnComplete} />);
+    render(<VerificationInput wrapWithContainer={false} onComplete={spyOnComplete} />);
 
     await userEvent.type(screen.getByRole("textbox"), "012345");
 
@@ -294,7 +294,7 @@ describe("VerificationInput", () => {
     const spyHandleBlur = jest.fn();
     render(
       <>
-        <VerificationInput onFocus={spyHandleFocus} onBlur={spyHandleBlur} />
+        <VerificationInput wrapWithContainer={false} onFocus={spyHandleFocus} onBlur={spyHandleBlur} />
         <div>other element</div>
       </>
     );
@@ -308,7 +308,7 @@ describe("VerificationInput", () => {
 
   it("should provide ref as object", async () => {
     const inputRef = React.createRef();
-    render(<VerificationInput ref={inputRef} />);
+    render(<VerificationInput wrapWithContainer={false} ref={inputRef} />);
 
     await userEvent.type(screen.getByRole("textbox"), "123456");
 
@@ -319,6 +319,7 @@ describe("VerificationInput", () => {
     const inputRef = React.createRef();
     render(
       <VerificationInput
+        wrapWithContainer={false}
         ref={(node) => {
           inputRef.current = node;
         }}
@@ -333,6 +334,7 @@ describe("VerificationInput", () => {
   it("should apply custom class names", () => {
     render(
       <VerificationInput
+        wrapWithContainer={false}
         classNames={{
           container: "custom-container",
           character: "custom-character",
@@ -371,13 +373,13 @@ describe("VerificationInput", () => {
   });
 
   it("should forward inputProps to input element", () => {
-    render(<VerificationInput inputProps={{ type: "tel" }} />);
+    render(<VerificationInput wrapWithContainer={false} inputProps={{ type: "tel" }} />);
 
     expect(screen.getByRole("textbox")).toHaveAttribute("type", "tel");
   });
 
   it("should combine default and custom class names on input", () => {
-    render(<VerificationInput inputProps={{ className: "custom" }} />);
+    render(<VerificationInput wrapWithContainer={false} inputProps={{ className: "custom" }} />);
 
     expect(screen.getByRole("textbox")).toHaveClass("vi custom");
   });
@@ -385,6 +387,7 @@ describe("VerificationInput", () => {
   it("should combine default and custom class names on container", () => {
     render(
       <VerificationInput
+        wrapWithContainer={false}
         classNames={{ container: "custom-1" }}
         containerProps={{ className: "custom-2" }}
       />
@@ -396,13 +399,13 @@ describe("VerificationInput", () => {
   });
 
   it("should forward containerProps to container element", () => {
-    render(<VerificationInput containerProps={{ prop: "value" }} />);
+    render(<VerificationInput wrapWithContainer={false} containerProps={{ prop: "value" }} />);
 
     expect(screen.getByTestId("container")).toHaveAttribute("prop", "value");
   });
 
   it("should disable spell check", () => {
-    render(<VerificationInput />);
+    render(<VerificationInput wrapWithContainer={false} />);
 
     expect(screen.getByRole("textbox")).toHaveAttribute("spellcheck", "false");
   });

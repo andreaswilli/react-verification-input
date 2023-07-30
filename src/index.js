@@ -4,6 +4,11 @@ import PropTypes from "prop-types";
 
 import style from "./styles.css";
 
+function Container({enable, children}) {
+    if (enable) return (<div className="vi__wrapper">{children}</div>)
+    return children
+}
+
 const VerificationInput = forwardRef(
   (
     {
@@ -20,6 +25,7 @@ const VerificationInput = forwardRef(
       onFocus,
       onBlur,
       onComplete,
+      wrapWithContainer,
     },
     ref
   ) => {
@@ -75,7 +81,7 @@ const VerificationInput = forwardRef(
       containerProps;
 
     return (
-      <div className="vi__wrapper">
+      <Container enable={wrapWithContainer}>
         <input
           aria-label="verification input"
           spellCheck={false}
@@ -142,7 +148,7 @@ const VerificationInput = forwardRef(
           ))}
         </div>
         <style dangerouslySetInnerHTML={{ __html: style }} />
-      </div>
+      </Container>
     );
   }
 );
@@ -168,6 +174,7 @@ VerificationInput.propTypes = {
   onFocus: PropTypes.func,
   onBlur: PropTypes.func,
   onComplete: PropTypes.func,
+  wrapWithContainer: PropTypes.bool,
 };
 
 VerificationInput.defaultProps = {
@@ -178,6 +185,18 @@ VerificationInput.defaultProps = {
   inputProps: {},
   containerProps: {},
   classNames: {},
+  wrapWithContainer: false,
 };
+
+Container.displayName = "Container";
+
+Container.propTypes = {
+  enable: PropTypes.bool,
+  children: PropTypes.arrayOf(PropTypes.element),
+}
+
+Container.defaultProps = {
+  enable: false,
+}
 
 export default VerificationInput;
