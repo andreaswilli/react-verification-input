@@ -1,9 +1,3 @@
-/* :where() gives the styles specificity 0, which makes them overridable */
-:where(.vi__wrapper) {
-  position: relative;
-  width: min-content;
-}
-
 .vi {
   top: 0;
   right: 0;
@@ -27,7 +21,9 @@
   background: transparent;
 }
 
+/* :where() gives the styles specificity 0, which makes them overridable */
 :where(.vi__container) {
+  position: relative;
   display: flex;
   gap: 8px;
   height: 50px;
@@ -41,8 +37,6 @@
   text-align: center;
   font-size: 36px;
   line-height: 50px;
-  color: black;
-  background-color: white;
   border: 1px solid black;
   cursor: default;
   user-select: none;

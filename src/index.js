@@ -75,37 +75,7 @@ const VerificationInput = forwardRef(
       containerProps;
 
     return (
-      <div className="vi__wrapper">
-        <input
-          aria-label="verification input"
-          spellCheck={false}
-          value={getValue()}
-          onChange={handleInputChange}
-          ref={(node) => {
-            inputRef.current = node;
-            if (typeof ref === "function") {
-              ref(node);
-            } else if (ref) {
-              ref.current = node;
-            }
-          }}
-          className={classNames("vi", inputClassName)}
-          onKeyDown={handleKeyDown}
-          onFocus={() => {
-            setActive(true);
-            onFocus?.();
-          }}
-          onBlur={() => {
-            setActive(false);
-            onBlur?.();
-          }}
-          onSelect={(e) => {
-            const val = e.target.value;
-            e.target.setSelectionRange(val.length, val.length);
-          }}
-          type={passwordMode ? "password" : inputType}
-          {...restInputProps}
-        />
+      <>
         <div
           data-testid="container"
           className={classNames(
@@ -116,6 +86,36 @@ const VerificationInput = forwardRef(
           onClick={() => inputRef.current.focus()}
           {...restContainerProps}
         >
+          <input
+            aria-label="verification input"
+            spellCheck={false}
+            value={getValue()}
+            onChange={handleInputChange}
+            ref={(node) => {
+              inputRef.current = node;
+              if (typeof ref === "function") {
+                ref(node);
+              } else if (ref) {
+                ref.current = node;
+              }
+            }}
+            className={classNames("vi", inputClassName)}
+            onKeyDown={handleKeyDown}
+            onFocus={() => {
+              setActive(true);
+              onFocus?.();
+            }}
+            onBlur={() => {
+              setActive(false);
+              onBlur?.();
+            }}
+            onSelect={(e) => {
+              const val = e.target.value;
+              e.target.setSelectionRange(val.length, val.length);
+            }}
+            type={passwordMode ? "password" : inputType}
+            {...restInputProps}
+          />
           {[...Array(length)].map((_, i) => (
             <div
               className={classNames("vi__character", classes.character, {
@@ -142,7 +142,7 @@ const VerificationInput = forwardRef(
           ))}
         </div>
         <style dangerouslySetInnerHTML={{ __html: style }} />
-      </div>
+      </>
     );
   }
 );
