@@ -37,6 +37,8 @@
   text-align: center;
   font-size: 36px;
   line-height: 50px;
+  color: black;
+  background-color: white;
   border: 1px solid black;
   cursor: default;
   user-select: none;

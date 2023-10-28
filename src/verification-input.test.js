@@ -54,7 +54,7 @@ describe("VerificationInput", () => {
   });
 
   it("Should show only (*) in password mode", async () => {
-    render(<VerificationInput  passwordMode={true} />);
+    render(<VerificationInput passwordMode={true} />);
 
     await userEvent.type(screen.getByLabelText("verification input"), "012345");
 
@@ -368,6 +368,18 @@ describe("VerificationInput", () => {
       "custom-character",
       "custom-character-inactive"
     );
+  });
+
+  it("should not have undefined class name", () => {
+    render(<VerificationInput />);
+
+    expect(screen.getByTestId("container")).not.toHaveClass("undefined");
+    expect(screen.getByTestId("character-0")).not.toHaveClass("undefined");
+    expect(screen.getByTestId("character-1")).not.toHaveClass("undefined");
+    expect(screen.getByTestId("character-2")).not.toHaveClass("undefined");
+    expect(screen.getByTestId("character-3")).not.toHaveClass("undefined");
+    expect(screen.getByTestId("character-4")).not.toHaveClass("undefined");
+    expect(screen.getByTestId("character-5")).not.toHaveClass("undefined");
   });
 
   it("should forward inputProps to input element", () => {
