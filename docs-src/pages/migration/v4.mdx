@@ -1,0 +1,30 @@
+---
+title: Migrating to Version 4
+---
+
+# Migrating to Version 4
+
+This guide is aimed at developers wanting to update from `v3.x.x` to `v4.x.x`.
+
+Check the following steps one by one and execute the ones that apply to your
+situation.
+
+## Removed Wrapper Element
+
+The wrapper element with the class name `.vi_wrapper` was removed. It was inconvenient to style this element with frameworks like Tailwind, since it was not possible to set custom class names. Instead the `.vi_wrapper` class had to be overridden in a CSS file. 
+
+If you currently rely on this class, this change might break your styling. Styles from the wrapper element should probably be moved to the container element in version 4.
+
+```jsx
+// v3
+<style>
+.vi_wrapper {
+  // your custom styles
+}
+</style>
+
+<VerificationInput />
+
+// v4
+<VerificationInput classNames={{ container: "custom-class-names" }} />
+```
