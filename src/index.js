@@ -66,6 +66,16 @@ const VerificationInput = forwardRef(
       return value ?? localValue;
     };
 
+    const isCharacterSelected = (i) => {
+      const value = getValue();
+      return (
+        (value.length === i || (value.length === i + 1 && length === i + 1)) &&
+        isActive
+      );
+    };
+
+    const isCharacterInactive = (i) => getValue().length < i;
+
     const {
       className: inputClassName,
       type: inputType,
@@ -75,37 +85,7 @@ const VerificationInput = forwardRef(
       containerProps;
 
     return (
-      <div className="vi__wrapper">
-        <input
-          aria-label="verification input"
-          spellCheck={false}
-          value={getValue()}
-          onChange={handleInputChange}
-          ref={(node) => {
-            inputRef.current = node;
-            if (typeof ref === "function") {
-              ref(node);
-            } else if (ref) {
-              ref.current = node;
-            }
-          }}
-          className={classNames("vi", inputClassName)}
-          onKeyDown={handleKeyDown}
-          onFocus={() => {
-            setActive(true);
-            onFocus?.();
-          }}
-          onBlur={() => {
-            setActive(false);
-            onBlur?.();
-          }}
-          onSelect={(e) => {
-            const val = e.target.value;
-            e.target.setSelectionRange(val.length, val.length);
-          }}
-          type={passwordMode ? "password" : inputType}
-          {...restInputProps}
-        />
+      <>
         <div
           data-testid="container"
           className={classNames(
@@ -116,20 +96,48 @@ const VerificationInput = forwardRef(
           onClick={() => inputRef.current.focus()}
           {...restContainerProps}
         >
+          <input
+            aria-label="verification input"
+            spellCheck={false}
+            value={getValue()}
+            onChange={handleInputChange}
+            ref={(node) => {
+              inputRef.current = node;
+              if (typeof ref === "function") {
+                ref(node);
+              } else if (ref) {
+                ref.current = node;
+              }
+            }}
+            className={classNames("vi", inputClassName)}
+            onKeyDown={handleKeyDown}
+            onFocus={() => {
+              setActive(true);
+              onFocus?.();
+            }}
+            onBlur={() => {
+              setActive(false);
+              onBlur?.();
+            }}
+            onSelect={(e) => {
+              const val = e.target.value;
+              e.target.setSelectionRange(val.length, val.length);
+            }}
+            type={passwordMode ? "password" : inputType}
+            {...restInputProps}
+          />
           {[...Array(length)].map((_, i) => (
             <div
-              className={classNames("vi__character", classes.character, {
-                "vi__character--selected":
-                  (getValue().length === i ||
-                    (getValue().length === i + 1 && length === i + 1)) &&
-                  isActive,
-                [classes.characterSelected]:
-                  (getValue().length === i ||
-                    (getValue().length === i + 1 && length === i + 1)) &&
-                  isActive,
-                "vi__character--inactive": getValue().length < i,
-                [classes.characterInactive]: getValue().length < i,
-              })}
+              className={classNames(
+                "vi__character",
+                classes.character,
+                {
+                  "vi__character--selected": isCharacterSelected(i),
+                  "vi__character--inactive": isCharacterInactive(i),
+                },
+                isCharacterSelected(i) && classes.characterSelected,
+                isCharacterInactive(i) && classes.characterInactive
+              )}
               onClick={handleClick}
               id={`field-${i}`}
               data-testid={`character-${i}`}
@@ -142,7 +150,7 @@ const VerificationInput = forwardRef(
           ))}
         </div>
         <style dangerouslySetInnerHTML={{ __html: style }} />
-      </div>
+      </>
     );
   }
 );
