@@ -76,6 +76,7 @@ Style the input by passing it your custom class names like so:
     character: "character",
     characterInactive: "character--inactive",
     characterSelected: "character--selected",
+    characterFilled: "character--filled",
   }}
 />
 ```

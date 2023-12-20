@@ -75,6 +75,7 @@ const VerificationInput = forwardRef(
     };
 
     const isCharacterInactive = (i) => getValue().length < i;
+    const isCharacterFilled = (i) => getValue().length > i;
 
     const {
       className: inputClassName,
@@ -134,9 +135,11 @@ const VerificationInput = forwardRef(
                 {
                   "vi__character--selected": isCharacterSelected(i),
                   "vi__character--inactive": isCharacterInactive(i),
+                  "vi__character--filled": isCharacterFilled(i),
                 },
                 isCharacterSelected(i) && classes.characterSelected,
-                isCharacterInactive(i) && classes.characterInactive
+                isCharacterInactive(i) && classes.characterInactive,
+                isCharacterFilled(i) && classes.characterFilled
               )}
               onClick={handleClick}
               id={`field-${i}`}
@@ -171,6 +174,7 @@ VerificationInput.propTypes = {
     character: PropTypes.string,
     characterInactive: PropTypes.string,
     characterSelected: PropTypes.string,
+    characterFilled: PropTypes.string,
   }),
   onChange: PropTypes.func,
   onFocus: PropTypes.func,
