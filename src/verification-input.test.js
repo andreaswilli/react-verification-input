@@ -330,14 +330,52 @@ describe("VerificationInput", () => {
     expect(inputRef.current).toHaveValue("123456");
   });
 
+  it("should apply class names", async () => {
+    render(
+      <VerificationInput value="22" autoFocus />
+    );
+
+    expect(screen.getByTestId("character-0")).toHaveClass(
+      "vi__character",
+      "vi__character--filled"
+    );
+
+    expect(screen.getByTestId("character-1")).toHaveClass(
+      "vi__character",
+      "vi__character--filled"
+    );
+
+    expect(screen.getByTestId("character-2")).toHaveClass(
+      "vi__character",
+      "vi__character--selected"
+    );
+
+    expect(screen.getByTestId("character-3")).toHaveClass(
+      "vi__character",
+      "vi__character--inactive"
+    );
+
+    expect(screen.getByTestId("character-4")).toHaveClass(
+      "vi__character",
+      "vi__character--inactive"
+    );
+
+    expect(screen.getByTestId("character-5")).toHaveClass(
+      "vi__character",
+      "vi__character--inactive"
+    );
+  });
+
   it("should apply custom class names", () => {
     render(
       <VerificationInput
+        value="22"
         classNames={{
           container: "custom-container",
           character: "custom-character",
           characterInactive: "custom-character-inactive",
           characterSelected: "custom-character-selected",
+          characterFilled: "custom-character-filled",
         }}
         autoFocus
       />
@@ -346,15 +384,15 @@ describe("VerificationInput", () => {
     expect(screen.getByTestId("container")).toHaveClass("custom-container");
     expect(screen.getByTestId("character-0")).toHaveClass(
       "custom-character",
-      "custom-character-selected"
+      "custom-character-filled"
     );
     expect(screen.getByTestId("character-1")).toHaveClass(
       "custom-character",
-      "custom-character-inactive"
+      "custom-character-filled"
     );
     expect(screen.getByTestId("character-2")).toHaveClass(
       "custom-character",
-      "custom-character-inactive"
+      "custom-character-selected"
     );
     expect(screen.getByTestId("character-3")).toHaveClass(
       "custom-character",
