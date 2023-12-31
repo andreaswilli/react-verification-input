@@ -20,10 +20,15 @@ html.dark .character {
   position: relative;
 }
 
-.cursor_character--selected:empty::after {
+/* optionally hide placeholder (in case it overlaps the cursor) */
+.cursor_character--selected:not(.cursor_character--filled) {
+  color: transparent;
+}
+
+.cursor_character--selected:not(.cursor_character--filled)::after {
   content: "";
   width: 1px;
-  height: 30px;
+  height: 25px;
   background-color: #333;
   display: block;
   position: absolute;

@@ -11,6 +11,8 @@ import { Callout } from "nextra-theme-docs";
 
 <Section markdown={Readme} type="h3" name="Custom Styling" removeHeading />
 
+<Section markdown={Readme} type="h4" name="Component Structure" removeHeading />
+
 ## Example
 
 <br />
@@ -41,14 +43,12 @@ import { Callout } from "nextra-theme-docs";
 
 ## With Cursor (Caret)
 
-<Callout>This currently only works with `placeholder` set to `""`.</Callout>
-
 <br />
 <VerificationInput
-  placeholder=""
   classNames={{
     character: "cursor_character",
     characterSelected: "cursor_character--selected",
+    characterFilled: "cursor_character--filled",
   }}
 />
 
@@ -57,10 +57,15 @@ import { Callout } from "nextra-theme-docs";
   position: relative;
 }
 
-.character--selected:empty::after {
+/* optionally hide placeholder (in case it overlaps the cursor) */
+.character--selected:not(.character--filled) {
+  color: transparent;
+}
+
+.character--selected:not(.character--filled)::after {
   content: "";
   width: 1px;
-  height: 30px;
+  height: 25px;
   background-color: #333;
   display: block;
   position: absolute;

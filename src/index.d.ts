@@ -12,6 +12,7 @@ export interface VerificationInputProps {
     character?: string;
     characterInactive?: string;
     characterSelected?: string;
+    characterFilled?: string;
   };
   onChange?: (value: string) => void;
   onFocus?: () => void;

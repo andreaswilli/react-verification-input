@@ -15,6 +15,10 @@ export default function Section({
       .slice(fromIndex + 1)
       .findIndex((c) => type === (c?.type?.name ?? c?.type));
 
+  if (toIndex <= fromIndex) {
+    toIndex = md.props.children.length - 1;
+  }
+
   if (removeHeading) {
     fromIndex += 1;
   }
