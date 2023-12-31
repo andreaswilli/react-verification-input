@@ -89,7 +89,7 @@ Style the input by passing it your custom class names like so:
 
 The following illustration shows the component structure.
 
-<img width="500px" alt="elements" src="https://user-images.githubusercontent.com/17298270/120887724-d61f4e00-c5f4-11eb-9971-0fc2f4ff9982.png" />
+<img width="500px" alt="elements" src="https://github.com/andreaswilli/react-verification-input/assets/17298270/e0af9092-56e8-4791-a224-e964f9ddd775" />
 
 ## Contributing
 
