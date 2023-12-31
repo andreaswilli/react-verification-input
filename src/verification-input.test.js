@@ -331,38 +331,43 @@ describe("VerificationInput", () => {
   });
 
   it("should apply class names", async () => {
-    render(
-      <VerificationInput value="22" autoFocus />
-    );
+    render(<VerificationInput value="22" autoFocus />);
 
     expect(screen.getByTestId("character-0")).toHaveClass(
       "vi__character",
       "vi__character--filled"
     );
-
     expect(screen.getByTestId("character-1")).toHaveClass(
       "vi__character",
       "vi__character--filled"
     );
-
     expect(screen.getByTestId("character-2")).toHaveClass(
       "vi__character",
       "vi__character--selected"
     );
-
     expect(screen.getByTestId("character-3")).toHaveClass(
       "vi__character",
       "vi__character--inactive"
     );
-
     expect(screen.getByTestId("character-4")).toHaveClass(
       "vi__character",
       "vi__character--inactive"
     );
-
     expect(screen.getByTestId("character-5")).toHaveClass(
       "vi__character",
       "vi__character--inactive"
+    );
+  });
+
+  it("should apply selected and filled to last character if value is complete", () => {
+    render(<VerificationInput value="123456" autoFocus />);
+
+    expect(screen.getByTestId("character-4")).toHaveClass(
+      "vi__character--filled"
+    );
+    expect(screen.getByTestId("character-5")).toHaveClass(
+      "vi__character--filled",
+      "vi__character--selected"
     );
   });
 
