@@ -14,6 +14,7 @@ const VerificationInput = forwardRef(
       autoFocus,
       passwordMode,
       inputProps,
+      nonce,
       containerProps,
       classNames: classes,
       onChange,
@@ -152,7 +153,7 @@ const VerificationInput = forwardRef(
             </div>
           ))}
         </div>
-        <style dangerouslySetInnerHTML={{ __html: style }} />
+        <style dangerouslySetInnerHTML={{ __html: style }} nonce={nonce} />
       </>
     );
   }
@@ -162,6 +163,7 @@ VerificationInput.displayName = "VerificationInput";
 
 VerificationInput.propTypes = {
   value: PropTypes.string,
+  nonce: PropTypes.string,
   length: PropTypes.number,
   validChars: PropTypes.string,
   placeholder: PropTypes.string,
@@ -184,6 +186,7 @@ VerificationInput.propTypes = {
 
 VerificationInput.defaultProps = {
   length: 6,
+  nonce: null,
   validChars: "A-Za-z0-9",
   placeholder: "·",
   autoFocus: false,
