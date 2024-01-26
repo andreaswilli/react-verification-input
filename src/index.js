@@ -153,7 +153,10 @@ const VerificationInput = forwardRef(
             </div>
           ))}
         </div>
-        <style dangerouslySetInnerHTML={{ __html: style }} nonce={nonce} />
+        <style
+          dangerouslySetInnerHTML={{ __html: style }}
+          {...(nonce && { nonce: nonce })}
+        />
       </>
     );
   }
@@ -186,7 +189,6 @@ VerificationInput.propTypes = {
 
 VerificationInput.defaultProps = {
   length: 6,
-  nonce: null,
   validChars: "A-Za-z0-9",
   placeholder: "·",
   autoFocus: false,
