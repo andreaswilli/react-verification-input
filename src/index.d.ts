@@ -5,8 +5,8 @@ export interface VerificationInputProps {
   placeholder?: string;
   autoFocus?: boolean;
   passwordMode?: boolean;
-  inputProps?: object;
-  containerProps?: object;
+  inputProps?: React.HTMLAttributes<HTMLInputElement>;
+  containerProps?: React.HTMLAttributes<HTMLDivElement>;
   classNames?: {
     container?: string;
     character?: string;
