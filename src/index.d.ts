@@ -6,7 +6,7 @@ export interface VerificationInputProps {
   autoFocus?: boolean;
   passwordMode?: boolean;
   inputProps?: React.ComponentPropsWithRef<"input">;
-  containerProps?: React.ComponentPropsWithoutRef<"div">;
+  containerProps?: React.ComponentPropsWithRef<"div">;
   classNames?: {
     container?: string;
     character?: string;
