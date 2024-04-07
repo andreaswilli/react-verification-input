@@ -461,4 +461,18 @@ describe("VerificationInput", () => {
 
     expect(screen.getByRole("textbox")).toHaveAttribute("spellcheck", "false");
   });
+
+  it("should remove selection after disabling input", () => {
+    const { rerender } = render(<VerificationInput value={"1"} length={3} autoFocus={true} inputProps={{ disabled: false }} />);
+
+    expect(screen.getByTestId("character-0")).toHaveClass("vi__character", "vi__character--filled");
+    expect(screen.getByTestId("character-1")).toHaveClass("vi__character", "vi__character--selected");
+    expect(screen.getByTestId("character-2")).toHaveClass("vi__character", "vi__character--inactive");
+
+    rerender(<VerificationInput value={"1"} length={3} autoFocus={true} inputProps={{ disabled: true }} />)
+
+    expect(screen.getByTestId("character-0")).toHaveClass("vi__character", "vi__character--filled");
+    expect(screen.getByTestId("character-1")).toHaveClass("vi__character");
+    expect(screen.getByTestId("character-2")).toHaveClass("vi__character", "vi__character--inactive");
+  })
 });
