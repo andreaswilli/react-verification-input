@@ -34,6 +34,12 @@ const VerificationInput = forwardRef(
       }
     }, [autoFocus]);
 
+    useEffect(() => {
+      if(inputProps.disabled) {
+        setActive(false);
+      }
+    }, [inputProps.disabled])
+
     const handleClick = () => {
       inputRef.current.focus();
     };
