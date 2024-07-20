@@ -505,7 +505,7 @@ describe("VerificationInput", () => {
     );
   });
 
-  it("should render a custom aria-label", async () => {
+  it("should render a custom aria-label", () => {
     render(<VerificationInput ariaLabel="Custom Aria Label" />);
 
     expect(screen.getByLabelText("Custom Aria Label")).toBeInTheDocument();
