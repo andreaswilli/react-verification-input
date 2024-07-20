@@ -53,10 +53,10 @@ describe("VerificationInput", () => {
     expect(screen.getByTestId("container")).toHaveTextContent(/^012345$/);
   });
 
-  it("Should show only (*) in password mode", async () => {
+  it("should show only (*) in password mode", async () => {
     render(<VerificationInput passwordMode={true} />);
 
-    await userEvent.type(screen.getByLabelText("verification input"), "012345");
+    await userEvent.type(screen.getByLabelText("Verification input"), "012345");
 
     expect(screen.getByTestId("container")).toHaveTextContent(/^\*\*\*\*\*\*$/);
   });
@@ -503,5 +503,11 @@ describe("VerificationInput", () => {
       "vi__character",
       "vi__character--inactive"
     );
+  });
+
+  it("should render a custom aria-label", async () => {
+    render(<VerificationInput ariaLabel="Custom Aria Label" />);
+
+    expect(screen.getByLabelText("Custom Aria Label")).toBeInTheDocument();
   });
 });
