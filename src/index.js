@@ -20,6 +20,7 @@ const VerificationInput = forwardRef(
       onFocus,
       onBlur,
       onComplete,
+      ariaLabel,
     },
     ref
   ) => {
@@ -104,7 +105,7 @@ const VerificationInput = forwardRef(
           {...restContainerProps}
         >
           <input
-            aria-label="verification input"
+            aria-label={ariaLabel}
             spellCheck={false}
             value={getValue()}
             onChange={handleInputChange}
@@ -186,6 +187,7 @@ VerificationInput.propTypes = {
   onFocus: PropTypes.func,
   onBlur: PropTypes.func,
   onComplete: PropTypes.func,
+  ariaLabel: PropTypes.string,
 };
 
 VerificationInput.defaultProps = {
@@ -196,6 +198,7 @@ VerificationInput.defaultProps = {
   inputProps: {},
   containerProps: {},
   classNames: {},
+  ariaLabel: "Verification input",
 };
 
 export default VerificationInput;
