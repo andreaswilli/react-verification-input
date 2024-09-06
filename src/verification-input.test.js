@@ -504,4 +504,65 @@ describe("VerificationInput", () => {
       "vi__character--inactive"
     );
   });
+
+  it('should render custom separators', () => {
+    render(
+      <VerificationInput
+        length={7}
+        classNames={{ separator: "custom-separator" }}
+        separator="*"
+        separatorIndices={[1, 3]}
+      />
+    );
+
+    expect(screen.getByTestId("separator-1")).toHaveTextContent("*");
+    expect(screen.getByTestId("separator-1")).toHaveClass(
+      "vi__separator",
+      "custom-separator"
+    );
+
+    expect(screen.getByTestId("separator-3")).toHaveClass(
+      "vi__separator",
+      "custom-separator"
+    );
+    expect(screen.getByTestId("separator-3")).toHaveTextContent("*");
+  });
+
+  it('should not render separators if indices are not specified', () => {
+    render(
+      <VerificationInput />
+    );
+
+    expect(screen.queryByText('-')).not.toBeInTheDocument();
+  });
+
+  it('should use the default separator if none is specified', () => {
+    render(
+      <VerificationInput
+        length={7}
+        classNames={{ separator: "custom-separator" }}
+        separatorIndices={[2, 5]}
+      />
+    );
+
+    expect(screen.getByTestId("separator-2")).toHaveTextContent("-");
+    expect(screen.getByTestId("separator-2")).toHaveClass(
+      "vi__separator",
+      "custom-separator"
+    );
+
+    expect(screen.getByTestId("separator-5")).toHaveClass(
+      "vi__separator",
+      "custom-separator"
+    );
+    expect(screen.getByTestId("separator-5")).toHaveTextContent("-");
+  });
+
+  it('should ignore out-of-bounds separator indices', () => {
+    render(
+      <VerificationInput length={7} separatorIndices={[-2, 20]} />
+    );
+
+    expect(screen.queryByText('-')).not.toBeInTheDocument();
+  });
 });
