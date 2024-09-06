@@ -16,6 +16,8 @@ const VerificationInput = forwardRef(
       inputProps,
       containerProps,
       classNames: classes,
+      seperator,
+      seperatorIndices,
       onChange,
       onFocus,
       onBlur,
@@ -27,6 +29,8 @@ const VerificationInput = forwardRef(
     const [isActive, setActive] = useState(false);
 
     const inputRef = useRef(null);
+
+    const seperatorSet = new Set(seperatorIndices);
 
     useEffect(() => {
       if (autoFocus) {
@@ -134,28 +138,43 @@ const VerificationInput = forwardRef(
             {...restInputProps}
           />
           {[...Array(length)].map((_, i) => (
-            <div
-              className={classNames(
-                "vi__character",
-                classes.character,
-                {
-                  "vi__character--selected": isCharacterSelected(i),
-                  "vi__character--inactive": isCharacterInactive(i),
-                  "vi__character--filled": isCharacterFilled(i),
-                },
-                isCharacterSelected(i) && classes.characterSelected,
-                isCharacterInactive(i) && classes.characterInactive,
-                isCharacterFilled(i) && classes.characterFilled
-              )}
-              onClick={handleClick}
-              id={`field-${i}`}
-              data-testid={`character-${i}`}
-              key={i}
-            >
-              {passwordMode && getValue()[i]
-                ? "*"
-                : getValue()[i] || placeholder}
-            </div>
+            <React.Fragment key={i}>
+              {
+                seperatorSet.has(i) ? (
+                  <div
+                    className={classNames(
+                      'vi__seperator',
+                      classes.seperator,
+                    )}
+                    id={`seperator-${i}`}
+                    data-testid={`seperator-${i}`}
+                  >
+                    {seperator}
+                  </div>
+                ) : null
+              }
+              <div
+                className={classNames(
+                  "vi__character",
+                  classes.character,
+                  {
+                    "vi__character--selected": isCharacterSelected(i),
+                    "vi__character--inactive": isCharacterInactive(i),
+                    "vi__character--filled": isCharacterFilled(i),
+                  },
+                  isCharacterSelected(i) && classes.characterSelected,
+                  isCharacterInactive(i) && classes.characterInactive,
+                  isCharacterFilled(i) && classes.characterFilled
+                )}
+                onClick={handleClick}
+                id={`field-${i}`}
+                data-testid={`character-${i}`}
+              >
+                {passwordMode && getValue()[i]
+                  ? "*"
+                  : getValue()[i] || placeholder}
+              </div>
+            </React.Fragment>
           ))}
         </div>
         <style dangerouslySetInnerHTML={{ __html: style }} />
@@ -181,7 +200,10 @@ VerificationInput.propTypes = {
     characterInactive: PropTypes.string,
     characterSelected: PropTypes.string,
     characterFilled: PropTypes.string,
+    seperator: PropTypes.string,
   }),
+  seperator: PropTypes.string,
+  seperatorIndices: PropTypes.arrayOf(PropTypes.number),
   onChange: PropTypes.func,
   onFocus: PropTypes.func,
   onBlur: PropTypes.func,
@@ -196,6 +218,8 @@ VerificationInput.defaultProps = {
   inputProps: {},
   containerProps: {},
   classNames: {},
+  seperator: '-',
+  seperatorIndices: [],
 };
 
 export default VerificationInput;

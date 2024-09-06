@@ -13,7 +13,10 @@ export interface VerificationInputProps {
     characterInactive?: string;
     characterSelected?: string;
     characterFilled?: string;
+    seperator?: string;
   };
+  seperator?: string;
+  seperatorIndices?: number[];
   onChange?: (value: string) => void;
   onFocus?: () => void;
   onBlur?: () => void;

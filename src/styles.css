@@ -45,6 +45,19 @@
   box-sizing: border-box;
 }
 
+:where(.vi__seperator) {
+  height: 100%;
+  flex-grow: 0;
+  flex-basis: 0;
+  text-align: center;
+  font-size: 36px;
+  line-height: 50px;
+  color: black;
+  cursor: default;
+  user-select: none;
+  box-sizing: border-box;
+}
+
 :where(.vi__character--inactive) {
   color: dimgray;
   background-color: lightgray;
