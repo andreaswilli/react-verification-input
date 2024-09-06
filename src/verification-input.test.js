@@ -505,30 +505,30 @@ describe("VerificationInput", () => {
     );
   });
 
-  it('should render custom seperators', () => {
+  it('should render custom separators', () => {
     render(
       <VerificationInput
         length={7}
-        classNames={{ seperator: "custom-seperator" }}
-        seperator="*"
-        seperatorIndices={[1, 3]}
+        classNames={{ separator: "custom-separator" }}
+        separator="*"
+        separatorIndices={[1, 3]}
       />
     );
 
-    expect(screen.getByTestId("seperator-1")).toHaveTextContent("*");
-    expect(screen.getByTestId("seperator-1")).toHaveClass(
-      "vi__seperator",
-      "custom-seperator"
+    expect(screen.getByTestId("separator-1")).toHaveTextContent("*");
+    expect(screen.getByTestId("separator-1")).toHaveClass(
+      "vi__separator",
+      "custom-separator"
     );
 
-    expect(screen.getByTestId("seperator-3")).toHaveClass(
-      "vi__seperator",
-      "custom-seperator"
+    expect(screen.getByTestId("separator-3")).toHaveClass(
+      "vi__separator",
+      "custom-separator"
     );
-    expect(screen.getByTestId("seperator-3")).toHaveTextContent("*");
+    expect(screen.getByTestId("separator-3")).toHaveTextContent("*");
   });
 
-  it('should not render seperators if indices are not specified', () => {
+  it('should not render separators if indices are not specified', () => {
     render(
       <VerificationInput />
     );
@@ -536,31 +536,31 @@ describe("VerificationInput", () => {
     expect(screen.queryByText('-')).not.toBeInTheDocument();
   });
 
-  it('should use the default seperator if none is specified', () => {
+  it('should use the default separator if none is specified', () => {
     render(
       <VerificationInput
         length={7}
-        classNames={{ seperator: "custom-seperator" }}
-        seperatorIndices={[2, 5]}
+        classNames={{ separator: "custom-separator" }}
+        separatorIndices={[2, 5]}
       />
     );
 
-    expect(screen.getByTestId("seperator-2")).toHaveTextContent("-");
-    expect(screen.getByTestId("seperator-2")).toHaveClass(
-      "vi__seperator",
-      "custom-seperator"
+    expect(screen.getByTestId("separator-2")).toHaveTextContent("-");
+    expect(screen.getByTestId("separator-2")).toHaveClass(
+      "vi__separator",
+      "custom-separator"
     );
 
-    expect(screen.getByTestId("seperator-5")).toHaveClass(
-      "vi__seperator",
-      "custom-seperator"
+    expect(screen.getByTestId("separator-5")).toHaveClass(
+      "vi__separator",
+      "custom-separator"
     );
-    expect(screen.getByTestId("seperator-5")).toHaveTextContent("-");
+    expect(screen.getByTestId("separator-5")).toHaveTextContent("-");
   });
 
-  it('should ignore out-of-bounds seperator indices', () => {
+  it('should ignore out-of-bounds separator indices', () => {
     render(
-      <VerificationInput length={7} seperatorIndices={[-2, 20]} />
+      <VerificationInput length={7} separatorIndices={[-2, 20]} />
     );
 
     expect(screen.queryByText('-')).not.toBeInTheDocument();

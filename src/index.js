@@ -16,8 +16,8 @@ const VerificationInput = forwardRef(
       inputProps,
       containerProps,
       classNames: classes,
-      seperator,
-      seperatorIndices,
+      separator,
+      separatorIndices,
       onChange,
       onFocus,
       onBlur,
@@ -30,7 +30,7 @@ const VerificationInput = forwardRef(
 
     const inputRef = useRef(null);
 
-    const seperatorSet = new Set(seperatorIndices);
+    const separatorSet = new Set(separatorIndices);
 
     useEffect(() => {
       if (autoFocus) {
@@ -140,16 +140,16 @@ const VerificationInput = forwardRef(
           {[...Array(length)].map((_, i) => (
             <React.Fragment key={i}>
               {
-                seperatorSet.has(i) ? (
+                separatorSet.has(i) ? (
                   <div
                     className={classNames(
-                      'vi__seperator',
-                      classes.seperator,
+                      'vi__separator',
+                      classes.separator,
                     )}
-                    id={`seperator-${i}`}
-                    data-testid={`seperator-${i}`}
+                    id={`separator-${i}`}
+                    data-testid={`separator-${i}`}
                   >
-                    {seperator}
+                    {separator}
                   </div>
                 ) : null
               }
@@ -200,10 +200,10 @@ VerificationInput.propTypes = {
     characterInactive: PropTypes.string,
     characterSelected: PropTypes.string,
     characterFilled: PropTypes.string,
-    seperator: PropTypes.string,
+    separator: PropTypes.string,
   }),
-  seperator: PropTypes.string,
-  seperatorIndices: PropTypes.arrayOf(PropTypes.number),
+  separator: PropTypes.string,
+  separatorIndices: PropTypes.arrayOf(PropTypes.number),
   onChange: PropTypes.func,
   onFocus: PropTypes.func,
   onBlur: PropTypes.func,
@@ -218,8 +218,8 @@ VerificationInput.defaultProps = {
   inputProps: {},
   containerProps: {},
   classNames: {},
-  seperator: '-',
-  seperatorIndices: [],
+  separator: '-',
+  separatorIndices: [],
 };
 
 export default VerificationInput;

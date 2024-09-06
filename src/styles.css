@@ -45,7 +45,7 @@
   box-sizing: border-box;
 }
 
-:where(.vi__seperator) {
+:where(.vi__separator) {
   height: 100%;
   flex-grow: 0;
   flex-basis: 0;
