@@ -53,10 +53,6 @@ import { Callout } from "nextra-theme-docs";
 />
 
 ```css
-.character--selected {
-  position: relative;
-}
-
 /* optionally hide placeholder (in case it overlaps the cursor) */
 .character--selected:not(.character--filled) {
   color: transparent;
@@ -67,11 +63,6 @@ import { Callout } from "nextra-theme-docs";
   width: 1px;
   height: 25px;
   background-color: #333;
-  display: block;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
   animation: blink 1s infinite step-end;
 }
 
