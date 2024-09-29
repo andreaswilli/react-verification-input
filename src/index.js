@@ -13,6 +13,7 @@ const VerificationInput = forwardRef(
       placeholder,
       autoFocus,
       passwordMode,
+      passwordChar,
       inputProps,
       containerProps,
       classNames: classes,
@@ -153,7 +154,7 @@ const VerificationInput = forwardRef(
               key={i}
             >
               {passwordMode && getValue()[i]
-                ? "*"
+                ? passwordChar
                 : getValue()[i] || placeholder}
             </div>
           ))}
@@ -173,6 +174,7 @@ VerificationInput.propTypes = {
   placeholder: PropTypes.string,
   autoFocus: PropTypes.bool,
   passwordMode: PropTypes.bool,
+  passwordChar: PropTypes.string,
   inputProps: PropTypes.object,
   containerProps: PropTypes.object,
   classNames: PropTypes.shape({
@@ -192,6 +194,7 @@ VerificationInput.defaultProps = {
   length: 6,
   validChars: "A-Za-z0-9",
   placeholder: "·",
+  passwordChar: "*",
   autoFocus: false,
   inputProps: {},
   containerProps: {},
