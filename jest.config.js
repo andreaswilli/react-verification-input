@@ -1,4 +1,4 @@
-module.exports = {
+export default {
   moduleNameMapper: {
     "^.+\\.(css|less|scss)$": "babel-jest",
   },

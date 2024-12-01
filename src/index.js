@@ -1,6 +1,5 @@
 import React, { useRef, useState, useEffect, forwardRef } from "react";
 import classNames from "classnames";
-import PropTypes from "prop-types";
 
 import style from "./styles.css";
 
