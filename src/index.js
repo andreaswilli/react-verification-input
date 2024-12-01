@@ -1,6 +1,5 @@
 import React, { useRef, useState, useEffect, forwardRef } from "react";
 import classNames from "classnames";
-import PropTypes from "prop-types";
 
 import style from "./styles.css";
 
@@ -8,20 +7,20 @@ const VerificationInput = forwardRef(
   (
     {
       value,
-      length,
-      validChars,
-      placeholder,
-      autoFocus,
-      passwordMode,
-      inputProps,
-      containerProps,
-      classNames: classes,
+      length = 6,
+      validChars = "A-Za-z0-9",
+      placeholder = "·",
+      autoFocus = false,
+      passwordMode = false,
+      inputProps = {},
+      containerProps = {},
+      classNames: classes = {},
       onChange,
       onFocus,
       onBlur,
       onComplete,
     },
-    ref
+    ref,
   ) => {
     const [localValue, setLocalValue] = useState("");
     const [isActive, setActive] = useState(false);
@@ -35,10 +34,10 @@ const VerificationInput = forwardRef(
     }, [autoFocus]);
 
     useEffect(() => {
-      if(inputProps.disabled) {
+      if (inputProps.disabled) {
         setActive(false);
       }
-    }, [inputProps.disabled])
+    }, [inputProps.disabled]);
 
     const handleClick = () => {
       inputRef.current.focus();
@@ -57,9 +56,7 @@ const VerificationInput = forwardRef(
       const newInputVal = event.target.value.replace(/\s/g, "");
 
       if (RegExp(`^[${validChars}]{0,${length}}$`).test(newInputVal)) {
-        if (onChange) {
-          onChange?.(newInputVal);
-        }
+        onChange?.(newInputVal);
         setLocalValue(newInputVal);
 
         if (newInputVal.length === length) {
@@ -98,7 +95,7 @@ const VerificationInput = forwardRef(
           className={classNames(
             "vi__container",
             classes.container,
-            containerClassName
+            containerClassName,
           )}
           onClick={() => inputRef.current.focus()}
           {...restContainerProps}
@@ -145,7 +142,7 @@ const VerificationInput = forwardRef(
                 },
                 isCharacterSelected(i) && classes.characterSelected,
                 isCharacterInactive(i) && classes.characterInactive,
-                isCharacterFilled(i) && classes.characterFilled
+                isCharacterFilled(i) && classes.characterFilled,
               )}
               onClick={handleClick}
               id={`field-${i}`}
@@ -161,41 +158,9 @@ const VerificationInput = forwardRef(
         <style dangerouslySetInnerHTML={{ __html: style }} />
       </>
     );
-  }
+  },
 );
 
 VerificationInput.displayName = "VerificationInput";
-
-VerificationInput.propTypes = {
-  value: PropTypes.string,
-  length: PropTypes.number,
-  validChars: PropTypes.string,
-  placeholder: PropTypes.string,
-  autoFocus: PropTypes.bool,
-  passwordMode: PropTypes.bool,
-  inputProps: PropTypes.object,
-  containerProps: PropTypes.object,
-  classNames: PropTypes.shape({
-    container: PropTypes.string,
-    character: PropTypes.string,
-    characterInactive: PropTypes.string,
-    characterSelected: PropTypes.string,
-    characterFilled: PropTypes.string,
-  }),
-  onChange: PropTypes.func,
-  onFocus: PropTypes.func,
-  onBlur: PropTypes.func,
-  onComplete: PropTypes.func,
-};
-
-VerificationInput.defaultProps = {
-  length: 6,
-  validChars: "A-Za-z0-9",
-  placeholder: "·",
-  autoFocus: false,
-  inputProps: {},
-  containerProps: {},
-  classNames: {},
-};
 
 export default VerificationInput;
