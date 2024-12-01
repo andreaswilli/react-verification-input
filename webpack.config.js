@@ -1,11 +1,11 @@
-const path = require("path");
-const webpack = require("webpack");
-const CopyPlugin = require("copy-webpack-plugin");
+import { resolve } from "path";
+import webpack from "webpack";
+import CopyPlugin from "copy-webpack-plugin";
 
-module.exports = {
+export default {
   entry: "./src/index.js",
   output: {
-    path: path.resolve(__dirname, "lib"),
+    path: resolve("lib"),
     filename: "index.js",
     libraryTarget: "commonjs",
   },
