@@ -1,7 +1,6 @@
 {
   "name": "react-verification-input",
   "version": "4.1.3-beta.1",
-  "type": "module",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "repository": "https://github.com/andreaswilli/react-verification-input.git",
