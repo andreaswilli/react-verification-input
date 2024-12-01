@@ -61,6 +61,14 @@ describe("VerificationInput", () => {
     expect(screen.getByTestId("container")).toHaveTextContent(/^\*\*\*\*\*\*$/);
   });
 
+  it("Should show only custom password character (e.g., '!') in password mode", async () => {
+    render(<VerificationInput passwordMode={true} passwordChar="!" />);
+
+    await userEvent.type(screen.getByLabelText("verification input"), "012345");
+
+    expect(screen.getByTestId("container")).toHaveTextContent(/^!!!!!!$/);
+  });
+
   it("should not allow placeholder character", async () => {
     render(<VerificationInput />);
 
