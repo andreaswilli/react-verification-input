@@ -10,6 +10,7 @@
   caret-color: transparent;
   outline: none;
   border: 0 none transparent;
+  opacity: 0;
 }
 
 .vi::-ms-reveal,
