@@ -10,6 +10,9 @@
   caret-color: transparent;
   outline: none;
   border: 0 none transparent;
+}
+
+.vi:-webkit-autofill {
   opacity: 0;
 }
 
